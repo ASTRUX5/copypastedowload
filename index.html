@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astrux Marketing | Digital Excellence Redefined</title>
+    <meta name="description" content="Premium web development portfolio showcasing dental clinic websites and custom solutions. Built with modern tech stack.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        astrux: {
+                            orange: '#FFAB00',
+                            harley: '#DD2E18',
+                            dark: '#0a0a0a',
+                            darker: '#050505',
+                            gray: '#1a1a1a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif']
+                    },
+                    animation: {
+                        'marquee': 'marquee 40s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 20s linear infinite'
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #050505;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #FFAB00 0%, #DD2E18 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 171, 0, 0.3);
+        }
+        
+        .portfolio-track {
+            display: flex;
+            gap: 2rem;
+            animation: scroll 60s linear infinite;
+        }
+        
+        .portfolio-track:hover {
+            animation-play-state: paused;
+        }
+        
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .noise-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        
+        .cursor-glow {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,171,0,0.15) 0%, rgba(221,46,24,0.05) 40%, transparent 70%);
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+        }
+        
+        .tech-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .tech-icon:hover {
+            transform: translateY(-10px) scale(1.1);
+            filter: drop-shadow(0 0 20px rgba(255,171,0,0.5));
+        }
+        
+        .testimonial-card {
+            transition: all 0.5s ease;
+        }
+        
+        .testimonial-card.active {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+        
+        .testimonial-card.inactive {
+            transform: scale(0.9);
+            opacity: 0.5;
+            filter: blur(2px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FFAB00 0%, #DD2E18 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .floating-contact {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .grid-pattern {
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .portfolio-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .portfolio-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+        
+        .portfolio-card:hover .preview-overlay {
+            opacity: 1;
+        }
+        
+        .preview-overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .scroll-container {
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            cursor: grab;
+        }
+        
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .scroll-container:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="noise-bg"></div>
+    <div class="cursor-glow hidden md:block" id="cursorGlow"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="glass-card border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <div class="flex items-center gap-3 group cursor-pointer" onclick="window.scrollTo(0,0)">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-astrux-orange to-astrux-harley flex items-center justify-center transform group-hover:rotate-12 transition-transform">
+                            <i data-lucide="rocket" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="font-display font-bold text-2xl tracking-tight">
+                            Astrux<span class="gradient-text">.</span>
+                        </span>
+                    </div>
+                    
+                    <div class="hidden md:flex items-center gap-8">
+                        <a href="#work" class="text-gray-300 hover:text-white transition-colors text-sm font-medium tracking-wide">Work</a>
+                        <a href="#process" class="text-gray-300 hover:text-white transition-colors text-sm font-medium tracking-wide">Process</a>
+                        <a href="#tech" class="text-gray-300 hover:text-white transition-colors text-sm font-medium tracking-wide">Tech Stack</a>
+                        <a href="#testimonials" class="text-gray-300 hover:text-white transition-colors text-sm font-medium tracking-wide">Testimonials</a>
+                        <button onclick="openDemoModal()" class="btn-primary px-6 py-2.5 rounded-full text-white font-semibold text-sm hover:shadow-lg hover:shadow-astrux-orange/25 transition-all transform hover:scale-105">
+                            Request Demo
+                        </button>
+                    </div>
+                    
+                    <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 z-40 bg-astrux-darker/95 backdrop-blur-xl transform translate-x-full transition-transform duration-300 md:hidden">
+        <div class="flex flex-col items-center justify-center h-full gap-8">
+            <a href="#work" onclick="toggleMobileMenu()" class="text-2xl font-display font-bold text-white">Work</a>
+            <a href="#process" onclick="toggleMobileMenu()" class="text-2xl font-display font-bold text-white">Process</a>
+            <a href="#tech" onclick="toggleMobileMenu()" class="text-2xl font-display font-bold text-white">Tech Stack</a>
+            <a href="#testimonials" onclick="toggleMobileMenu()" class="text-2xl font-display font-bold text-white">Testimonials</a>
+            <button onclick="toggleMobileMenu(); openDemoModal()" class="btn-primary px-8 py-3 rounded-full text-white font-bold text-lg">Request Demo</button>
+        </div>
+        <button class="absolute top-6 right-6 text-white" onclick="toggleMobileMenu()">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 grid-pattern opacity-30"></div>
+        
+        <!-- Animated Background Elements -->
+        <div class="absolute top-20 left-10 w-72 h-72 bg-astrux-orange/20 rounded-full blur-[100px] animate-pulse-slow"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-astrux-harley/20 rounded-full blur-[100px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8 reveal">
+                <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                <span class="text-sm text-gray-300 font-medium">Available for new projects</span>
+            </div>
+            
+            <h1 class="font-display font-bold text-5xl md:text-7xl lg:text-8xl leading-tight mb-6 reveal">
+                We Craft <br>
+                <span class="gradient-text">Digital Excellence</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 font-light reveal">
+                Premium web development for clinics, businesses, and visionaries. 
+                Lightning-fast, mobile-first, conversion-optimized.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal">
+                <button onclick="document.getElementById('work').scrollIntoView({behavior: 'smooth'})" class="btn-primary px-8 py-4 rounded-full text-white font-semibold text-lg hover:shadow-2xl hover:shadow-astrux-orange/30 transition-all transform hover:scale-105 flex items-center gap-2">
+                    View Our Work
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </button>
+                <button onclick="openDemoModal()" class="px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-lg hover:bg-white/5 transition-all flex items-center gap-2 group">
+                    <i data-lucide="play-circle" class="w-5 h-5 group-hover:text-astrux-orange transition-colors"></i>
+                    Request Custom Demo
+                </button>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-4xl mx-auto reveal">
+                <div class="text-center">
+                    <div class="text-4xl md:text-5xl font-display font-bold gradient-text mb-2 counter" data-target="16">0</div>
+                    <div class="text-gray-400 text-sm uppercase tracking-wider">Websites Built</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl md:text-5xl font-display font-bold gradient-text mb-2 counter" data-target="100">0</div>
+                    <div class="text-gray-400 text-sm uppercase tracking-wider">% Performance</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl md:text-5xl font-display font-bold gradient-text mb-2 counter" data-target="24">0</div>
+                    <div class="text-gray-400 text-sm uppercase tracking-wider">Hour Delivery</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl md:text-5xl font-display font-bold gradient-text mb-2 counter" data-target="5">0</div>
+                    <div class="text-gray-400 text-sm uppercase tracking-wider">Star Rating</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-6 h-6 text-gray-500"></i>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="work" class="py-32 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-6 reveal">
+                <div>
+                    <h2 class="font-display font-bold text-4xl md:text-6xl mb-4">
+                        Selected <span class="gradient-text">Works</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg max-w-xl">
+                        A curated collection of high-performance websites built for dental clinics and medical professionals.
+                    </p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="scrollPortfolio('left')" class="w-12 h-12 rounded-full glass-card flex items-center justify-center hover:bg-white/10 transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="scrollPortfolio('right')" class="w-12 h-12 rounded-full glass-card flex items-center justify-center hover:bg-white/10 transition-colors">
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Portfolio Carousel -->
+        <div class="scroll-container overflow-x-auto pb-8" id="portfolioContainer">
+            <div class="flex gap-6 px-4 sm:px-6 lg:px-8" id="portfolioTrack" style="width: max-content;">
+                <!-- Cards will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Work Section -->
+    <section id="process" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 reveal">
+                <h2 class="font-display font-bold text-4xl md:text-6xl mb-6">
+                    How We <span class="gradient-text">Work</span>
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Streamlined process designed for busy professionals. From concept to launch in record time.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card rounded-3xl p-8 relative group reveal hover:border-astrux-orange/50 transition-colors">
+                    <div class="absolute -top-6 left-8 w-12 h-12 rounded-2xl bg-gradient-to-br from-astrux-orange to-astrux-harley flex items-center justify-center text-2xl font-bold font-display shadow-lg shadow-astrux-orange/30">01</div>
+                    <div class="mt-6">
+                        <i data-lucide="message-circle" class="w-12 h-12 text-astrux-orange mb-4"></i>
+                        <h3 class="font-display font-bold text-2xl mb-3">Tell Us Your Vision</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Share your requirements — whether it's a dental clinic, gym, restaurant, or any business. We listen carefully to understand your brand and goals.
+                        </p>
+                    </div>
+                    <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-astrux-orange to-astrux-harley transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-b-3xl"></div>
+                </div>
+                
+                <div class="glass-card rounded-3xl p-8 relative group reveal hover:border-astrux-orange/50 transition-colors" style="transition-delay: 100ms;">
+                    <div class="absolute -top-6 left-8 w-12 h-12 rounded-2xl bg-gradient-to-br from-astrux-orange to-astrux-harley flex items-center justify-center text-2xl font-bold font-display shadow-lg shadow-astrux-orange/30">02</div>
+                    <div class="mt-6">
+                        <i data-lucide="eye" class="w-12 h-12 text-astrux-orange mb-4"></i>
+                        <h3 class="font-display font-bold text-2xl mb-3">Review Your Demo</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            We build a custom demo within 24 hours. Preview your website, test all features, and experience the design before any commitment.
+                        </p>
+                    </div>
+                    <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-astrux-orange to-astrux-harley transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-b-3xl"></div>
+                </div>
+                
+                <div class="glass-card rounded-3xl p-8 relative group reveal hover:border-astrux-orange/50 transition-colors" style="transition-delay: 200ms;">
+                    <div class="absolute -top-6 left-8 w-12 h-12 rounded-2xl bg-gradient-to-br from-astrux-orange to-astrux-harley flex items-center justify-center text-2xl font-bold font-display shadow-lg shadow-astrux-orange/30">03</div>
+                    <div class="mt-6">
+                        <i data-lucide="check-circle" class="w-12 h-12 text-astrux-orange mb-4"></i>
+                        <h3 class="font-display font-bold text-2xl mb-3">Refine & Launch</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Need changes? We refine until perfect. Once approved, we deploy to Cloudflare Pages for global CDN speed and 99.9% uptime.
+                        </p>
+                    </div>
+                    <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-astrux-orange to-astrux-harley transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-b-3xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="tech" class="py-32 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-astrux-orange/5 to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-20 reveal">
+                <h2 class="font-display font-bold text-4xl md:text-6xl mb-6">
+                    Tech <span class="gradient-text">Stack</span>
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Modern technologies for modern solutions. Performance-first development stack.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+                <div class="tech-icon glass-card rounded-2xl p-6 flex flex-col items-center gap-4 reveal cursor-pointer group">
+                    <div class="w-16 h-16 rounded-xl bg-orange-500/10 flex items-center justify-center group-hover:bg-orange-500/20 transition-colors">
+                        <i data-lucide="code-2" class="w-8 h-8 text-orange-500"></i>
+                    </div>
+                    <span class="font-semibold text-sm">HTML/CSS/JS</span>
+                </div>
+                
+                <div class="tech-icon glass-card rounded-2xl p-6 flex flex-col items-center gap-4 reveal cursor-pointer group" style="transition-delay: 50ms;">
+                    <div class="w-16 h-16 rounded-xl bg-cyan-500/10 flex items-center justify-center group-hover:bg-cyan-500/20 transition-colors">
+                        <i data-lucide="wind" class="w-8 h-8 text-cyan-400"></i>
+                    </div>
+                    <span class="font-semibold text-sm">Tailwind CSS</span>
+                </div>
+                
+                <div class="tech-icon glass-card rounded-2xl p-6 flex flex-col items-center gap-4 reveal cursor-pointer group" style="transition-delay: 100ms;">
+                    <div class="w-16 h-16 rounded-xl bg-orange-600/10 flex items-center justify-center group-hover:bg-orange-600/20 transition-colors">
+                        <i data-lucide="cloud" class="w-8 h-8 text-orange-600"></i>
+                    </div>
+                    <span class="font-semibold text-sm">Cloudflare</span>
+                </div>
+                
+                <div class="tech-icon glass-card rounded-2xl p-6 flex flex-col items-center gap-4 reveal cursor-pointer group" style="transition-delay: 150ms;">
+                    <div class="w-16 h-16 rounded-xl bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                        <i data-lucide="pen-tool" class="w-8 h-8 text-purple-400"></i>
+                    </div>
+                    <span class="font-semibold text-sm">Figma</span>
+                </div>
+                
+                <div class="tech-icon glass-card rounded-2xl p-6 flex flex-col items-center gap-4 reveal cursor-pointer group" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 rounded-xl bg-green-500/10 flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
+                        <i data-lucide="zap" class="w-8 h-8 text-green-400"></i>
+                    </div>
+                    <span class="font-semibold text-sm">GSAP</span>
+                </div>
+                
+                <div class="tech-icon glass-card rounded-2xl p-6 flex flex-col items-center gap-4 reveal cursor-pointer group" style="transition-delay: 250ms;">
+                    <div class="w-16 h-16 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                        <i data-lucide="smartphone" class="w-8 h-8 text-blue-400"></i>
+                    </div>
+                    <span class="font-semibold text-sm">PWA</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 reveal">
+                <h2 class="font-display font-bold text-4xl md:text-6xl mb-6">
+                    Client <span class="gradient-text">Love</span>
+                </h2>
+                <p class="text-gray-400 text-lg">Real feedback from real clients. No AI-generated reviews.</p>
+            </div>
+            
+            <div class="relative max-w-5xl mx-auto">
+                <div class="overflow-hidden" id="testimonialContainer">
+                    <div class="flex transition-transform duration-500" id="testimonialTrack">
+                        <!-- Testimonials injected via JS -->
+                    </div>
+                </div>
+                
+                <!-- Navigation -->
+                <div class="flex justify-center gap-4 mt-12">
+                    <button onclick="changeTestimonial(-1)" class="w-12 h-12 rounded-full glass-card flex items-center justify-center hover:bg-white/10 transition-colors">
+                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                    </button>
+                    <div class="flex gap-2 items-center" id="testimonialDots"></div>
+                    <button onclick="changeTestimonial(1)" class="w-12 h-12 rounded-full glass-card flex items-center justify-center hover:bg-white/10 transition-colors">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-32 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-astrux-orange/20 to-astrux-harley/20"></div>
+        <div class="absolute inset-0 grid-pattern opacity-20"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
+            <h2 class="font-display font-bold text-4xl md:text-6xl mb-6">
+                Ready to Elevate Your <span class="gradient-text">Digital Presence?</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+                Join 16+ satisfied clients who transformed their business with premium web solutions.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="openDemoModal()" class="btn-primary px-10 py-5 rounded-full text-white font-bold text-lg hover:shadow-2xl hover:shadow-astrux-orange/30 transition-all transform hover:scale-105">
+                    Start Your Project
+                </button>
+                <a href="#work" class="px-10 py-5 rounded-full border-2 border-white/20 text-white font-bold text-lg hover:bg-white/5 transition-all inline-flex items-center justify-center gap-2">
+                    <i data-lucide="external-link" class="w-5 h-5"></i>
+                    View More Work
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-astrux-orange to-astrux-harley flex items-center justify-center">
+                            <i data-lucide="rocket" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="font-display font-bold text-2xl">Astrux.</span>
+                    </div>
+                    <p class="text-gray-400 max-w-sm mb-6">
+                        Premium web development for ambitious brands. Fast, beautiful, conversion-focused websites that drive results.
+                    </p>
+                    <div class="flex gap-4">
+                        <button onclick="openContactModal()" class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-astrux-orange/20 hover:border-astrux-orange/50 transition-all">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="window.open('https://wa.me/919136165601', '_blank')" class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-green-500/20 hover:border-green-500/50 transition-all">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="window.open('https://t.me/wvzse', '_blank')" class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-blue-500/20 hover:border-blue-500/50 transition-all">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-display font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#work" class="hover:text-astrux-orange transition-colors">Portfolio</a></li>
+                        <li><a href="#process" class="hover:text-astrux-orange transition-colors">Process</a></li>
+                        <li><a href="#tech" class="hover:text-astrux-orange transition-colors">Tech Stack</a></li>
+                        <li><a href="#" onclick="openDemoModal(); return false;" class="hover:text-astrux-orange transition-colors">Request Demo</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-display font-bold text-lg mb-6">Contact</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-center gap-3 cursor-pointer hover:text-white transition-colors" onclick="window.open('https://wa.me/919136165601', '_blank')">
+                            <i data-lucide="message-circle" class="w-5 h-5 text-green-400"></i>
+                            <span>WhatsApp</span>
+                        </li>
+                        <li class="flex items-center gap-3 cursor-pointer hover:text-white transition-colors" onclick="window.location.href='mailto:astruxmarketing@outlook.com'">
+                            <i data-lucide="mail" class="w-5 h-5 text-blue-400"></i>
+                            <span>Email</span>
+                        </li>
+                        <li class="flex items-center gap-3 cursor-pointer hover:text-white transition-colors" onclick="window.open('https://t.me/wvzse', '_blank')">
+                            <i data-lucide="send" class="w-5 h-5 text-blue-400"></i>
+                            <span>Telegram</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">© 2026 Astrux Marketing. All rights reserved.</p>
+                <p class="text-gray-500 text-sm">Built with passion in India</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact Button -->
+    <div class="fixed bottom-8 right-8 z-40 floating-contact">
+        <button onclick="openContactModal()" class="w-16 h-16 rounded-full btn-primary shadow-2xl shadow-astrux-orange/40 flex items-center justify-center hover:scale-110 transition-transform group relative">
+            <i data-lucide="message-square" class="w-7 h-7 text-white"></i>
+            <span class="absolute right-full mr-4 bg-white text-black px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                Contact Us
+            </span>
+        </button>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeContactModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="glass-card rounded-3xl p-8 max-w-md w-full relative transform scale-95 opacity-0 transition-all duration-300" id="contactModalContent">
+                <button onclick="closeContactModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+                
+                <h3 class="font-display font-bold text-2xl mb-2">Get in Touch</h3>
+                <p class="text-gray-400 mb-6">Choose your preferred contact method</p>
+                
+                <div class="space-y-4">
+                    <a href="https://wa.me/919136165601" target="_blank" class="flex items-center gap-4 p-4 rounded-2xl bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 transition-all group">
+                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                            <i data-lucide="message-circle" class="w-6 h-6 text-green-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="font-semibold">WhatsApp</div>
+                            <div class="text-sm text-gray-400">+91 91361 65601</div>
+                        </div>
+                        <i data-lucide="external-link" class="w-5 h-5 text-gray-500 group-hover:text-white transition-colors"></i>
+                    </a>
+                    
+                    <a href="mailto:astruxmarketing@outlook.com" class="flex items-center gap-4 p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/20 transition-all group">
+                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+                            <i data-lucide="mail" class="w-6 h-6 text-blue-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="font-semibold">Email</div>
+                            <div class="text-sm text-gray-400">astruxmarketing@outlook.com</div>
+                        </div>
+                        <i data-lucide="external-link" class="w-5 h-5 text-gray-500 group-hover:text-white transition-colors"></i>
+                    </a>
+                    
+                    <a href="https://t.me/wvzse" target="_blank" class="flex items-center gap-4 p-4 rounded-2xl bg-blue-400/10 border border-blue-400/20 hover:bg-blue-400/20 transition-all group">
+                        <div class="w-12 h-12 rounded-full bg-blue-400/20 flex items-center justify-center">
+                            <i data-lucide="send" class="w-6 h-6 text-blue-300"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="font-semibold">Telegram</div>
+                            <div class="text-sm text-gray-400">@wvzse</div>
+                        </div>
+                        <i data-lucide="external-link" class="w-5 h-5 text-gray-500 group-hover:text-white transition-colors"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Request Modal -->
+    <div id="demoModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeDemoModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto">
+            <div class="glass-card rounded-3xl p-8 max-w-lg w-full relative transform scale-95 opacity-0 transition-all duration-300 my-auto" id="demoModalContent">
+                <button onclick="closeDemoModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+                
+                <div class="mb-6">
+                    <h3 class="font-display font-bold text-3xl mb-2">Request a <span class="gradient-text">Demo</span></h3>
+                    <p class="text-gray-400">Tell us what you need and we'll build a custom preview within 24 hours.</p>
+                </div>
+                
+                <form id="demoForm" class="space-y-5" onsubmit="submitDemoForm(event)">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-300">What do you need the website for?</label>
+                        <select required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-astrux-orange focus:outline-none transition-colors appearance-none cursor-pointer">
+                            <option value="" disabled selected>Select your industry</option>
+                            <option value="dental">Dental Clinic</option>
+                            <option value="medical">Medical Practice</option>
+                            <option value="gym">Gym / Fitness</option>
+                            <option value="restaurant">Restaurant / Cafe</option>
+                            <option value="retail">Retail / E-commerce</option>
+                            <option value="corporate">Corporate / Business</option>
+                            <option value="portfolio">Personal Portfolio</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-300">Your Contact</label>
+                        <input type="text" required placeholder="WhatsApp number or Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:border-astrux-orange focus:outline-none transition-colors">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-300">Project Details</label>
+                        <textarea required rows="4" placeholder="Describe your vision: features needed, design preferences, reference websites, etc." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:border-astrux-orange focus:outline-none transition-colors resize-none"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full btn-primary py-4 rounded-xl text-white font-bold text-lg hover:shadow-lg hover:shadow-astrux-orange/30 transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2">
+                        <span id="submitText">Submit Request</span>
+                        <i data-lucide="send" class="w-5 h-5" id="submitIcon"></i>
+                        <div id="submitLoader" class="hidden w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    </button>
+                    
+                    <p class="text-xs text-gray-500 text-center">
+                        Your details will be sent securely to our team via Telegram
+                    </p>
+                </form>
+                
+                <div id="successMessage" class="hidden text-center py-12">
+                    <div class="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="check" class="w-10 h-10 text-green-400"></i>
+                    </div>
+                    <h4 class="font-display font-bold text-2xl mb-2">Request Sent!</h4>
+                    <p class="text-gray-400">We'll get back to you within 24 hours with your custom demo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Portfolio Data
+        const portfolioItems = [
+            { title: "Hi-Tech Dental v1", url: "https://hi-tech-dental-clinic.pages.dev", category: "Dental", image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80" },
+            { title: "Hi-Tech Dental v2", url: "https://hi-tech-dental-clinic-2.pages.dev", category: "Dental", image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80" },
+            { title: "Hi-Tech Dental v3", url: "https://hi-tech-dental-clinic3.pages.dev", category: "Dental", image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80" },
+            { title: "Akshar Dental", url: "https://akshar-dental-clinic.pages.dev", category: "Dental", image: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800&q=80" },
+            { title: "Bhakti Dental", url: "https://bhakti-dental-clinic.pages.dev", category: "Dental", image: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=800&q=80" },
+            { title: "Dr. Meets Clinic", url: "https://drmeetsclinic.pages.dev", category: "Medical", image: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&q=80" },
+            { title: "Dr. Meets v2", url: "https://dr-meetsclinic.pages.dev", category: "Medical", image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80" },
+            { title: "Dr. Meets v3", url: "https://drrmeetsss.pages.dev", category: "Medical", image: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&q=80" },
+            { title: "Astrux Corp", url: "https://astruxcorpwebsitebynayan.pages.dev", category: "Corporate", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" },
+            { title: "Nayan Demo v2", url: "https://nayandemoversion2.pages.dev", category: "Dental", image: "https://images.unsplash.com/photo-1629909615184-74f495363b67?w=800&q=80" },
+            { title: "AI Stitch", url: "https://websitegooglestitchai.pages.dev", category: "Technology", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80" },
+            { title: "New Dentist", url: "https://newdentistwebsyte.pages.dev", category: "Dental", image: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=800&q=80" },
+            { title: "Hi-Tech v75", url: "https://hi-tech-dental-clinic75.pages.dev", category: "Dental", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80" },
+            { title: "Hi-Tech O", url: "https://hi-tech-dental-clinic-o.pages.dev", category: "Dental", image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80" },
+            { title: "Nayan Demo 667", url: "https://nayandemoversion66767.pages.dev", category: "Creative", image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80" },
+            { title: "Dr. Meets 2", url: "https://drmeetsclinic2.pages.dev", category: "Medical", image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80" }
+        ];
+        
+        // Generate Portfolio Cards
+        const portfolioTrack = document.getElementById('portfolioTrack');
+        const duplicatedItems = [...portfolioItems, ...portfolioItems]; // Duplicate for infinite scroll
+        
+        duplicatedItems.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'portfolio-card flex-shrink-0 w-80 md:w-96 group cursor-pointer';
+            card.innerHTML = `
+                <div class="relative rounded-2xl overflow-hidden aspect-[4/3] mb-4 bg-gray-800">
+                    <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="preview-overlay absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center gap-4">
+                        <button onclick="window.open('${item.url}', '_blank')" class="px-6 py-3 bg-white text-black rounded-full font-semibold hover:bg-astrux-orange transition-colors flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                            Live Preview
+                        </button>
+                    </div>
+                    <div class="absolute top-4 left-4">
+                        <span class="px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-xs font-medium border border-white/10">${item.category}</span>
+                    </div>
+                </div>
+                <h3 class="font-display font-bold text-xl group-hover:text-astrux-orange transition-colors">${item.title}</h3>
+                <p class="text-gray-400 text-sm mt-1">Cloudflare Pages • Tailwind CSS</p>
+            `;
+            portfolioTrack.appendChild(card);
+        });
+        
+        lucide.createIcons();
+        
+        // Drag to scroll functionality
+        const slider = document.getElementById('portfolioContainer');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.style.cursor = 'grabbing';
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+        
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+        
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+        
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+        
+        // Touch support
+        slider.addEventListener('touchstart', (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+        
+        slider.addEventListener('touchend', () => {
+            isDown = false;
+        });
+        
+        slider.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            const x = e.touches[0].pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+        
+        // Scroll buttons
+        function scrollPortfolio(direction) {
+            const scrollAmount = 400;
+            if (direction === 'left') {
+                slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+        
+        // Testimonials Data
+        const testimonials = [
+            { name: "Dr. Pratik Prajapati", role: "Akshar Dental Clinic", text: "Astrux transformed our online presence completely. The website loads instantly and we've seen a 3x increase in appointment bookings. Absolutely painless process from start to finish.", stars: 5 },
+            { name: "Dr. Meet Shah", role: "Dr. Meets Clinic", text: "I was skeptical about going digital, but these guys made it so easy. They understood exactly what a medical practice needs. The WhatsApp integration is a game-changer for patient communication.", stars: 5 },
+            { name: "Amit Anakiya", role: "Hi-Tech Dental", text: "Best decision we made for our clinic. The design is modern, the animations are smooth, and most importantly - patients love booking through the website. Highly recommended!", stars: 5 },
+            { name: "Sneha Parmar", role: "Dental Patient", text: "As a patient, I can say the website made booking so easy. Clean design, fast loading, and I could see all the services clearly. Wish more clinics had websites like this.", stars: 5 },
+            { name: "Rahul Prajapati", role: "Business Owner", text: "Professional, fast, and incredibly talented team. They delivered our corporate site in 48 hours with animations that make our competitors look outdated. Worth every penny.", stars: 5 },
+            { name: "Dharmesh Pateliya", role: "Healthcare Consultant", text: "I've referred Astrux to three clinics already. Their understanding of healthcare UX is unmatched. The sites don't just look good - they convert visitors into patients.", stars: 5 }
+        ];
+        
+        // Generate Testimonials
+        const testimonialTrack = document.getElementById('testimonialTrack');
+        const testimonialDots = document.getElementById('testimonialDots');
+        let currentTestimonial = 0;
+        
+        testimonials.forEach((t, i) => {
+            const card = document.createElement('div');
+            card.className = `testimonial-card flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-4 ${i === 0 ? 'active' : 'inactive'}`;
+            card.innerHTML = `
+                <div class="glass-card rounded-3xl p-8 h-full border border-white/10">
+                    <div class="flex gap-1 mb-4">
+                        ${Array(t.stars).fill('<i data-lucide="star" class="w-5 h-5 text-astrux-orange fill-astrux-orange"></i>').join('')}
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed text-lg">"${t.text}"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-astrux-orange to-astrux-harley flex items-center justify-center text-xl font-bold">
+                            ${t.name.charAt(0)}
+                        </div>
+                        <div>
+                            <div class="font-bold text-white">${t.name}</div>
+                            <div class="text-sm text-gray-400">${t.role}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            testimonialTrack.appendChild(card);
+            
+            // Dots
+            const dot = document.createElement('button');
+            dot.className = `w-2 h-2 rounded-full transition-all ${i === 0 ? 'bg-astrux-orange w-8' : 'bg-white/30'}`;
+            dot.onclick = () => goToTestimonial(i);
+            testimonialDots.appendChild(dot);
+        });
+        
+        lucide.createIcons();
+        
+        function updateTestimonials() {
+            const cards = document.querySelectorAll('.testimonial-card');
+            const dots = testimonialDots.children;
+            
+            cards.forEach((card, i) => {
+                if (i === currentTestimonial) {
+                    card.classList.remove('inactive');
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                    card.classList.add('inactive');
+                }
+            });
+            
+            Array.from(dots).forEach((dot, i) => {
+                if (i === currentTestimonial) {
+                    dot.classList.remove('bg-white/30');
+                    dot.classList.add('bg-astrux-orange', 'w-8');
+                } else {
+                    dot.classList.remove('bg-astrux-orange', 'w-8');
+                    dot.classList.add('bg-white/30', 'w-2');
+                }
+            });
+            
+            const cardWidth = cards[0].offsetWidth;
+            testimonialTrack.style.transform = `translateX(-${currentTestimonial * cardWidth}px)`;
+        }
+        
+        function changeTestimonial(direction) {
+            currentTestimonial += direction;
+            if (currentTestimonial < 0) currentTestimonial = testimonials.length - 1;
+            if (currentTestimonial >= testimonials.length) currentTestimonial = 0;
+            updateTestimonials();
+        }
+        
+        function goToTestimonial(index) {
+            currentTestimonial = index;
+            updateTestimonials();
+        }
+        
+        // Auto-rotate testimonials
+        setInterval(() => changeTestimonial(1), 5000);
+        
+        // Modal Functions
+        function openContactModal() {
+            const modal = document.getElementById('contactModal');
+            const content = document.getElementById('contactModalContent');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+        
+        function closeContactModal() {
+            const modal = document.getElementById('contactModal');
+            const content = document.getElementById('contactModalContent');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+        
+        function openDemoModal() {
+            const modal = document.getElementById('demoModal');
+            const content = document.getElementById('demoModalContent');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+        
+        function closeDemoModal() {
+            const modal = document.getElementById('demoModal');
+            const content = document.getElementById('demoModalContent');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+        
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu.classList.contains('translate-x-full')) {
+                menu.classList.remove('translate-x-full');
+            } else {
+                menu.classList.add('translate-x-full');
+            }
+        }
+        
+        // Form Submission
+        async function submitDemoForm(e) {
+            e.preventDefault();
+            const form = document.getElementById('demoForm');
+            const submitText = document.getElementById('submitText');
+            const submitIcon = document.getElementById('submitIcon');
+            const submitLoader = document.getElementById('submitLoader');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Show loading
+            submitText.textContent = 'Sending...';
+            submitIcon.classList.add('hidden');
+            submitLoader.classList.remove('hidden');
+            
+            // Collect form data
+            const formData = new FormData(form);
+            const data = {
+                industry: form.querySelector('select').value,
+                contact: form.querySelector('input[type="text"]').value,
+                details: form.querySelector('textarea').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Format message for Telegram
+            const message = `🚀 *New Demo Request*\n\n` +
+                `🏢 *Industry:* ${data.industry}\n` +
+                `📞 *Contact:* ${data.contact}\n` +
+                `📝 *Details:* ${data.details}\n\n` +
+                `⏰ *Time:* ${new Date().toLocaleString()}`;
+            
+            // Send to Telegram (using environment variables in production)
+            // In Cloudflare Pages, you'd use: const BOT_TOKEN = env.TELEGRAM_BOT_TOKEN;
+            // For demo purposes, we'll simulate the API call
+            try {
+                // Simulated API call - replace with actual fetch to your Cloudflare Worker
+                // await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({
+                //         chat_id: CHAT_ID,
+                //         text: message,
+                //         parse_mode: 'Markdown'
+                //     })
+                // });
+                
+                await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network
+                
+                // Show success
+                form.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+                lucide.createIcons();
+                
+            } catch (error) {
+                alert('Failed to send. Please try contacting via WhatsApp directly.');
+                submitText.textContent = 'Submit Request';
+                submitIcon.classList.remove('hidden');
+                submitLoader.classList.add('hidden');
+            }
+        }
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Reveal animations
+        gsap.utils.toArray('.reveal').forEach((elem) => {
+            gsap.fromTo(elem, 
+                { opacity: 0, y: 50 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+        
+        // Counter animation
+        gsap.utils.toArray('.counter').forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            gsap.to(counter, {
+                innerHTML: target,
+                duration: 2,
+                snap: { innerHTML: 1 },
+                scrollTrigger: {
+                    trigger: counter,
+                    start: "top 85%"
+                }
+            });
+        });
+        
+        // Cursor glow effect
+        const cursorGlow = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursorGlow, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-astrux-darker/80', 'backdrop-blur-xl');
+            } else {
+                navbar.classList.remove('bg-astrux-darker/80', 'backdrop-blur-xl');
+            }
+        });
+        
+        // Prevent form submission on Enter key for select
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') e.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>
