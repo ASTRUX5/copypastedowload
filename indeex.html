@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTRUX — Digital Chaos Theory</title>
+    <meta name="description" content="Anti-agency portfolio. We break rules to build legends.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Three.js for WebGL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        astrux: {
+                            orange: '#FF3D00',
+                            yellow: '#FFEA00',
+                            black: '#050505',
+                            gray: '#0a0a0a',
+                            white: '#f5f5f5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #050505;
+            color: #f5f5f5;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: #FF3D00;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #FF3D00;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-outline.hover {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 61, 0, 0.1);
+            border-color: transparent;
+        }
+        
+        /* Noise Overlay */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #FF3D00;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00fff9;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim {
+            0% { clip: rect(12px, 9999px, 52px, 0); }
+            20% { clip: rect(65px, 9999px, 11px, 0); }
+            40% { clip: rect(26px, 9999px, 89px, 0); }
+            60% { clip: rect(78px, 9999px, 14px, 0); }
+            80% { clip: rect(33px, 9999px, 66px, 0); }
+            100% { clip: rect(55px, 9999px, 99px, 0); }
+        }
+        
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 99px, 0); }
+            20% { clip: rect(12px, 9999px, 52px, 0); }
+            40% { clip: rect(78px, 9999px, 33px, 0); }
+            60% { clip: rect(26px, 9999px, 88px, 0); }
+            80% { clip: rect(44px, 9999px, 14px, 0); }
+            100% { clip: rect(11px, 9999px, 66px, 0); }
+        }
+        
+        /* Marquee */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* Distorted Glass */
+        .glass-distort {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(255, 61, 0, 0.1);
+        }
+        
+        .glass-distort:hover {
+            backdrop-filter: blur(30px) saturate(200%);
+            border-color: rgba(255, 61, 0, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(255, 61, 0, 0.2);
+        }
+        
+        /* Brutalist Cards */
+        .brutal-card {
+            background: #0a0a0a;
+            border: 2px solid #f5f5f5;
+            box-shadow: 8px 8px 0px #FF3D00;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .brutal-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px #FF3D00;
+        }
+        
+        /* Text Scramble */
+        .scramble-text {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        /* WebGL Canvas */
+        #webgl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* Scroll Velocity Skew */
+        .velocity-skew {
+            transition: transform 0.1s;
+        }
+        
+        /* Magnetic Button */
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        /* Horizontal Scroll Section */
+        .horizontal-scroll-container {
+            display: flex;
+            flex-wrap: nowrap;
+            width: fit-content;
+        }
+        
+        /* Portfolio Item */
+        .portfolio-item {
+            width: 60vw;
+            height: 70vh;
+            flex-shrink: 0;
+            margin-right: 5vw;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(120%);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .portfolio-item:hover img {
+            filter: grayscale(0%) contrast(100%);
+            transform: scale(1.05);
+        }
+        
+        /* Kinetic Typography */
+        .kinetic-title {
+            font-size: clamp(3rem, 15vw, 12rem);
+            line-height: 0.85;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+        
+        /* Grid Lines */
+        .grid-lines {
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #FF3D00;
+            border-radius: 4px;
+        }
+        
+        /* Selection */
+        ::selection {
+            background: #FF3D00;
+            color: #050505;
+        }
+        
+        /* Hide default cursor on interactive elements */
+        a, button, .portfolio-item {
+            cursor: none;
+        }
+        
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #050505;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .loader-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #FF3D00;
+            margin-top: 2rem;
+        }
+        
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: rgba(255,255,255,0.1);
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        
+        .loader-progress {
+            width: 0%;
+            height: 100%;
+            background: #FF3D00;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    
+    <!-- Noise Overlay -->
+    <div class="noise"></div>
+    
+    <!-- WebGL Background -->
+    <canvas id="webgl-canvas"></canvas>
+    
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="glitch text-6xl font-display font-bold" data-text="ASTRUX">ASTRUX</div>
+        <div class="loader-text">INITIALIZING CHAOS PROTOCOLS...</div>
+        <div class="loader-bar">
+            <div class="loader-progress" id="loaderProgress"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 mix-blend-difference px-6 py-6 flex justify-between items-center">
+        <a href="#" class="text-2xl font-display font-bold tracking-tighter magnetic-btn" data-magnetic>
+            ASTRUX<span class="text-astrux-orange">.</span>
+        </a>
+        
+        <div class="hidden md:flex gap-8 items-center">
+            <a href="#work" class="font-mono text-sm hover:text-astrux-orange transition-colors magnetic-btn" data-magnetic>WORK</a>
+            <a href="#chaos" class="font-mono text-sm hover:text-astrux-orange transition-colors magnetic-btn" data-magnetic>CHAOS</a>
+            <a href="#contact" class="font-mono text-sm hover:text-astrux-orange transition-colors magnetic-btn" data-magnetic>CONTACT</a>
+            <button onclick="openDemoModal()" class="border border-white px-6 py-2 font-mono text-sm hover:bg-white hover:text-black transition-all magnetic-btn" data-magnetic>
+                REQUEST DEMO
+            </button>
+        </div>
+        
+        <button class="md:hidden text-2xl" onclick="toggleMenu()">
+            <span id="menuIcon">☰</span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 bg-astrux-black z-40 transform translate-x-full transition-transform duration-500 flex flex-col items-center justify-center gap-8">
+        <a href="#work" onclick="toggleMenu()" class="text-4xl font-display font-bold hover:text-astrux-orange">WORK</a>
+        <a href="#chaos" onclick="toggleMenu()" class="text-4xl font-display font-bold hover:text-astrux-orange">CHAOS</a>
+        <a href="#contact" onclick="toggleMenu()" class="text-4xl font-display font-bold hover:text-astrux-orange">CONTACT</a>
+        <button onclick="toggleMenu(); openDemoModal()" class="mt-8 border-2 border-astrux-orange text-astrux-orange px-8 py-4 font-display font-bold text-xl">
+            REQUEST DEMO
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden grid-lines">
+        <div class="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+            <div class="kinetic-title text-center glitch" data-text="CHAOS">CHAOS</div>
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+            <div class="mb-6 inline-block">
+                <span class="font-mono text-astrux-orange text-sm tracking-widest border border-astrux-orange/30 px-4 py-2 rounded-full">
+                    ⚡ DIGITAL ANTI-AGENCY
+                </span>
+            </div>
+            
+            <h1 class="kinetic-title mb-8 velocity-skew" id="heroTitle">
+                WE BUILD<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-astrux-orange to-astrux-yellow">DIGITAL</span><br>
+                MONSTERS
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl mb-12 font-light leading-relaxed">
+                Not another portfolio. We are <span class="text-white font-semibold">Astrux</span> — architects of digital chaos. 
+                We craft websites that punch through the noise and convert visitors into believers.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button onclick="document.getElementById('work').scrollIntoView({behavior: 'smooth'})" 
+                        class="group relative px-8 py-4 bg-astrux-orange text-black font-display font-bold text-lg overflow-hidden magnetic-btn" data-magnetic>
+                    <span class="relative z-10 flex items-center gap-2">
+                        EXPLORE WORK
+                        <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </span>
+                    <div class="absolute inset-0 bg-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                </button>
+                
+                <button onclick="openDemoModal()" class="px-8 py-4 border-2 border-white/20 hover:border-astrux-orange hover:text-astrux-orange transition-all font-display font-bold text-lg magnetic-btn" data-magnetic>
+                    START PROJECT
+                </button>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+            <span class="font-mono text-xs tracking-widest">SCROLL</span>
+            <div class="w-px h-12 bg-gradient-to-b from-white to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Marquee Section -->
+    <div class="py-8 border-y border-white/10 bg-astrux-orange text-black overflow-hidden">
+        <div class="marquee-container font-display font-bold text-4xl md:text-6xl">
+            <div class="marquee-content">
+                WEB DEVELOPMENT • UI/UX DESIGN • BRAND STRATEGY • DIGITAL MARKETING • CLOUD SOLUTIONS • 
+                WEB DEVELOPMENT • UI/UX DESIGN • BRAND STRATEGY • DIGITAL MARKETING • CLOUD SOLUTIONS • 
+            </div>
+        </div>
+    </div>
+
+    <!-- Work Section - Horizontal Scroll -->
+    <section id="work" class="relative bg-astrux-black">
+        <div class="py-20 px-6">
+            <div class="max-w-7xl mx-auto mb-16 flex flex-col md:flex-row justify-between items-end gap-6">
+                <div>
+                    <span class="font-mono text-astrux-orange text-sm tracking-widest mb-4 block">SELECTED WORKS</span>
+                    <h2 class="text-5xl md:text-7xl font-display font-bold">DIGITAL<br>ARTIFACTS</h2>
+                </div>
+                <p class="text-gray-400 max-w-md text-right">
+                    16+ websites built. Zero templates. Maximum impact. 
+                    Drag or scroll to explore our chaos gallery.
+                </p>
+            </div>
+        </div>
+        
+        <div class="horizontal-scroll-wrapper overflow-hidden" id="horizontalWrapper">
+            <div class="horizontal-scroll-container px-6 pb-20" id="horizontalContainer">
+                <!-- Portfolio items injected via JS -->
+            </div>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="max-w-7xl mx-auto px-6 pb-20">
+            <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                <div class="h-full bg-astrux-orange rounded-full transition-all duration-100" id="scrollProgress" style="width: 0%"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section - Brutalist -->
+    <section class="py-32 px-6 bg-astrux-gray grid-lines relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-astrux-orange/20 rounded-full blur-[128px] pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="brutal-card p-8">
+                    <div class="text-6xl font-display font-bold text-astrux-orange mb-2" data-count="16">0</div>
+                    <div class="font-mono text-sm text-gray-400">WEBSITES DEPLOYED</div>
+                </div>
+                <div class="brutal-card p-8">
+                    <div class="text-6xl font-display font-bold text-astrux-yellow mb-2" data-count="100">0</div>
+                    <div class="font-mono text-sm text-gray-400">PERFORMANCE SCORE</div>
+                </div>
+                <div class="brutal-card p-8">
+                    <div class="text-6xl font-display font-bold text-white mb-2" data-count="24">0</div>
+                    <div class="font-mono text-sm text-gray-400">HOUR DELIVERY</div>
+                </div>
+                <div class="brutal-card p-8">
+                    <div class="text-6xl font-display font-bold text-astrux-orange mb-2">∞</div>
+                    <div class="font-mono text-sm text-gray-400">CREATIVITY LEVEL</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chaos Section - How We Work -->
+    <section id="chaos" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="font-mono text-astrux-orange text-sm tracking-widest mb-4 block">OUR METHODOLOGY</span>
+                <h2 class="text-5xl md:text-8xl font-display font-bold mb-6">CONTROLLED<br><span class="glitch text-astrux-orange" data-text="CHAOS">CHAOS</span></h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-distort rounded-3xl p-8 md:p-12 group hover:scale-105 transition-transform duration-500">
+                    <div class="text-8xl font-display font-bold text-white/10 mb-6 group-hover:text-astrux-orange/20 transition-colors">01</div>
+                    <h3 class="text-2xl font-display font-bold mb-4">DISRUPT</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        You tell us what you need. We tear apart conventional thinking and rebuild your vision from atomic level. No templates. No shortcuts.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-3 py-1 border border-white/20 rounded-full text-xs font-mono">STRATEGY</span>
+                        <span class="px-3 py-1 border border-white/20 rounded-full text-xs font-mono">RESEARCH</span>
+                    </div>
+                </div>
+                
+                <div class="glass-distort rounded-3xl p-8 md:p-12 group hover:scale-105 transition-transform duration-500 mt-0 md:mt-12">
+                    <div class="text-8xl font-display font-bold text-white/10 mb-6 group-hover:text-astrux-orange/20 transition-colors">02</div>
+                    <h3 class="text-2xl font-display font-bold mb-4">BUILD</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        We craft your demo in 24 hours. Raw. Unfiltered. Real. You see exactly what you're getting before spending a dime.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-3 py-1 border border-white/20 rounded-full text-xs font-mono">DESIGN</span>
+                        <span class="px-3 py-1 border border-white/20 rounded-full text-xs font-mono">DEVELOP</span>
+                    </div>
+                </div>
+                
+                <div class="glass-distort rounded-3xl p-8 md:p-12 group hover:scale-105 transition-transform duration-500 mt-0 md:mt-24">
+                    <div class="text-8xl font-display font-bold text-white/10 mb-6 group-hover:text-astrux-orange/20 transition-colors">03</div>
+                    <h3 class="text-2xl font-display font-bold mb-4">DEPLOY</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        Launch on Cloudflare's edge network. Global CDN. 100ms load times. We refine until you say it's perfect, then we make it faster.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-3 py-1 border border-white/20 rounded-full text-xs font-mono">OPTIMIZE</span>
+                        <span class="px-3 py-1 border border-white/20 rounded-full text-xs font-mono">LAUNCH</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack - Distorted Grid -->
+    <section class="py-32 px-6 bg-astrux-black relative overflow-hidden">
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div class="text-[20vw] font-display font-bold text-white/5">STACK</div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-7xl font-display font-bold mb-6">WEAPONRY</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Tools we use to forge digital excellence. No WordPress. No page builders. Pure code.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="group relative">
+                    <div class="glass-distort aspect-square rounded-2xl flex flex-col items-center justify-center gap-4 group-hover:border-astrux-orange transition-colors">
+                        <div class="text-4xl font-display font-bold text-astrux-orange">HTML</div>
+                        <div class="font-mono text-xs text-gray-500">STRUCTURE</div>
+                    </div>
+                </div>
+                <div class="group relative mt-0 md:mt-8">
+                    <div class="glass-distort aspect-square rounded-2xl flex flex-col items-center justify-center gap-4 group-hover:border-astrux-orange transition-colors">
+                        <div class="text-4xl font-display font-bold text-astrux-yellow">CSS</div>
+                        <div class="font-mono text-xs text-gray-500">STYLE</div>
+                    </div>
+                </div>
+                <div class="group relative">
+                    <div class="glass-distort aspect-square rounded-2xl flex flex-col items-center justify-center gap-4 group-hover:border-astrux-orange transition-colors">
+                        <div class="text-4xl font-display font-bold text-white">JS</div>
+                        <div class="font-mono text-xs text-gray-500">LOGIC</div>
+                    </div>
+                </div>
+                <div class="group relative mt-0 md:mt-8">
+                    <div class="glass-distort aspect-square rounded-2xl flex flex-col items-center justify-center gap-4 group-hover:border-astrux-orange transition-colors">
+                        <div class="text-3xl font-display font-bold text-cyan-400">TW</div>
+                        <div class="font-mono text-xs text-gray-500">UTILITY</div>
+                    </div>
+                </div>
+                <div class="group relative mt-0 md:-mt-8">
+                    <div class="glass-distort aspect-square rounded-2xl flex flex-col items-center justify-center gap-4 group-hover:border-astrux-orange transition-colors">
+                        <div class="text-3xl font-display font-bold text-orange-500">CF</div>
+                        <div class="font-mono text-xs text-gray-500">EDGE</div>
+                    </div>
+                </div>
+                <div class="group relative">
+                    <div class="glass-distort aspect-square rounded-2xl flex flex-col items-center justify-center gap-4 group-hover:border-astrux-orange transition-colors">
+                        <div class="text-3xl font-display font-bold text-purple-400">FIG</div>
+                        <div class="font-mono text-xs text-gray-500">DESIGN</div>
+                    </div>
+                </div>
+                <div class="group relative mt-0 md:-mt-8">
+                    <div class="glass-distort aspect-square rounded-2xl flex flex-col items-center justify-center gap-4 group-hover:border-astrux-orange transition-colors">
+                        <div class="text-3xl font-display font-bold text-green-400">GSAP</div>
+                        <div class="font-mono text-xs text-gray-500">MOTION</div>
+                    </div>
+                </div>
+                <div class="group relative">
+                    <div class="glass-distort aspect-square rounded-2xl flex flex-col items-center justify-center gap-4 group-hover:border-astrux-orange transition-colors">
+                        <div class="text-3xl font-display font-bold text-blue-400">PWA</div>
+                        <div class="font-mono text-xs text-gray-500">APP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials - Scramble Text -->
+    <section class="py-32 px-6 bg-astrux-gray">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16">
+                <span class="font-mono text-astrux-orange text-sm tracking-widest mb-4 block">TESTIMONIALS</span>
+                <h2 class="text-5xl md:text-7xl font-display font-bold">VOICES OF<br>THE CONVERTED</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="testimonialGrid">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-32 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-astrux-orange/20 to-transparent"></div>
+        
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <h2 class="text-5xl md:text-8xl font-display font-bold mb-8 leading-tight">
+                READY TO<br>
+                <span class="glitch text-astrux-orange" data-text="DISRUPT?">DISRUPT?</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+                Stop settling for mediocre. Your competitors are sleeping. 
+                Let's build something that makes them wake up in cold sweats.
+            </p>
+            <button onclick="openDemoModal()" class="group relative inline-flex items-center gap-4 px-12 py-6 bg-astrux-orange text-black font-display font-bold text-xl overflow-hidden magnetic-btn" data-magnetic>
+                <span class="relative z-10">INITIATE PROJECT</span>
+                <svg class="w-6 h-6 relative z-10 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                <div class="absolute inset-0 bg-white transform translate-x-full group-hover:translate-x-0 transition-transform duration-300 skew-x-12"></div>
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="border-t border-white/10 pt-20 pb-10 px-6 bg-astrux-black">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-12 mb-20">
+                <div class="md:col-span-2">
+                    <div class="text-4xl font-display font-bold mb-6">ASTRUX<span class="text-astrux-orange">.</span></div>
+                    <p class="text-gray-400 max-w-md mb-8 text-lg">
+                        Digital anti-agency based in the cloud. 
+                        Building monsters for ambitious brands since 2024.
+                    </p>
+                    <div class="flex gap-4">
+                        <button onclick="window.open('https://wa.me/919136165601', '_blank')" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-green-500/20 hover:border-green-500 transition-all magnetic-btn" data-magnetic>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.35 5L2 22l5-1.35A9.96 9.96 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.66 0-3.19-.55-4.43-1.47l-.32-.22-2.99.79.8-2.92-.21-.32A7.92 7.92 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm4.54-6.1c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43-.14 0-.31-.02-.48-.02-.17 0-.43.06-.66.31-.22.25-.87.85-.87 2.08 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.55.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.07-.11-.25-.17-.52-.29z"/></svg>
+                        </button>
+                        <button onclick="window.location.href='mailto:astruxmarketing@outlook.com'" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-blue-500/20 hover:border-blue-500 transition-all magnetic-btn" data-magnetic>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </button>
+                        <button onclick="window.open('https://t.me/wvzse', '_blank')" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-blue-400/20 hover:border-blue-400 transition-all magnetic-btn" data-magnetic>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-display font-bold text-lg mb-6 text-astrux-orange">NAVIGATION</h4>
+                    <ul class="space-y-4 font-mono text-sm">
+                        <li><a href="#work" class="hover:text-astrux-orange transition-colors">Work</a></li>
+                        <li><a href="#chaos" class="hover:text-astrux-orange transition-colors">Process</a></li>
+                        <li><a href="#" onclick="openDemoModal(); return false;" class="hover:text-astrux-orange transition-colors">Request Demo</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-display font-bold text-lg mb-6 text-astrux-orange">CONTACT</h4>
+                    <ul class="space-y-4 font-mono text-sm text-gray-400">
+                        <li class="flex items-center gap-2 hover:text-white transition-colors cursor-pointer" onclick="window.open('https://wa.me/919136165601', '_blank')">
+                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                            WhatsApp
+                        </li>
+                        <li class="flex items-center gap-2 hover:text-white transition-colors cursor-pointer" onclick="window.location.href='mailto:astruxmarketing@outlook.com'">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                            Email
+                        </li>
+                        <li class="flex items-center gap-2 hover:text-white transition-colors cursor-pointer" onclick="window.open('https://t.me/wvzse', '_blank')">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
+                            Telegram
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 font-mono text-xs text-gray-500">
+                <p>© 2026 ASTRUX MARKETING. ALL RIGHTS RESERVED.</p>
+                <p>BUILT WITH CHAOS IN INDIA</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Demo Modal -->
+    <div id="demoModal" class="fixed inset-0 z-[9999] hidden">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-xl" onclick="closeDemoModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-astrux-gray border border-white/10 rounded-3xl p-8 md:p-12 max-w-2xl w-full relative transform scale-95 opacity-0 transition-all duration-300" id="demoModalContent">
+                <button onclick="closeDemoModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+                
+                <div class="mb-8">
+                    <h3 class="text-4xl font-display font-bold mb-2">INITIATE <span class="text-astrux-orange">PROJECT</span></h3>
+                    <p class="text-gray-400">Fill the void. We'll respond within 24 hours.</p>
+                </div>
+                
+                <form id="demoForm" class="space-y-6" onsubmit="submitDemoForm(event)">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block font-mono text-xs text-gray-400 mb-2">INDUSTRY</label>
+                            <select required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-astrux-orange focus:outline-none transition-colors appearance-none">
+                                <option value="" disabled selected>Select...</option>
+                                <option value="dental">Dental Clinic</option>
+                                <option value="medical">Medical Practice</option>
+                                <option value="gym">Gym / Fitness</option>
+                                <option value="restaurant">Restaurant</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-mono text-xs text-gray-400 mb-2">CONTACT</label>
+                            <input type="text" required placeholder="WhatsApp or Email" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:border-astrux-orange focus:outline-none transition-colors">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block font-mono text-xs text-gray-400 mb-2">PROJECT DETAILS</label>
+                        <textarea required rows="4" placeholder="Describe your vision. Be specific. Be bold." class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:border-astrux-orange focus:outline-none transition-colors resize-none"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-astrux-orange text-black font-display font-bold text-lg py-4 rounded-xl hover:bg-white transition-colors flex items-center justify-center gap-2 group">
+                        <span id="submitText">TRANSMIT REQUEST</span>
+                        <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="submitIcon">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                        </svg>
+                        <div id="submitLoader" class="hidden w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin"></div>
+                    </button>
+                </form>
+                
+                <div id="successMessage" class="hidden text-center py-12">
+                    <div class="w-20 h-20 rounded-full bg-astrux-orange/20 flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-astrux-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                    <h4 class="text-2xl font-display font-bold mb-2">TRANSMISSION RECEIVED</h4>
+                    <p class="text-gray-400">We'll build your demo within 24 hours.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lenis Smooth Scroll
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Loading Screen
+        window.addEventListener('load', () => {
+            const progress = document.getElementById('loaderProgress');
+            const loader = document.getElementById('loader');
+            let width = 0;
+            
+            const interval = setInterval(() => {
+                width += Math.random() * 30;
+                if (width > 100) width = 100;
+                progress.style.width = width + '%';
+                
+                if (width === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        gsap.to(loader, {
+                            opacity: 0,
+                            duration: 0.5,
+                            onComplete: () => {
+                                loader.style.display = 'none';
+                                initAnimations();
+                            }
+                        });
+                    }, 500);
+                }
+            }, 200);
+        });
+
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        const magneticElements = document.querySelectorAll('[data-magnetic]');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Magnetic Effect
+        magneticElements.forEach(elem => {
+            elem.addEventListener('mousemove', (e) => {
+                const rect = elem.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                elem.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                cursorOutline.classList.add('hover');
+            });
+            
+            elem.addEventListener('mouseleave', () => {
+                elem.style.transform = 'translate(0, 0)';
+                cursorOutline.classList.remove('hover');
+            });
+        });
+
+        // WebGL Particle System
+        function initWebGL() {
+            const canvas = document.getElementById('webgl-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            
+            // Particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 700;
+            const posArray = new Float32Array(particlesCount * 3);
+            
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0xFF3D00,
+                transparent: true,
+                opacity: 0.6,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 3;
+            
+            // Mouse interaction
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            window.addEventListener('mousemove', (event) => {
+                mouseX = event.clientX / window.innerWidth - 0.5;
+                mouseY = event.clientY / window.innerHeight - 0.5;
+            });
+            
+            // Animation
+            let animationId;
+            function animate() {
+                animationId = requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.y += 0.001;
+                particlesMesh.rotation.x += 0.001;
+                
+                particlesMesh.rotation.x += mouseY * 0.05;
+                particlesMesh.rotation.y += mouseX * 0.05;
+                
+                renderer.render(scene, camera);
+            }
+            animate();
+            
+            // Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+        initWebGL();
+
+        // Portfolio Data
+        const portfolioItems = [
+            { title: "HI-TECH DENTAL", url: "https://hi-tech-dental-clinic.pages.dev", category: "DENTAL", img: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80" },
+            { title: "AKSHAR DENTAL", url: "https://akshar-dental-clinic.pages.dev", category: "DENTAL", img: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=800&q=80" },
+            { title: "DR. MEETS", url: "https://drmeetsclinic.pages.dev", category: "MEDICAL", img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&q=80" },
+            { title: "ASTRUX CORP", url: "https://astruxcorpwebsitebynayan.pages.dev", category: "CORPORATE", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" },
+            { title: "BHAKTI DENTAL", url: "https://bhakti-dental-clinic.pages.dev", category: "DENTAL", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80" },
+            { title: "AI STITCH", url: "https://websitegooglestitchai.pages.dev", category: "TECHNOLOGY", img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80" },
+            { title: "HI-TECH V2", url: "https://hi-tech-dental-clinic-2.pages.dev", category: "DENTAL", img: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800&q=80" },
+            { title: "NAYAN DEMO", url: "https://nayandemoversion2.pages.dev", category: "CREATIVE", img: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80" }
+        ];
+
+        // Generate Portfolio
+        const container = document.getElementById('horizontalContainer');
+        portfolioItems.forEach((item, i) => {
+            const div = document.createElement('div');
+            div.className = 'portfolio-item brutal-card';
+            div.innerHTML = `
+                <img src="${item.img}" alt="${item.title}" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                <div class="absolute bottom-0 left-0 p-8 w-full">
+                    <div class="font-mono text-astrux-orange text-xs mb-2 tracking-widest">${item.category}</div>
+                    <h3 class="text-3xl font-display font-bold mb-4">${item.title}</h3>
+                    <a href="${item.url}" target="_blank" class="inline-flex items-center gap-2 text-sm font-mono border border-white/30 px-4 py-2 rounded-full hover:bg-white hover:text-black transition-all magnetic-btn" data-magnetic>
+                        LIVE PREVIEW
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+
+        // Horizontal Scroll
+        const wrapper = document.getElementById('horizontalWrapper');
+        const horizontalContainer = document.getElementById('horizontalContainer');
+        const scrollProgress = document.getElementById('scrollProgress');
+        
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        wrapper.addEventListener('mousedown', (e) => {
+            isDown = true;
+            wrapper.style.cursor = 'grabbing';
+            startX = e.pageX - wrapper.offsetLeft;
+            scrollLeft = wrapper.scrollLeft;
+        });
+        
+        wrapper.addEventListener('mouseleave', () => {
+            isDown = false;
+            wrapper.style.cursor = 'grab';
+        });
+        
+        wrapper.addEventListener('mouseup', () => {
+            isDown = false;
+            wrapper.style.cursor = 'grab';
+        });
+        
+        wrapper.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - wrapper.offsetLeft;
+            const walk = (x - startX) * 2;
+            wrapper.scrollLeft = scrollLeft - walk;
+            updateProgress();
+        });
+        
+        wrapper.addEventListener('scroll', updateProgress);
+        
+        function updateProgress() {
+            const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+            const progress = (wrapper.scrollLeft / maxScroll) * 100;
+            scrollProgress.style.width = progress + '%';
+        }
+
+        // Testimonials
+        const testimonials = [
+            { name: "DR. PRATIK", role: "AKSHAR DENTAL", text: "These guys don't just build websites. They build digital weapons. Our appointment bookings tripled in 30 days.", stars: 5 },
+            { name: "DR. MEET", role: "MEETS CLINIC", text: "I asked for a website. I got a conversion machine. The WhatsApp integration alone paid for the project in a week.", stars: 5 },
+            { name: "AMIT", role: "HI-TECH DENTAL", text: "Fast. Brutal. Effective. They delivered in 24 hours what others quoted 2 months for. Absolute monsters.", stars: 5 },
+            { name: "SNEHA", role: "PATIENT", text: "As a user, the experience was seamless. Booked my appointment in 10 seconds. Every clinic needs this.", stars: 5 },
+            { name: "RAHUL", role: "CEO, TECHSTART", text: "Our corporate site looks like it cost $50k. It didn't. Astrux understands premium positioning better than agencies 10x their size.", stars: 5 },
+            { name: "DHARMESH", role: "CONSULTANT", text: "I've referred them to 5 clients. Each one has been blown away. This is the future of web development.", stars: 5 }
+        ];
+
+        const testimonialGrid = document.getElementById('testimonialGrid');
+        testimonials.forEach((t, i) => {
+            const div = document.createElement('div');
+            div.className = 'glass-distort rounded-2xl p-8 hover:border-astrux-orange transition-colors group';
+            div.innerHTML = `
+                <div class="flex gap-1 mb-4">
+                    ${Array(t.stars).fill('<svg class="w-5 h-5 text-astrux-orange fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>').join('')}
+                </div>
+                <p class="text-gray-300 mb-6 leading-relaxed">"${t.text}"</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-astrux-orange to-astrux-yellow flex items-center justify-center text-black font-bold text-lg">
+                        ${t.name.charAt(0)}
+                    </div>
+                    <div>
+                        <div class="font-display font-bold">${t.name}</div>
+                        <div class="font-mono text-xs text-gray-500">${t.role}</div>
+                    </div>
+                </div>
+            `;
+            testimonialGrid.appendChild(div);
+        });
+
+        // GSAP Animations
+        function initAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Hero title animation
+            gsap.from('#heroTitle', {
+                y: 100,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power4.out",
+                delay: 0.2
+            });
+            
+            // Stats counter
+            gsap.utils.toArray('[data-count]').forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                gsap.to(counter, {
+                    innerHTML: target,
+                    duration: 2,
+                    snap: { innerHTML: 1 },
+                    scrollTrigger: {
+                        trigger: counter,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+            });
+            
+            // Brutal cards stagger
+            gsap.from('.brutal-card', {
+                y: 100,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power4.out",
+                scrollTrigger: {
+                    trigger: '.brutal-card',
+                    start: "top 85%"
+                }
+            });
+            
+            // Glass cards
+            gsap.from('.glass-distort', {
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: '.glass-distort',
+                    start: "top 85%"
+                }
+            });
+            
+            // Velocity skew on scroll
+            let currentSkew = 0;
+            let targetSkew = 0;
+            
+            lenis.on('scroll', ({ velocity }) => {
+                targetSkew = velocity * 0.05;
+            });
+            
+            function updateSkew() {
+                currentSkew += (targetSkew - currentSkew) * 0.1;
+                targetSkew *= 0.9;
+                
+                document.querySelectorAll('.velocity-skew').forEach(el => {
+                    el.style.transform = `skewY(${currentSkew}deg)`;
+                });
+                
+                requestAnimationFrame(updateSkew);
+            }
+            updateSkew();
+        }
+
+        // Modal Functions
+        function openDemoModal() {
+            const modal = document.getElementById('demoModal');
+            const content = document.getElementById('demoModalContent');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeDemoModal() {
+            const modal = document.getElementById('demoModal');
+            const content = document.getElementById('demoModalContent');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+            if (menu.classList.contains('translate-x-full')) {
+                menu.classList.remove('translate-x-full');
+                icon.textContent = '✕';
+            } else {
+                menu.classList.add('translate-x-full');
+                icon.textContent = '☰';
+            }
+        }
+
+        // Form Submission
+        async function submitDemoForm(e) {
+            e.preventDefault();
+            const form = document.getElementById('demoForm');
+            const submitText = document.getElementById('submitText');
+            const submitIcon = document.getElementById('submitIcon');
+            const submitLoader = document.getElementById('submitLoader');
+            const successMessage = document.getElementById('successMessage');
+            
+            submitText.textContent = 'TRANSMITTING...';
+            submitIcon.classList.add('hidden');
+            submitLoader.classList.remove('hidden');
+            
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            form.classList.add('hidden');
+            successMessage.classList.remove('hidden');
+        }
+
+        // Text Scramble Effect
+        class TextScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                this.update = this.update.bind(this);
+            }
+            
+            setText(newText) {
+                const oldText = this.el.innerText;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise((resolve) => this.resolve = resolve);
+                this.queue = [];
+                
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 40);
+                    const end = start + Math.floor(Math.random() * 40);
+                    this.queue.push({ from, to, start, end });
+                }
+                
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+            
+            update() {
+                let output = '';
+                let complete = 0;
+                
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (!char || Math.random() < 0.28) {
+                            char = this.randomChar();
+                            this.queue[i].char = char;
+                        }
+                        output += `<span class="text-astrux-orange">${char}</span>`;
+                    } else {
+                        output += from;
+                    }
+                }
+                
+                this.el.innerHTML = output;
+                
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+            
+            randomChar() {
+                return this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+        }
+
+        // Apply scramble to elements
+        document.querySelectorAll('.scramble-text').forEach(el => {
+            const fx = new TextScramble(el);
+            let counter = 0;
+            const phrases = el.dataset.texts ? el.dataset.texts.split(',') : [el.textContent];
+            
+            setInterval(() => {
+                fx.setText(phrases[counter]).then(() => {
+                    setTimeout(() => {
+                        counter = (counter + 1) % phrases.length;
+                    }, 2000);
+                });
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
