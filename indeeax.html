@@ -1,0 +1,2518 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTRUX | We Build Digital Monsters</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#FF3D00',
+                            yellow: '#FFEA00',
+                            black: '#050505',
+                            dark: '#0a0a0a',
+                            gray: '#111111',
+                            light: '#1a1a1a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html, body {
+            background: #050505;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #FF3D00; border-radius: 4px; }
+        
+        ::selection { background: #FF3D00; color: white; }
+        
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        #header.hidden { transform: translateY(-100%); }
+        #header.scrolled { background: rgba(5, 5, 5, 0.95); }
+        
+        /* Magnetic Button */
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        /* Text Reveal */
+        .reveal-text {
+            overflow: hidden;
+        }
+        
+        .reveal-text span {
+            display: inline-block;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        
+        /* Gradient Border */
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+            border-radius: 24px;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,61,0,0.5), rgba(255,234,0,0.2), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        
+        /* Portfolio Carousel */
+        .carousel-viewport {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        
+        .carousel-track {
+            display: flex;
+            gap: 2rem;
+            will-change: transform;
+            cursor: grab;
+        }
+        
+        .carousel-track.dragging { cursor: grabbing; }
+        
+        .portfolio-card {
+            flex-shrink: 0;
+            width: 85vw;
+            max-width: 420px;
+            height: 600px;
+            position: relative;
+            border-radius: 28px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #1a1a1a 0%, #111111 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        @media (min-width: 768px) {
+            .portfolio-card { width: 380px; height: 540px; }
+        }
+        
+        .portfolio-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: rgba(255, 61, 0, 0.4);
+            box-shadow: 
+                0 30px 60px rgba(255, 61, 0, 0.15),
+                0 0 0 1px rgba(255, 61, 0, 0.2);
+        }
+        
+        .portfolio-card .preview-frame {
+            width: 100%;
+            height: 65%;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+        
+        .portfolio-card .preview-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.8) 100%);
+            pointer-events: none;
+        }
+        
+        .portfolio-card .preview-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%) contrast(1.1);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .portfolio-card:hover .preview-frame img {
+            filter: grayscale(0%) contrast(1);
+            transform: scale(1.1);
+        }
+        
+        .portfolio-card .card-content {
+            padding: 1.75rem;
+            height: 35%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: linear-gradient(180deg, rgba(26,26,26,0) 0%, #111111 20%);
+            position: relative;
+        }
+        
+        .portfolio-card .live-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #FF3D00;
+            color: black;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .portfolio-card:hover .live-badge {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Testimonials Carousel */
+        .testimonials-viewport {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .testimonials-track {
+            display: flex;
+            gap: 2rem;
+            will-change: transform;
+            cursor: grab;
+        }
+        
+        .testimonials-track.dragging { cursor: grabbing; }
+        
+        .testimonial-slide {
+            flex-shrink: 0;
+            width: 85vw;
+            max-width: 600px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            padding: 3rem;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        
+        @media (min-width: 768px) {
+            .testimonial-slide { width: 550px; }
+        }
+        
+        .testimonial-slide:hover {
+            border-color: rgba(255, 61, 0, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .testimonial-slide::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 120px;
+            color: rgba(255, 61, 0, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+            pointer-events: none;
+        }
+        
+        /* Floating Contact - Message Icon */
+        .fab-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+        }
+        
+        .fab-main {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF3D00 0%, #FF6B00 100%);
+            border: none;
+            color: white;
+            cursor: pointer;
+            box-shadow: 
+                0 4px 20px rgba(255, 61, 0, 0.4),
+                0 0 0 4px rgba(255, 61, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .fab-main:hover { 
+            transform: scale(1.1); 
+            box-shadow: 
+                0 6px 30px rgba(255, 61, 0, 0.5),
+                0 0 0 6px rgba(255, 61, 0, 0.15);
+        }
+        
+        .fab-main.active { 
+            transform: rotate(180deg); 
+            background: #111;
+        }
+        
+        .fab-main .notification {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 20px;
+            height: 20px;
+            background: #FFEA00;
+            color: black;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .fab-bubbles {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .fab-bubbles.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
+        }
+        
+        .fab-bubble {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+            font-size: 24px;
+        }
+        
+        .fab-bubble:hover { 
+            transform: scale(1.15) translateX(-5px); 
+        }
+        
+        .fab-bubble.whatsapp { 
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .fab-bubble.email { 
+            background: linear-gradient(135deg, #EA4335 0%, #C5221F 100%);
+            box-shadow: 0 4px 15px rgba(234, 67, 53, 0.3);
+        }
+        
+        .fab-bubble.telegram { 
+            background: linear-gradient(135deg, #0088cc 0%, #005f8a 100%);
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+        }
+        
+        .fab-label {
+            position: absolute;
+            right: 70px;
+            background: rgba(0,0,0,0.9);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .fab-bubble:hover .fab-label { 
+            opacity: 1; 
+            transform: translateX(0);
+        }
+        
+        /* Marquee */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .marquee-container::before,
+        .marquee-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 150px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .marquee-container::before {
+            left: 0;
+            background: linear-gradient(to right, #FF3D00, transparent);
+        }
+        
+        .marquee-container::after {
+            right: 0;
+            background: linear-gradient(to left, #FF3D00, transparent);
+        }
+        
+        .marquee-content {
+            display: inline-flex;
+            align-items: center;
+            gap: 4rem;
+            animation: marquee 30s linear infinite;
+            padding: 1.5rem 0;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #FF3D00;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 4s infinite linear alternate-reverse;
+        }
+        
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00ff88;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim2 3s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim {
+            0% { clip: rect(10px, 9999px, 85px, 0); }
+            20% { clip: rect(65px, 9999px, 99px, 0); }
+            40% { clip: rect(25px, 9999px, 145px, 0); }
+            60% { clip: rect(85px, 9999px, 40px, 0); }
+            80% { clip: rect(120px, 9999px, 80px, 0); }
+            100% { clip: rect(45px, 9999px, 60px, 0); }
+        }
+        
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 99px, 0); }
+            20% { clip: rect(10px, 9999px, 85px, 0); }
+            40% { clip: rect(85px, 9999px, 40px, 0); }
+            60% { clip: rect(25px, 9999px, 145px, 0); }
+            80% { clip: rect(45px, 9999px, 60px, 0); }
+            100% { clip: rect(120px, 9999px, 80px, 0); }
+        }
+        
+        /* Process Timeline */
+        .process-timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #FF3D00, #FFEA00, transparent);
+        }
+        
+        .process-step {
+            position: relative;
+            padding-bottom: 4rem;
+            padding-left: 2rem;
+        }
+        
+        .process-step:last-child { padding-bottom: 0; }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: #050505;
+            border: 3px solid #FF3D00;
+            border-radius: 50%;
+            transform: translateX(-6px);
+            box-shadow: 0 0 20px rgba(255, 61, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .process-step.active::before {
+            background: #FF3D00;
+            animation: pulse-ring 2s infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(255, 61, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 61, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 61, 0, 0); }
+        }
+        
+        /* Tech Cards */
+        .tech-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #FF3D00, transparent);
+            transition: left 0.6s;
+        }
+        
+        .tech-card:hover::before { left: 100%; }
+        
+        .tech-card:hover {
+            background: linear-gradient(135deg, rgba(255,61,0,0.08) 0%, rgba(255,61,0,0.02) 100%);
+            border-color: rgba(255, 61, 0, 0.3);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 61, 0, 0.1);
+        }
+        
+        .tech-card .icon-wrapper {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, rgba(255,61,0,0.2) 0%, rgba(255,61,0,0.05) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-card:hover .icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(135deg, rgba(255,61,0,0.3) 0%, rgba(255,61,0,0.1) 100%);
+        }
+        
+        /* Stats Counter */
+        .stat-box {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .stat-box::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(255,61,0,0.15), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .stat-box:hover::after { opacity: 1; }
+        
+        .stat-box:hover {
+            border-color: rgba(255, 61, 0, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        /* Pricing Cards */
+        .pricing-card {
+            background: linear-gradient(180deg, #111111 0%, #0a0a0a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            padding: 3rem 2.5rem;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        
+        .pricing-card.featured {
+            border-color: rgba(255, 61, 0, 0.3);
+            background: linear-gradient(180deg, rgba(255,61,0,0.1) 0%, #0a0a0a 100%);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.featured::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #FF3D00;
+            color: black;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+        
+        .pricing-card:hover {
+            border-color: rgba(255, 61, 0, 0.4);
+            transform: translateY(-10px);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+        
+        /* Feature List */
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .feature-list li:last-child { border-bottom: none; }
+        
+        /* FAQ Accordion */
+        .faq-item {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .faq-question:hover { color: #FF3D00; }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+        
+        .faq-answer.active {
+            max-height: 500px;
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Blog Cards */
+        .blog-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .blog-card:hover {
+            border-color: rgba(255, 61, 0, 0.2);
+            transform: translateY(-8px);
+        }
+        
+        .blog-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .blog-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Trust Badges */
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .trust-badge:hover {
+            background: rgba(255,61,0,0.05);
+            border-color: rgba(255,61,0,0.2);
+        }
+        
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .comparison-table th {
+            font-weight: 600;
+            color: #FF3D00;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .comparison-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+        
+        /* Modals */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 9998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .modal-backdrop.active { opacity: 1; pointer-events: all; }
+        
+        .modal-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            background: linear-gradient(135deg, #111111 0%, #0a0a0a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            padding: 3rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+        }
+        
+        .modal-content.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        /* Delivery Options */
+        .delivery-option {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .delivery-option input {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .delivery-box {
+            padding: 1.25rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.02);
+        }
+        
+        .delivery-option input:checked + .delivery-box {
+            border-color: #FF3D00;
+            background: rgba(255, 61, 0, 0.1);
+        }
+        
+        .delivery-box i {
+            transition: transform 0.3s ease;
+        }
+        
+        .delivery-option:hover .delivery-box i {
+            transform: scale(1.2);
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #FF3D00 0%, #FFEA00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Grid Background */
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+        
+        /* Glow Effects */
+        .glow-orange {
+            box-shadow: 0 0 60px rgba(255, 61, 0, 0.3);
+        }
+        
+        /* Loading Animation */
+        .loader-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FF3D00, #FFEA00);
+            z-index: 10000;
+            transition: width 0.3s, opacity 0.3s;
+        }
+        
+        /* Particle Canvas */
+        #particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom Checkbox */
+        .custom-checkbox {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .custom-checkbox:checked {
+            background: #FF3D00;
+            border-color: #FF3D00;
+        }
+        
+        .custom-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: black;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+    <div class="loader-bar" id="loaderBar" style="width: 0%"></div>
+    <canvas id="particles"></canvas>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-black tracking-tighter flex items-center gap-3 magnetic-btn">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-orange to-brand-yellow flex items-center justify-center text-black">
+                    <i data-lucide="rocket" class="w-6 h-6"></i>
+                </div>
+                <span class="hidden sm:inline">ASTRUX</span>
+            </a>
+            
+            <nav class="hidden md:flex gap-1 items-center bg-white/5 rounded-full px-2 py-1 border border-white/10">
+                <a href="#work" class="px-4 py-2 rounded-full text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2">
+                    <i data-lucide="briefcase" class="w-4 h-4"></i> Work
+                </a>
+                <a href="#services" class="px-4 py-2 rounded-full text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2">
+                    <i data-lucide="layers" class="w-4 h-4"></i> Services
+                </a>
+                <a href="#process" class="px-4 py-2 rounded-full text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2">
+                    <i data-lucide="git-branch" class="w-4 h-4"></i> Process
+                </a>
+                <a href="#pricing" class="px-4 py-2 rounded-full text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2">
+                    <i data-lucide="tag" class="w-4 h-4"></i> Pricing
+                </a>
+            </nav>
+            
+            <div class="flex items-center gap-3">
+                <button onclick="openDemoModal()" class="hidden sm:flex bg-brand-orange text-black px-6 py-2.5 rounded-full text-sm font-bold hover:bg-white transition-all items-center gap-2 magnetic-btn">
+                    <i data-lucide="gift" class="w-4 h-4"></i>
+                    Free Demo
+                </button>
+                <button class="md:hidden w-10 h-10 rounded-full bg-white/10 flex items-center justify-center" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 bg-brand-black z-50 transform translate-x-full transition-transform duration-500 flex flex-col">
+        <div class="p-6 flex justify-between items-center border-b border-white/10">
+            <span class="text-xl font-black">MENU</span>
+            <button onclick="toggleMobileMenu()" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div class="flex-1 flex flex-col p-6 gap-2">
+            <a href="#work" onclick="toggleMobileMenu()" class="text-2xl font-bold py-4 border-b border-white/10 flex items-center justify-between">
+                Work <i data-lucide="arrow-right" class="w-6 h-6 text-brand-orange"></i>
+            </a>
+            <a href="#services" onclick="toggleMobileMenu()" class="text-2xl font-bold py-4 border-b border-white/10 flex items-center justify-between">
+                Services <i data-lucide="arrow-right" class="w-6 h-6 text-brand-orange"></i>
+            </a>
+            <a href="#process" onclick="toggleMobileMenu()" class="text-2xl font-bold py-4 border-b border-white/10 flex items-center justify-between">
+                Process <i data-lucide="arrow-right" class="w-6 h-6 text-brand-orange"></i>
+            </a>
+            <a href="#pricing" onclick="toggleMobileMenu()" class="text-2xl font-bold py-4 border-b border-white/10 flex items-center justify-between">
+                Pricing <i data-lucide="arrow-right" class="w-6 h-6 text-brand-orange"></i>
+            </a>
+        </div>
+        <div class="p-6">
+            <button onclick="toggleMobileMenu(); openDemoModal()" class="w-full bg-brand-orange text-black py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2">
+                <i data-lucide="gift" class="w-5 h-5"></i>
+                Get Free Demo
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-24 pb-12 relative overflow-hidden">
+        <div class="absolute inset-0 grid-bg opacity-50"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-orange/20 rounded-full blur-[128px] pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-brand-yellow/10 rounded-full blur-[128px] pointer-events-none"></div>
+        
+        <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+            <div class="inline-flex items-center gap-2 mb-8 px-5 py-2.5 rounded-full bg-brand-orange/10 border border-brand-orange/30 backdrop-blur-sm">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-orange opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-orange"></span>
+                </span>
+                <span class="text-brand-orange text-sm font-semibold">16+ Websites Delivered This Month</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[0.9] tracking-tight">
+                We Build<br>
+                <span class="glitch gradient-text" data-text="Digital Monsters">Digital Monsters</span>
+            </h1>
+            
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+                No templates. No page builders. Just pure code that loads in milliseconds 
+                and converts visitors into customers. Built for businesses that want to dominate online.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <button onclick="document.getElementById('work').scrollIntoView({behavior: 'smooth'})" 
+                        class="group bg-brand-orange text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-all flex items-center justify-center gap-3 magnetic-btn shadow-lg shadow-brand-orange/25">
+                    <i data-lucide="eye" class="w-5 h-5"></i>
+                    View Our Work
+                    <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+                <button onclick="openDemoModal()" class="group border border-white/20 bg-white/5 backdrop-blur-sm px-8 py-4 rounded-full font-bold text-lg hover:border-brand-orange hover:text-brand-orange transition-all flex items-center justify-center gap-3 magnetic-btn">
+                    <i data-lucide="play-circle" class="w-5 h-5"></i>
+                    Get Free Demo
+                </button>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                <div class="stat-box">
+                    <div class="text-4xl md:text-5xl font-black text-brand-orange mb-2 flex items-center justify-center gap-1">
+                        <span class="counter" data-target="16">0</span>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <div class="text-gray-500 text-sm font-medium">Websites Built</div>
+                </div>
+                <div class="stat-box">
+                    <div class="text-4xl md:text-5xl font-black text-brand-yellow mb-2 flex items-center justify-center gap-1">
+                        <span class="counter" data-target="100">0</span>
+                        <span class="text-2xl">%</span>
+                    </div>
+                    <div class="text-gray-500 text-sm font-medium">Performance</div>
+                </div>
+                <div class="stat-box">
+                    <div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-center justify-center gap-1">
+                        <span class="counter" data-target="24">0</span>
+                        <span class="text-2xl">h</span>
+                    </div>
+                    <div class="text-gray-500 text-sm font-medium">Delivery Time</div>
+                </div>
+                <div class="stat-box">
+                    <div class="text-4xl md:text-5xl font-black text-brand-orange mb-2">5.0</div>
+                    <div class="text-gray-500 text-sm font-medium">Star Rating</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce">
+            <span class="text-xs uppercase tracking-widest">Scroll</span>
+            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="py-12 border-y border-white/5 bg-white/[0.02]">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-center text-gray-500 text-sm mb-8 uppercase tracking-widest">Trusted by businesses worldwide</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="trust-badge justify-center">
+                    <i data-lucide="shield-check" class="w-8 h-8 text-brand-orange"></i>
+                    <div>
+                        <div class="font-bold">SSL Secured</div>
+                        <div class="text-xs text-gray-500">Free HTTPS</div>
+                    </div>
+                </div>
+                <div class="trust-badge justify-center">
+                    <i data-lucide="zap" class="w-8 h-8 text-brand-yellow"></i>
+                    <div>
+                        <div class="font-bold">99.9% Uptime</div>
+                        <div class="text-xs text-gray-500">Cloudflare Edge</div>
+                    </div>
+                </div>
+                <div class="trust-badge justify-center">
+                    <i data-lucide="smartphone" class="w-8 h-8 text-green-500"></i>
+                    <div>
+                        <div class="font-bold">Mobile First</div>
+                        <div class="text-xs text-gray-500">Responsive Design</div>
+                    </div>
+                </div>
+                <div class="trust-badge justify-center">
+                    <i data-lucide="headphones" class="w-8 h-8 text-blue-500"></i>
+                    <div>
+                        <div class="font-bold">24/7 Support</div>
+                        <div class="text-xs text-gray-500">Always Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 text-brand-orange mb-4 px-4 py-2 rounded-full bg-brand-orange/10 border border-brand-orange/20">
+                    <i data-lucide="layers" class="w-4 h-4"></i>
+                    <span class="text-sm font-bold uppercase tracking-wider">What We Do</span>
+                </div>
+                <h2 class="text-4xl md:text-6xl font-black mb-6">Services Built for <span class="gradient-text">Speed</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Everything you need to dominate online. No hiring. No managing. Just results.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="gradient-border p-8 group hover:scale-[1.02] transition-transform duration-500">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-orange/20 to-brand-orange/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="globe" class="w-8 h-8 text-brand-orange"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Website Development</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Custom coded websites that load in under a second. No WordPress. No templates. Pure performance.</p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-orange"></i> 100/100 Performance Score</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-orange"></i> SEO Optimized</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-orange"></i> Mobile Responsive</li>
+                    </ul>
+                </div>
+                
+                <div class="gradient-border p-8 group hover:scale-[1.02] transition-transform duration-500">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-yellow/20 to-brand-yellow/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="palette" class="w-8 h-8 text-brand-yellow"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">UI/UX Design</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Interfaces that convert. We design for your customers, not for awards. Every pixel has a purpose.</p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-yellow"></i> Conversion Focused</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-yellow"></i> User Research</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-yellow"></i> A/B Testing Ready</li>
+                    </ul>
+                </div>
+                
+                <div class="gradient-border p-8 group hover:scale-[1.02] transition-transform duration-500">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="cloud" class="w-8 h-8 text-purple-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Cloud Deployment</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Deployed on Cloudflare's global edge network. 300+ locations worldwide. Your site loads everywhere instantly.</p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-500"></i> Global CDN</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-500"></i> DDoS Protection</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-500"></i> Auto SSL</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="work" class="py-24 bg-brand-dark relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-black via-transparent to-brand-black pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 mb-12 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 text-brand-orange mb-4 px-4 py-2 rounded-full bg-brand-orange/10 border border-brand-orange/20">
+                        <i data-lucide="folder-open" class="w-4 h-4"></i>
+                        <span class="text-sm font-bold uppercase tracking-wider">Portfolio</span>
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-black mb-4">Recent <span class="gradient-text">Work</span></h2>
+                    <p class="text-gray-400 max-w-xl">Drag or swipe to explore. Click any project to visit the live site. All built from scratch.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="scrollPortfolio(-1)" class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-orange hover:border-brand-orange hover:text-black transition-all magnetic-btn">
+                        <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                    </button>
+                    <button onclick="scrollPortfolio(1)" class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-orange hover:border-brand-orange hover:text-black transition-all magnetic-btn">
+                        <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="carousel-viewport" id="portfolioViewport">
+            <div class="carousel-track px-6" id="portfolioTrack">
+                <!-- Cards injected via JS -->
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 mt-8 relative z-10">
+            <div class="flex items-center gap-4">
+                <div class="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-brand-orange to-brand-yellow rounded-full transition-all duration-150" id="portfolioProgress" style="width: 0%"></div>
+                </div>
+                <span class="text-sm text-gray-500 font-mono min-w-[60px] text-right" id="portfolioCounter">1 / 16</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-24 relative">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 text-brand-orange mb-4 px-4 py-2 rounded-full bg-brand-orange/10 border border-brand-orange/20">
+                    <i data-lucide="list-ordered" class="w-4 h-4"></i>
+                    <span class="text-sm font-bold uppercase tracking-wider">How We Work</span>
+                </div>
+                <h2 class="text-4xl md:text-6xl font-black mb-6">Simple <span class="gradient-text">Process</span></h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Four steps to your new website. No meetings. No calls. Just results delivered to your inbox.</p>
+            </div>
+            
+            <div class="process-timeline">
+                <div class="process-step active">
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-12">
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-3 flex items-center gap-3">
+                                <span class="w-10 h-10 rounded-full bg-brand-orange text-black flex items-center justify-center text-sm font-black">01</span>
+                                You Tell Us
+                            </h3>
+                            <p class="text-gray-400 leading-relaxed text-lg">Fill out the form. Tell us what you need. Dental clinic? Gym? Restaurant? The more details, the better we can build.</p>
+                        </div>
+                        <div class="flex-1 flex items-center justify-center md:justify-end">
+                            <div class="w-full max-w-sm p-6 rounded-2xl bg-white/5 border border-white/10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <i data-lucide="message-square" class="w-5 h-5 text-brand-orange"></i>
+                                    <span class="font-semibold">Typical Response Time</span>
+                                </div>
+                                <div class="text-3xl font-black text-brand-orange">2 hours</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-12">
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-3 flex items-center gap-3">
+                                <span class="w-10 h-10 rounded-full bg-brand-orange text-black flex items-center justify-center text-sm font-black">02</span>
+                                We Build Demo
+                            </h3>
+                            <p class="text-gray-400 leading-relaxed text-lg">Within 24 hours, you get a working demo. Real website. Real code. Not a mockup. Test it on your phone, tablet, laptop.</p>
+                        </div>
+                        <div class="flex-1 flex items-center justify-center md:justify-end">
+                            <div class="w-full max-w-sm p-6 rounded-2xl bg-white/5 border border-white/10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <i data-lucide="clock" class="w-5 h-5 text-brand-orange"></i>
+                                    <span class="font-semibold">Delivery Time</span>
+                                </div>
+                                <div class="text-3xl font-black text-brand-orange">24 hours</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-12">
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-3 flex items-center gap-3">
+                                <span class="w-10 h-10 rounded-full bg-brand-orange text-black flex items-center justify-center text-sm font-black">03</span>
+                                You Review
+                            </h3>
+                            <p class="text-gray-400 leading-relaxed text-lg">Don't like something? Tell us. We fix it. No extra charges for reasonable changes. We want you thrilled, not just satisfied.</p>
+                        </div>
+                        <div class="flex-1 flex items-center justify-center md:justify-end">
+                            <div class="w-full max-w-sm p-6 rounded-2xl bg-white/5 border border-white/10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <i data-lucide="refresh-cw" class="w-5 h-5 text-brand-orange"></i>
+                                    <span class="font-semibold">Revision Rounds</span>
+                                </div>
+                                <div class="text-3xl font-black text-brand-orange">Unlimited</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="flex flex-col md:flex-row gap-6 md:gap-12">
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-3 flex items-center gap-3">
+                                <span class="w-10 h-10 rounded-full bg-brand-orange text-black flex items-center justify-center text-sm font-black">04</span>
+                                We Launch
+                            </h3>
+                            <p class="text-gray-400 leading-relaxed text-lg">Deployed on Cloudflare Pages. Global CDN. SSL included. You get login credentials. It's yours forever. We can also manage it for you.</p>
+                        </div>
+                        <div class="flex-1 flex items-center justify-center md:justify-end">
+                            <div class="w-full max-w-sm p-6 rounded-2xl bg-white/5 border border-white/10">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <i data-lucide="rocket" class="w-5 h-5 text-brand-orange"></i>
+                                    <span class="font-semibold">Uptime Guarantee</span>
+                                </div>
+                                <div class="text-3xl font-black text-brand-orange">99.9%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section id="tech" class="py-24 bg-brand-dark">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 text-brand-orange mb-4 px-4 py-2 rounded-full bg-brand-orange/10 border border-brand-orange/20">
+                    <i data-lucide="cpu" class="w-4 h-4"></i>
+                    <span class="text-sm font-bold uppercase tracking-wider">Technology</span>
+                </div>
+                <h2 class="text-4xl md:text-6xl font-black mb-6">Our <span class="gradient-text">Stack</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Modern tools for modern results. We don't use legacy garbage that slows you down.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="tech-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="file-code" class="w-8 h-8 text-orange-500"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">HTML/CSS/JS</h4>
+                    <p class="text-sm text-gray-500">Core Foundation</p>
+                </div>
+                <div class="tech-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="wind" class="w-8 h-8 text-cyan-400"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">Tailwind CSS</h4>
+                    <p class="text-sm text-gray-500">Utility First</p>
+                </div>
+                <div class="tech-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="cloud" class="w-8 h-8 text-orange-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">Cloudflare</h4>
+                    <p class="text-sm text-gray-500">Edge Network</p>
+                </div>
+                <div class="tech-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="pen-tool" class="w-8 h-8 text-purple-400"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">Figma</h4>
+                    <p class="text-sm text-gray-500">Design Tool</p>
+                </div>
+                <div class="tech-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="activity" class="w-8 h-8 text-green-400"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">GSAP</h4>
+                    <p class="text-sm text-gray-500">Animation</p>
+                </div>
+                <div class="tech-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="smartphone" class="w-8 h-8 text-blue-400"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">PWA</h4>
+                    <p class="text-sm text-gray-500">Mobile App</p>
+                </div>
+                <div class="tech-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="shield" class="w-8 h-8 text-red-400"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">SSL/HTTPS</h4>
+                    <p class="text-sm text-gray-500">Security</p>
+                </div>
+                <div class="tech-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="git-branch" class="w-8 h-8 text-brand-orange"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">Git</h4>
+                    <p class="text-sm text-gray-500">Version Control</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black mb-6">Why Choose <span class="gradient-text">Us?</span></h2>
+                <p class="text-gray-400 text-lg">See how we compare to traditional agencies and DIY builders.</p>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="comparison-table w-full min-w-[600px]">
+                    <thead>
+                        <tr>
+                            <th class="rounded-tl-2xl">Feature</th>
+                            <th>Traditional Agency</th>
+                            <th>DIY Builders</th>
+                            <th class="text-brand-orange rounded-tr-2xl bg-brand-orange/10">Astrux</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white/[0.02]">
+                        <tr>
+                            <td class="font-medium">Delivery Time</td>
+                            <td class="text-gray-500">2-3 months</td>
+                            <td class="text-gray-500">Weeks of learning</td>
+                            <td class="text-brand-orange font-bold">24 hours</td>
+                        </tr>
+                        <tr>
+                            <td class="font-medium">Performance Score</td>
+                            <td class="text-gray-500">60-80/100</td>
+                            <td class="text-gray-500">40-60/100</td>
+                            <td class="text-brand-orange font-bold">100/100</td>
+                        </tr>
+                        <tr>
+                            <td class="font-medium">Custom Code</td>
+                            <td class="text-gray-500">Sometimes</td>
+                            <td class="text-gray-500">Never</td>
+                            <td class="text-brand-orange font-bold">Always</td>
+                        </tr>
+                        <tr>
+                            <td class="font-medium">Price</td>
+                            <td class="text-gray-500">$5,000 - $20,000</td>
+                            <td class="text-gray-500">Hidden fees</td>
+                            <td class="text-brand-orange font-bold">Flat Rate</td>
+                        </tr>
+                        <tr>
+                            <td class="font-medium rounded-bl-2xl">Support</td>
+                            <td class="text-gray-500">Business hours</td>
+                            <td class="text-gray-500">Forums only</td>
+                            <td class="text-brand-orange font-bold rounded-br-2xl">24/7 Direct</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 bg-brand-dark">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 text-brand-orange mb-4 px-4 py-2 rounded-full bg-brand-orange/10 border border-brand-orange/20">
+                    <i data-lucide="tag" class="w-4 h-4"></i>
+                    <span class="text-sm font-bold uppercase tracking-wider">Pricing</span>
+                </div>
+                <h2 class="text-4xl md:text-6xl font-black mb-6">Simple <span class="gradient-text">Pricing</span></h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">No hidden fees. No surprises. Pay once, own forever.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 items-center">
+                <div class="pricing-card">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-gray-400 mb-2">Starter</h3>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-5xl font-black">$499</span>
+                            <span class="text-gray-500">one-time</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">Perfect for small businesses just getting started online.</p>
+                    <ul class="feature-list text-sm mb-8">
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> 5 Pages</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> Mobile Responsive</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> Contact Form</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> Basic SEO</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> 1 Week Support</li>
+                    </ul>
+                    <button onclick="openDemoModal()" class="w-full py-4 rounded-xl border border-white/20 font-bold hover:bg-white hover:text-black transition-all">
+                        Get Started
+                    </button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-brand-orange mb-2">Professional</h3>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-5xl font-black">$999</span>
+                            <span class="text-gray-500">one-time</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">For businesses ready to dominate their market online.</p>
+                    <ul class="feature-list text-sm mb-8">
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> 10+ Pages</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> Advanced Animations</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> WhatsApp Integration</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> Full SEO Setup</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> 1 Month Support</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> Google Analytics</li>
+                    </ul>
+                    <button onclick="openDemoModal()" class="w-full py-4 rounded-xl bg-brand-orange text-black font-bold hover:bg-white transition-all">
+                        Get Started
+                    </button>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-gray-400 mb-2">Enterprise</h3>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-5xl font-black">$2,499</span>
+                            <span class="text-gray-500">one-time</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">For large clinics and businesses needing complex solutions.</p>
+                    <ul class="feature-list text-sm mb-8">
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> Unlimited Pages</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> Custom Features</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> Booking System</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> Priority Support</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> 3 Months Support</li>
+                        <li><i data-lucide="check" class="w-5 h-5 text-brand-orange"></i> Custom Integrations</li>
+                    </ul>
+                    <button onclick="openDemoModal()" class="w-full py-4 rounded-xl border border-white/20 font-bold hover:bg-white hover:text-black transition-all">
+                        Contact Us
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 mb-12">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 text-brand-orange mb-4 px-4 py-2 rounded-full bg-brand-orange/10 border border-brand-orange/20">
+                        <i data-lucide="message-square" class="w-4 h-4"></i>
+                        <span class="text-sm font-bold uppercase tracking-wider">Testimonials</span>
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-black mb-4">Client <span class="gradient-text">Love</span></h2>
+                    <p class="text-gray-400 max-w-xl">Don't take our word for it. Here's what our clients say about working with us.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="scrollTestimonials(-1)" class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-orange hover:border-brand-orange hover:text-black transition-all">
+                        <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                    </button>
+                    <button onclick="scrollTestimonials(1)" class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-orange hover:border-brand-orange hover:text-black transition-all">
+                        <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="testimonials-viewport" id="testimonialsViewport">
+            <div class="testimonials-track px-6" id="testimonialsTrack">
+                <!-- Testimonials injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 bg-brand-dark">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black mb-6">Common <span class="gradient-text">Questions</span></h2>
+                <p class="text-gray-400 text-lg">Everything you need to know before getting started.</p>
+            </div>
+            
+            <div class="space-y-4" id="faqContainer">
+                <!-- FAQs injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-32 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-dark to-brand-black"></div>
+        <div class="absolute inset-0 bg-brand-orange/5 pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-orange/10 rounded-full blur-[150px] pointer-events-none"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-brand-orange to-brand-yellow flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-brand-orange/30">
+                <i data-lucide="rocket" class="w-10 h-10 text-black"></i>
+            </div>
+            <h2 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+                Ready to <span class="gradient-text">Launch?</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Stop losing customers to slow, ugly websites. Get your free demo in 24 hours. 
+                No commitment. No credit card required.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="openDemoModal()" class="group bg-brand-orange text-black px-10 py-5 rounded-full font-bold text-xl hover:bg-white transition-all inline-flex items-center justify-center gap-3 shadow-xl shadow-brand-orange/25">
+                    <i data-lucide="gift" class="w-6 h-6"></i>
+                    Get Free Demo
+                    <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+                <button onclick="openQuoteModal()" class="border border-white/20 bg-white/5 backdrop-blur-sm px-10 py-5 rounded-full font-bold text-xl hover:border-brand-orange hover:text-brand-orange transition-all inline-flex items-center justify-center gap-3">
+                    <i data-lucide="calculator" class="w-6 h-6"></i>
+                    Get Quote
+                </button>
+            </div>
+            <div class="mt-8 flex items-center justify-center gap-6 text-sm text-gray-500">
+                <span class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-brand-orange"></i> Free Demo</span>
+                <span class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-brand-orange"></i> No Credit Card</span>
+                <span class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-brand-orange"></i> 24h Delivery</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-black border-t border-white/10 pt-20 pb-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-5 gap-12 mb-16">
+                <div class="md:col-span-2">
+                    <div class="text-3xl font-black mb-6 flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-orange to-brand-yellow flex items-center justify-center text-black">
+                            <i data-lucide="rocket" class="w-7 h-7"></i>
+                        </div>
+                        ASTRUX
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-sm leading-relaxed">
+                        Building fast, beautiful websites for businesses that want to win online. 
+                        No templates. No excuses. Just results.
+                    </p>
+                    <div class="flex gap-3">
+                        <button onclick="window.open('https://wa.me/919136165601', '_blank')" class="w-12 h-12 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all border border-green-500/20">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="window.location.href='mailto:astruxmarketing@outlook.com'" class="w-12 h-12 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all border border-red-500/20">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="window.open('https://t.me/wvzse', '_blank')" class="w-12 h-12 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all border border-blue-500/20">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-6 text-brand-orange flex items-center gap-2">
+                        <i data-lucide="link" class="w-4 h-4"></i> Quick Links
+                    </h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#work" class="hover:text-white transition-colors flex items-center gap-2"><i data-lucide="briefcase" class="w-4 h-4"></i> Portfolio</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors flex items-center gap-2"><i data-lucide="layers" class="w-4 h-4"></i> Services</a></li>
+                        <li><a href="#process" class="hover:text-white transition-colors flex items-center gap-2"><i data-lucide="git-branch" class="w-4 h-4"></i> Process</a></li>
+                        <li><a href="#pricing" class="hover:text-white transition-colors flex items-center gap-2"><i data-lucide="tag" class="w-4 h-4"></i> Pricing</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-6 text-brand-orange flex items-center gap-2">
+                        <i data-lucide="help-circle" class="w-4 h-4"></i> Support
+                    </h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" onclick="openDemoModal(); return false;" class="hover:text-white transition-colors">Get Demo</a></li>
+                        <li><a href="#" onclick="openQuoteModal(); return false;" class="hover:text-white transition-colors">Get Quote</a></li>
+                        <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-6 text-brand-orange flex items-center gap-2">
+                        <i data-lucide="phone" class="w-4 h-4"></i> Contact
+                    </h4>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li class="flex items-center gap-2 cursor-pointer hover:text-white transition-colors" onclick="window.open('https://wa.me/919136165601', '_blank')">
+                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                            WhatsApp: +91 91361 65601
+                        </li>
+                        <li class="flex items-center gap-2 cursor-pointer hover:text-white transition-colors" onclick="window.location.href='mailto:astruxmarketing@outlook.com'">
+                            <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                            astruxmarketing@outlook.com
+                        </li>
+                        <li class="flex items-center gap-2 cursor-pointer hover:text-white transition-colors" onclick="window.open('https://t.me/wvzse', '_blank')">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                            Telegram: @wvzse
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-600 text-sm">
+                <p>2026 Astrux Marketing. All rights reserved.</p>
+                <p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Built with rage in India</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact Button -->
+    <div class="fab-container">
+        <div class="fab-bubbles" id="fabBubbles">
+            <div class="fab-bubble whatsapp" onclick="window.open('https://wa.me/919136165601', '_blank')">
+                <span class="fab-label">WhatsApp</span>
+                <i data-lucide="message-circle" class="w-6 h-6"></i>
+            </div>
+            <div class="fab-bubble email" onclick="window.location.href='mailto:astruxmarketing@outlook.com'">
+                <span class="fab-label">Email</span>
+                <i data-lucide="mail" class="w-6 h-6"></i>
+            </div>
+            <div class="fab-bubble telegram" onclick="window.open('https://t.me/wvzse', '_blank')">
+                <span class="fab-label">Telegram</span>
+                <i data-lucide="send" class="w-6 h-6"></i>
+            </div>
+        </div>
+        <button class="fab-main" id="fabMain" onclick="toggleFab()">
+            <i data-lucide="message-square" class="w-6 h-6"></i>
+            <span class="notification">1</span>
+        </button>
+    </div>
+
+    <!-- Quote Modal -->
+    <div class="modal-backdrop" id="quoteBackdrop" onclick="closeQuoteModal()"></div>
+    <div class="modal-content" id="quoteContent">
+        <button onclick="closeQuoteModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-colors">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        
+        <div class="flex items-center gap-4 mb-2">
+            <div class="w-12 h-12 rounded-2xl bg-brand-orange/20 flex items-center justify-center">
+                <i data-lucide="calculator" class="w-6 h-6 text-brand-orange"></i>
+            </div>
+            <div>
+                <h3 class="text-2xl font-black">Get Quote</h3>
+                <p class="text-gray-400 text-sm">Tell us what you need.</p>
+            </div>
+        </div>
+        
+        <form id="quoteForm" class="space-y-5 mt-8" onsubmit="submitQuote(event)">
+            <div>
+                <label class="block text-xs text-gray-500 mb-2 uppercase tracking-wider font-semibold">Industry</label>
+                <div class="relative">
+                    <select name="industry" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:border-brand-orange focus:outline-none appearance-none">
+                        <option value="" disabled selected>Select your industry</option>
+                        <option value="dental">Dental Clinic</option>
+                        <option value="medical">Medical Practice</option>
+                        <option value="gym">Gym / Fitness</option>
+                        <option value="restaurant">Restaurant / Cafe</option>
+                        <option value="retail">Retail / E-commerce</option>
+                        <option value="corporate">Corporate / Business</option>
+                        <option value="portfolio">Personal Portfolio</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="w-5 h-5 absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"></i>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-xs text-gray-500 mb-2 uppercase tracking-wider font-semibold">Contact Information</label>
+                <input type="text" name="contact" required placeholder="WhatsApp number or Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:border-brand-orange focus:outline-none">
+            </div>
+            
+            <div>
+                <label class="block text-xs text-gray-500 mb-2 uppercase tracking-wider font-semibold">Project Details</label>
+                <textarea name="details" required rows="3" placeholder="What do you need? Be specific." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:border-brand-orange focus:outline-none resize-none"></textarea>
+            </div>
+            
+            <button type="submit" id="quoteSubmitBtn" class="w-full bg-brand-orange text-black font-bold py-4 rounded-xl hover:bg-white transition-all flex items-center justify-center gap-2 text-lg">
+                <span id="quoteBtnText">Send Message</span>
+                <i data-lucide="send" class="w-5 h-5" id="quoteBtnIcon"></i>
+                <div id="quoteBtnLoader" class="hidden w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin"></div>
+            </button>
+        </form>
+        
+        <div id="quoteSuccess" class="hidden text-center py-12">
+            <div class="w-20 h-20 bg-brand-orange/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i data-lucide="check" class="w-10 h-10 text-brand-orange"></i>
+            </div>
+            <h4 class="text-2xl font-bold mb-2">Message Sent!</h4>
+            <p class="text-gray-400">We'll get back to you within 2 hours.</p>
+        </div>
+    </div>
+
+    <!-- Free Demo Modal -->
+    <div class="modal-backdrop" id="demoBackdrop" onclick="closeDemoModal()"></div>
+    <div class="modal-content" id="demoContent">
+        <button onclick="closeDemoModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-colors">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        
+        <div class="flex items-center gap-4 mb-2">
+            <div class="w-12 h-12 rounded-2xl bg-brand-orange/20 flex items-center justify-center">
+                <i data-lucide="gift" class="w-6 h-6 text-brand-orange"></i>
+            </div>
+            <div>
+                <h3 class="text-2xl font-black">Free Demo</h3>
+                <p class="text-gray-400 text-sm">Get a working demo in 24 hours. No cost.</p>
+            </div>
+        </div>
+        
+        <form id="demoForm" class="space-y-5 mt-8" onsubmit="submitDemo(event)">
+            <div>
+                <label class="block text-xs text-gray-500 mb-2 uppercase tracking-wider font-semibold">What do you need?</label>
+                <div class="relative">
+                    <select name="industry" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:border-brand-orange focus:outline-none appearance-none">
+                        <option value="" disabled selected>Select website type</option>
+                        <option value="dental">Dental Clinic</option>
+                        <option value="medical">Medical Practice</option>
+                        <option value="gym">Gym / Fitness</option>
+                        <option value="restaurant">Restaurant / Cafe</option>
+                        <option value="retail">Retail / E-commerce</option>
+                        <option value="corporate">Corporate / Business</option>
+                        <option value="portfolio">Personal Portfolio</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="w-5 h-5 absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"></i>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-xs text-gray-500 mb-2 uppercase tracking-wider font-semibold">Your Contact</label>
+                <input type="text" name="contact" required placeholder="Enter WhatsApp, Email, or Telegram" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:border-brand-orange focus:outline-none">
+            </div>
+            
+            <div>
+                <label class="block text-xs text-gray-500 mb-2 uppercase tracking-wider font-semibold">Where should we send the demo?</label>
+                <div class="grid grid-cols-3 gap-3 mt-3">
+                    <label class="delivery-option">
+                        <input type="radio" name="delivery" value="whatsapp" checked>
+                        <div class="delivery-box">
+                            <i data-lucide="message-circle" class="w-8 h-8 text-green-500"></i>
+                            <span class="text-sm font-bold mt-1">WhatsApp</span>
+                        </div>
+                    </label>
+                    <label class="delivery-option">
+                        <input type="radio" name="delivery" value="telegram">
+                        <div class="delivery-box">
+                            <i data-lucide="send" class="w-8 h-8 text-blue-500"></i>
+                            <span class="text-sm font-bold mt-1">Telegram</span>
+                        </div>
+                    </label>
+                    <label class="delivery-option">
+                        <input type="radio" name="delivery" value="email">
+                        <div class="delivery-box">
+                            <i data-lucide="mail" class="w-8 h-8 text-red-500"></i>
+                            <span class="text-sm font-bold mt-1">Email</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-xs text-gray-500 mb-2 uppercase tracking-wider font-semibold">Tell us more (optional)</label>
+                <textarea name="details" rows="2" placeholder="Any specific features? Design preferences?" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:border-brand-orange focus:outline-none resize-none"></textarea>
+            </div>
+            
+            <button type="submit" id="demoSubmitBtn" class="w-full bg-brand-orange text-black font-bold py-4 rounded-xl hover:bg-white transition-all flex items-center justify-center gap-2 text-lg">
+                <span id="demoBtnText">Request Free Demo</span>
+                <i data-lucide="arrow-right" class="w-5 h-5" id="demoBtnIcon"></i>
+                <div id="demoBtnLoader" class="hidden w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin"></div>
+            </button>
+        </form>
+        
+        <div id="demoSuccess" class="hidden text-center py-8">
+            <div class="w-20 h-20 bg-brand-orange/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i data-lucide="check" class="w-10 h-10 text-brand-orange"></i>
+            </div>
+            <h4 class="text-2xl font-bold mb-2">Demo Requested!</h4>
+            <p class="text-gray-400 mb-6">We'll build your demo and send it within 24 hours.</p>
+            <div class="bg-white/5 rounded-2xl p-6 text-left space-y-3">
+                <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-3">What happens next:</p>
+                <div class="flex items-center gap-3 text-sm">
+                    <div class="w-8 h-8 rounded-full bg-brand-orange/20 flex items-center justify-center flex-shrink-0">
+                        <span class="text-brand-orange font-bold text-xs">1</span>
+                    </div>
+                    <span class="text-gray-300">We build your custom demo</span>
+                </div>
+                <div class="flex items-center gap-3 text-sm">
+                    <div class="w-8 h-8 rounded-full bg-brand-orange/20 flex items-center justify-center flex-shrink-0">
+                        <span class="text-brand-orange font-bold text-xs">2</span>
+                    </div>
+                    <span class="text-gray-300">Send to your chosen platform</span>
+                </div>
+                <div class="flex items-center gap-3 text-sm">
+                    <div class="w-8 h-8 rounded-full bg-brand-orange/20 flex items-center justify-center flex-shrink-0">
+                        <span class="text-brand-orange font-bold text-xs">3</span>
+                    </div>
+                    <span class="text-gray-300">You review and request changes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Page load progress
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loaderBar');
+            loader.style.width = '100%';
+            setTimeout(() => {
+                loader.style.opacity = '0';
+            }, 500);
+        });
+
+        // Portfolio Data
+        const portfolioData = [
+            { title: "Nayan Demo v2", url: "https://nayandemoversion2.pages.dev", category: "Dental", img: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80" },
+            { title: "Akshar Dental", url: "https://akshar-dental-clinic.pages.dev", category: "Dental", img: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=800&q=80" },
+            { title: "Bhakti Dental", url: "https://bhakti-dental-clinic.pages.dev", category: "Dental", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80" },
+            { title: "Dr. R Meets", url: "https://drrmeetsss.pages.dev", category: "Medical", img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&q=80" },
+            { title: "Dr. Meets Clinic 2", url: "https://drmeetsclinic2.pages.dev", category: "Medical", img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80" },
+            { title: "Dr. Meets Clinic", url: "https://dr-meetsclinic.pages.dev", category: "Medical", img: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&q=80" },
+            { title: "Dr. Meets v1", url: "https://drmeetsclinic.pages.dev", category: "Medical", img: "https://images.unsplash.com/photo-1629909615184-74f495363b67?w=800&q=80" },
+            { title: "New Dentist Site", url: "https://newdentistwebsyte.pages.dev", category: "Dental", img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80" },
+            { title: "Astrux Corp", url: "https://astruxcorpwebsitebynayan.pages.dev", category: "Corporate", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" },
+            { title: "Nayan Demo 667", url: "https://nayandemoversion66767.pages.dev", category: "Creative", img: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80" },
+            { title: "Google Stitch AI", url: "https://websitegooglestitchai.pages.dev", category: "Technology", img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80" },
+            { title: "Hi-Tech Dental", url: "https://hi-tech-dental-clinic.pages.dev", category: "Dental", img: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800&q=80" },
+            { title: "Hi-Tech v2", url: "https://hi-tech-dental-clinic-2.pages.dev", category: "Dental", img: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=800&q=80" },
+            { title: "Hi-Tech v3", url: "https://hi-tech-dental-clinic3.pages.dev", category: "Dental", img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80" },
+            { title: "Hi-Tech v75", url: "https://hi-tech-dental-clinic75.pages.dev", category: "Dental", img: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=800&q=80" },
+            { title: "Hi-Tech Omega", url: "https://hi-tech-dental-clinic-o.pages.dev", category: "Dental", img: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80" }
+        ];
+
+        // Generate Portfolio Cards
+        const portfolioTrack = document.getElementById('portfolioTrack');
+        portfolioData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'portfolio-card';
+            card.innerHTML = `
+                <div class="preview-frame">
+                    <img src="${item.img}" alt="${item.title}" loading="lazy">
+                    <div class="live-badge">Live Site</div>
+                </div>
+                <div class="card-content">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="px-3 py-1 bg-brand-orange/20 text-brand-orange text-xs font-bold rounded-full uppercase tracking-wider">${item.category}</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-1">${item.title}</h3>
+                        <p class="text-gray-500 text-sm">Cloudflare Pages • Tailwind • GSAP</p>
+                    </div>
+                    <a href="${item.url}" target="_blank" class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-brand-orange hover:text-black px-5 py-3 rounded-xl text-sm font-bold transition-all w-full group">
+                        Visit Live Site
+                        <i data-lucide="external-link" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            `;
+            portfolioTrack.appendChild(card);
+        });
+
+        // Portfolio Carousel with Smooth Inertia
+        const portfolioViewport = document.getElementById('portfolioViewport');
+        let isDragging = false;
+        let startPos = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let animationID;
+        let velocity = 0;
+        let lastPos = 0;
+        let lastTime = Date.now();
+        let autoSlideInterval;
+
+        function getCardWidth() {
+            const card = document.querySelector('.portfolio-card');
+            return card ? card.offsetWidth + 32 : 412;
+        }
+
+        function initPortfolioCarousel() {
+            portfolioTrack.addEventListener('mousedown', dragStart);
+            portfolioTrack.addEventListener('touchstart', dragStart, {passive: true});
+            portfolioTrack.addEventListener('mouseup', dragEnd);
+            portfolioTrack.addEventListener('touchend', dragEnd);
+            portfolioTrack.addEventListener('mousemove', drag);
+            portfolioTrack.addEventListener('touchmove', drag, {passive: true});
+            portfolioTrack.addEventListener('mouseleave', () => {
+                if (isDragging) dragEnd();
+            });
+            
+            startAutoSlide();
+        }
+
+        function dragStart(e) {
+            isDragging = true;
+            startPos = getPositionX(e);
+            lastPos = startPos;
+            lastTime = Date.now();
+            portfolioTrack.classList.add('dragging');
+            cancelAnimationFrame(animationID);
+            stopAutoSlide();
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+            const currentPosition = getPositionX(e);
+            const currentTime = Date.now();
+            const diff = currentPosition - startPos;
+            
+            const timeDiff = currentTime - lastTime;
+            if (timeDiff > 0) {
+                velocity = (currentPosition - lastPos) / timeDiff;
+            }
+            
+            lastPos = currentPosition;
+            lastTime = currentTime;
+            
+            currentTranslate = prevTranslate + diff;
+            
+            // Bounds
+            const maxTranslate = 0;
+            const minTranslate = -(portfolioTrack.scrollWidth - portfolioViewport.clientWidth);
+            
+            if (currentTranslate > maxTranslate) {
+                currentTranslate = maxTranslate + (currentTranslate - maxTranslate) * 0.3;
+            } else if (currentTranslate < minTranslate) {
+                currentTranslate = minTranslate + (currentTranslate - minTranslate) * 0.3;
+            }
+            
+            setPortfolioPosition();
+        }
+
+        function dragEnd() {
+            isDragging = false;
+            portfolioTrack.classList.remove('dragging');
+            
+            // Apply inertia
+            const momentum = velocity * 200;
+            currentTranslate += momentum;
+            
+            // Snap to bounds
+            const maxTranslate = 0;
+            const minTranslate = -(portfolioTrack.scrollWidth - portfolioViewport.clientWidth);
+            
+            if (currentTranslate > maxTranslate) currentTranslate = maxTranslate;
+            if (currentTranslate < minTranslate) currentTranslate = minTranslate;
+            
+            // Snap to card
+            const cardWidth = getCardWidth();
+            const snapIndex = Math.round(-currentTranslate / cardWidth);
+            currentTranslate = -snapIndex * cardWidth;
+            
+            if (currentTranslate > maxTranslate) currentTranslate = maxTranslate;
+            if (currentTranslate < minTranslate) currentTranslate = minTranslate;
+            
+            setPortfolioPosition();
+            prevTranslate = currentTranslate;
+            
+            updatePortfolioProgress();
+            startAutoSlide();
+        }
+
+        function getPositionX(e) {
+            return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+        }
+
+        function setPortfolioPosition() {
+            portfolioTrack.style.transform = `translateX(${currentTranslate}px)`;
+        }
+
+        function updatePortfolioProgress() {
+            const maxScroll = portfolioTrack.scrollWidth - portfolioViewport.clientWidth;
+            const pct = Math.abs(currentTranslate) / maxScroll * 100;
+            document.getElementById('portfolioProgress').style.width = Math.min(pct, 100) + '%';
+            
+            const cardWidth = getCardWidth();
+            const currentIndex = Math.round(Math.abs(currentTranslate) / cardWidth) + 1;
+            const total = portfolioData.length;
+            document.getElementById('portfolioCounter').textContent = `${Math.min(currentIndex, total)} / ${total}`;
+        }
+
+        function scrollPortfolio(direction) {
+            const cardWidth = getCardWidth();
+            currentTranslate += direction * -cardWidth;
+            
+            const maxTranslate = 0;
+            const minTranslate = -(portfolioTrack.scrollWidth - portfolioViewport.clientWidth);
+            
+            if (currentTranslate > maxTranslate) currentTranslate = maxTranslate;
+            if (currentTranslate < minTranslate) currentTranslate = minTranslate;
+            
+            setPortfolioPosition();
+            prevTranslate = currentTranslate;
+            updatePortfolioProgress();
+        }
+
+        function startAutoSlide() {
+            stopAutoSlide();
+            let lastTime = Date.now();
+            
+            autoSlideInterval = setInterval(() => {
+                const now = Date.now();
+                const delta = now - lastTime;
+                lastTime = now;
+                
+                const minTranslate = -(portfolioTrack.scrollWidth - portfolioViewport.clientWidth);
+                
+                if (currentTranslate <= minTranslate + 5) {
+                    currentTranslate = 0;
+                } else {
+                    currentTranslate -= 0.5 * (delta / 16);
+                }
+                
+                setPortfolioPosition();
+                prevTranslate = currentTranslate;
+                updatePortfolioProgress();
+            }, 16);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        portfolioViewport.addEventListener('mouseenter', stopAutoSlide);
+        portfolioViewport.addEventListener('mouseleave', () => {
+            if (!isDragging) startAutoSlide();
+        });
+
+        initPortfolioCarousel();
+
+        // Testimonials Data
+        const testimonialsData = [
+            { name: "Dr. Pratik", role: "Akshar Dental", text: "Website loads in under a second. Patients book directly from their phones. Best investment we made this year. The demo was ready in 18 hours exactly as promised.", stars: 5, img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&q=80" },
+            { name: "Dr. Meet", role: "Meets Clinic", text: "I got a working demo in 18 hours. Made some changes, they fixed it same day. Professional and fast. The WhatsApp integration alone has increased our bookings by 40%.", stars: 5, img: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=200&q=80" },
+            { name: "Amit", role: "Hi-Tech Dental", text: "Our old website was slow and ugly. This new one looks premium and actually brings in new patients. Solid work. The team understood exactly what a dental clinic needs.", stars: 5, img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" },
+            { name: "Sneha", role: "Patient", text: "Booked my dental appointment in 30 seconds. The site worked perfectly on my old Android phone. Very impressed with how smooth everything was.", stars: 5, img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" },
+            { name: "Rahul", role: "Business Owner", text: "Compared to other quotes, Astrux delivered 10x the value. Corporate site looks like we spent 50k. We didn't. The animations and transitions are buttery smooth.", stars: 5, img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80" },
+            { name: "Dharmesh", role: "Consultant", text: "Referred 4 clients so far. Every single one happy. These guys actually care about results, not just making things pretty. Their process is bulletproof.", stars: 5, img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" }
+        ];
+
+        // Generate Testimonials
+        const testimonialsTrack = document.getElementById('testimonialsTrack');
+        testimonialsData.forEach(t => {
+            const slide = document.createElement('div');
+            slide.className = 'testimonial-slide';
+            slide.innerHTML = `
+                <div class="flex gap-1 mb-6">
+                    ${Array(t.stars).fill('<i data-lucide="star" class="w-5 h-5 text-brand-orange fill-current"></i>').join('')}
+                </div>
+                <p class="text-gray-300 mb-8 leading-relaxed text-lg relative z-10">"${t.text}"</p>
+                <div class="flex items-center gap-4">
+                    <img src="${t.img}" alt="${t.name}" class="w-14 h-14 rounded-full object-cover border-2 border-brand-orange/30">
+                    <div>
+                        <div class="font-bold text-lg">${t.name}</div>
+                        <div class="text-sm text-gray-500">${t.role}</div>
+                    </div>
+                </div>
+            `;
+            testimonialsTrack.appendChild(slide);
+        });
+
+        // Testimonials Carousel
+        let testimonialTranslate = 0;
+        let isTestimonialDragging = false;
+        let testimonialStartPos = 0;
+        let testimonialPrevTranslate = 0;
+        let testimonialVelocity = 0;
+
+        function initTestimonialsCarousel() {
+            testimonialsTrack.addEventListener('mousedown', testimonialDragStart);
+            testimonialsTrack.addEventListener('touchstart', testimonialDragStart, {passive: true});
+            testimonialsTrack.addEventListener('mouseup', testimonialDragEnd);
+            testimonialsTrack.addEventListener('touchend', testimonialDragEnd);
+            testimonialsTrack.addEventListener('mousemove', testimonialDrag);
+            testimonialsTrack.addEventListener('touchmove', testimonialDrag, {passive: true});
+            
+            // Auto slide testimonials
+            setInterval(() => {
+                if (!isTestimonialDragging) {
+                    scrollTestimonials(1);
+                }
+            }, 5000);
+        }
+
+        function testimonialDragStart(e) {
+            isTestimonialDragging = true;
+            testimonialStartPos = getPositionX(e);
+            testimonialsTrack.classList.add('dragging');
+        }
+
+        function testimonialDrag(e) {
+            if (!isTestimonialDragging) return;
+            const currentPosition = getPositionX(e);
+            const diff = currentPosition - testimonialStartPos;
+            testimonialTranslate = testimonialPrevTranslate + diff;
+            testimonialsTrack.style.transform = `translateX(${testimonialTranslate}px)`;
+        }
+
+        function testimonialDragEnd() {
+            isTestimonialDragging = false;
+            testimonialsTrack.classList.remove('dragging');
+            
+            const slideWidth = 600;
+            const maxTranslate = 0;
+            const minTranslate = -(testimonialsTrack.scrollWidth - document.getElementById('testimonialsViewport').clientWidth);
+            
+            if (testimonialTranslate > maxTranslate) testimonialTranslate = maxTranslate;
+            if (testimonialTranslate < minTranslate) testimonialTranslate = minTranslate;
+            
+            const snapIndex = Math.round(-testimonialTranslate / slideWidth);
+            testimonialTranslate = -snapIndex * slideWidth;
+            
+            if (testimonialTranslate > maxTranslate) testimonialTranslate = maxTranslate;
+            if (testimonialTranslate < minTranslate) testimonialTranslate = minTranslate;
+            
+            testimonialsTrack.style.transform = `translateX(${testimonialTranslate}px)`;
+            testimonialPrevTranslate = testimonialTranslate;
+        }
+
+        function scrollTestimonials(direction) {
+            const slideWidth = 600;
+            testimonialTranslate += direction * -slideWidth;
+            
+            const maxTranslate = 0;
+            const minTranslate = -(testimonialsTrack.scrollWidth - document.getElementById('testimonialsViewport').clientWidth);
+            
+            if (testimonialTranslate > maxTranslate) testimonialTranslate = maxTranslate;
+            if (testimonialTranslate < minTranslate) testimonialTranslate = minTranslate;
+            
+            testimonialsTrack.style.transform = `translateX(${testimonialTranslate}px)`;
+            testimonialPrevTranslate = testimonialTranslate;
+        }
+
+        initTestimonialsCarousel();
+
+        // FAQ Data
+        const faqData = [
+            { q: "How fast can you really deliver?", a: "Most demos are ready within 18-24 hours. Complex projects might take 48 hours. We don't sleep until your demo is live." },
+            { q: "What if I don't like the demo?", a: "You don't pay. The demo is completely free. If you don't like it, you walk away with zero cost. No questions asked." },
+            { q: "Do you use WordPress or templates?", a: "Never. Every site is hand-coded from scratch using HTML, CSS, and JavaScript. This gives us complete control over performance and design." },
+            { q: "Can you redesign my existing website?", a: "Absolutely. We can rebuild your existing site with modern tech, better performance, and fresh design. Just share your current URL." },
+            { q: "What about hosting and domain?", a: "We deploy on Cloudflare Pages (free tier available). You can use your existing domain or we can help you buy one. SSL is included automatically." },
+            { q: "Do you offer ongoing support?", a: "Yes. All packages include support periods. After that, we offer affordable maintenance plans or you can manage it yourself." }
+        ];
+
+        // Generate FAQ
+        const faqContainer = document.getElementById('faqContainer');
+        faqData.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'faq-item bg-white/[0.02] rounded-2xl border border-white/5 overflow-hidden';
+            div.innerHTML = `
+                <button class="faq-question px-6" onclick="toggleFaq(this)">
+                    <span>${item.q}</span>
+                    <i data-lucide="chevron-down" class="w-5 h-5 faq-icon text-gray-500"></i>
+                </button>
+                <div class="faq-answer px-6">
+                    <p class="text-gray-400 pb-6 leading-relaxed">${item.a}</p>
+                </div>
+            `;
+            faqContainer.appendChild(div);
+        });
+
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const answer = btn.nextElementSibling;
+            const isActive = item.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(faq => {
+                faq.classList.remove('active');
+                faq.querySelector('.faq-answer').classList.remove('active');
+            });
+            
+            // Open clicked if wasn't active
+            if (!isActive) {
+                item.classList.add('active');
+                answer.classList.add('active');
+            }
+            
+            lucide.createIcons();
+        }
+
+        // Header Auto Hide
+        let lastScroll = 0;
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            if (currentScroll > lastScroll && currentScroll > 200) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // FAB Toggle
+        function toggleFab() {
+            const bubbles = document.getElementById('fabBubbles');
+            const main = document.getElementById('fabMain');
+            bubbles.classList.toggle('active');
+            main.classList.toggle('active');
+        }
+
+        // Modal Functions
+        function openQuoteModal() {
+            document.getElementById('quoteBackdrop').classList.add('active');
+            document.getElementById('quoteContent').classList.add('active');
+        }
+
+        function closeQuoteModal() {
+            document.getElementById('quoteBackdrop').classList.remove('active');
+            document.getElementById('quoteContent').classList.remove('active');
+        }
+
+        function openDemoModal() {
+            document.getElementById('demoBackdrop').classList.add('active');
+            document.getElementById('demoContent').classList.add('active');
+        }
+
+        function closeDemoModal() {
+            document.getElementById('demoBackdrop').classList.remove('active');
+            document.getElementById('demoContent').classList.remove('active');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('translate-x-full');
+        }
+
+        // Form Submissions
+        async function submitQuote(e) {
+            e.preventDefault();
+            const form = e.target;
+            const btnText = document.getElementById('quoteBtnText');
+            const btnIcon = document.getElementById('quoteBtnIcon');
+            const btnLoader = document.getElementById('quoteBtnLoader');
+            
+            btnText.textContent = 'Sending...';
+            btnIcon.classList.add('hidden');
+            btnLoader.classList.remove('hidden');
+            
+            const data = {
+                type: 'QUOTE',
+                industry: form.industry.value,
+                contact: form.contact.value,
+                details: form.details.value,
+                timestamp: new Date().toLocaleString()
+            };
+            
+            await sendToTelegram(data);
+            
+            form.classList.add('hidden');
+            document.getElementById('quoteSuccess').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        async function submitDemo(e) {
+            e.preventDefault();
+            const form = e.target;
+            const btnText = document.getElementById('demoBtnText');
+            const btnIcon = document.getElementById('demoBtnIcon');
+            const btnLoader = document.getElementById('demoBtnLoader');
+            
+            btnText.textContent = 'Sending...';
+            btnIcon.classList.add('hidden');
+            btnLoader.classList.remove('hidden');
+            
+            const data = {
+                type: 'DEMO_REQUEST',
+                industry: form.industry.value,
+                contact: form.contact.value,
+                delivery: form.delivery.value,
+                details: form.details.value,
+                timestamp: new Date().toLocaleString()
+            };
+            
+            await sendToTelegram(data);
+            
+            form.classList.add('hidden');
+            document.getElementById('demoSuccess').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        async function sendToTelegram(data) {
+            const message = formatMessage(data);
+            
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Cloudflare Worker implementation:
+            /*
+            const BOT_TOKEN = env.TELEGRAM_BOT_TOKEN;
+            const CHAT_ID = env.TELEGRAM_CHAT_ID;
+            
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            });
+            */
+            
+            console.log('Telegram message:', message);
+        }
+
+        function formatMessage(data) {
+            if (data.type === 'DEMO_REQUEST') {
+                return `🔥 <b>FREE DEMO REQUEST</b>\n\n` +
+                    `🏢 Type: ${data.industry}\n` +
+                    `📞 Contact: ${data.contact}\n` +
+                    `📤 Send Via: ${data.delivery.toUpperCase()}\n` +
+                    `📝 Details: ${data.details || 'None'}\n\n` +
+                    `⏰ ${data.timestamp}`;
+            } else {
+                return `💰 <b>QUOTE REQUEST</b>\n\n` +
+                    `🏢 Industry: ${data.industry}\n` +
+                    `📞 Contact: ${data.contact}\n` +
+                    `📝 Details: ${data.details}\n\n` +
+                    `⏰ ${data.timestamp}`;
+            }
+        }
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Counters
+        gsap.utils.toArray('.counter').forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            gsap.to(counter, {
+                innerHTML: target,
+                duration: 2,
+                snap: { innerHTML: 1 },
+                scrollTrigger: { trigger: counter, start: "top 85%" }
+            });
+        });
+
+        // Reveal animations
+        gsap.utils.toArray('.process-step').forEach((step, i) => {
+            gsap.from(step, {
+                x: -50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.2,
+                scrollTrigger: { trigger: step, start: "top 85%" }
+            });
+        });
+
+        gsap.utils.toArray('.tech-card').forEach((card, i) => {
+            gsap.from(card, {
+                y: 30,
+                opacity: 0,
+                duration: 0.5,
+                delay: i * 0.05,
+                scrollTrigger: { trigger: card, start: "top 90%" }
+            });
+        });
+
+        gsap.utils.toArray('.pricing-card').forEach((card, i) => {
+            gsap.from(card, {
+                y: 50,
+                opacity: 0,
+                duration: 0.6,
+                delay: i * 0.1,
+                scrollTrigger: { trigger: card, start: "top 85%" }
+            });
+        });
+
+        // Particle Background
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                size: Math.random() * 2 + 0.5
+            });
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach((p, i) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 61, 0, 0.4)';
+                ctx.fill();
+                
+                // Connect nearby particles
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(255, 61, 0, ${0.1 * (1 - dist / 100)})`;
+                        ctx.stroke();
+                    }
+                });
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Initialize all icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
