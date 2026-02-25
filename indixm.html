@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saffron Flame | Where Tradition Meets Fire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandDark: '#0a0a0a',
+                        brandGold: '#d4af37',
+                        brandGray: '#1a1a1a'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+    </style>
+</head>
+<body class="bg-brandDark text-gray-300 font-sans antialiased overflow-x-hidden">
+
+    <section class="relative h-screen flex items-center justify-center text-center">
+        <div class="absolute inset-0 z-0">
+            <img src="https://image.pollinations.ai/prompt/luxury%20restaurant%20interior%20warm%20lighting%20fine%20dining" alt="Luxury Restaurant Interior" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-brandDark"></div>
+        </div>
+        <div class="relative z-10 px-4 fade-in-up">
+            <h1 class="font-serif text-5xl md:text-7xl text-brandGold font-bold mb-4 tracking-wide">Saffron Flame</h1>
+            <p class="text-xl md:text-2xl text-white font-light tracking-widest uppercase mb-10">Where Tradition Meets Fire</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#menu" class="px-8 py-3 border border-brandGold text-brandGold hover:bg-brandGold hover:text-brandDark transition-all duration-300 uppercase tracking-wider text-sm">View Menu</a>
+                <a href="https://wa.me/447876137354?text=Hello%20I%20would%20like%20to%20place%20an%20order" target="_blank" class="px-8 py-3 bg-green-600 text-white hover:bg-green-700 transition-all duration-300 uppercase tracking-wider text-sm flex items-center justify-center gap-2">
+                    <i class="fab fa-whatsapp text-lg"></i> Order on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-4 max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+        <div class="md:w-1/2 fade-in-up">
+            <h2 class="font-serif text-4xl text-brandGold mb-6">Our Culinary Journey</h2>
+            <p class="text-lg leading-relaxed text-gray-400 font-light">
+                At Saffron Flame, we blend authentic Indian spices with modern culinary artistry. Every dish is handcrafted using premium ingredients, slow-cooked traditions, and bold contemporary flavors. Our chefs create an unforgettable dining experience that celebrates warmth, culture, and innovation.
+            </p>
+        </div>
+        <div class="md:w-1/2 fade-in-up delay-200">
+            <img src="https://image.pollinations.ai/prompt/chef%20cooking%20indian%20food%20professional%20kitchen" alt="Chef cooking" class="rounded-sm shadow-2xl border border-gray-800">
+        </div>
+    </section>
+
+    <section id="menu" class="py-24 bg-brandGray px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="font-serif text-4xl text-center text-brandGold mb-16 fade-in-up">Signature Creations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="bg-brandDark border border-gray-800 rounded-sm overflow-hidden group hover:scale-105 transition-transform duration-300 fade-in-up">
+                    <img src="https://image.pollinations.ai/prompt/butter%20chicken%20indian%20dish" alt="Butter Chicken Supreme" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-serif text-xl text-white">Butter Chicken Supreme</h3>
+                            <span class="text-brandGold font-bold">£14.99</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6 h-10">Creamy tomato gravy, charcoal smoked chicken, fresh cream swirl.</p>
+                        <button onclick="openModal('Butter Chicken Supreme')" class="w-full py-2 border border-brandGold text-brandGold hover:bg-brandGold hover:text-brandDark transition-colors duration-300 text-sm uppercase tracking-wider">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="bg-brandDark border border-gray-800 rounded-sm overflow-hidden group hover:scale-105 transition-transform duration-300 fade-in-up delay-100">
+                    <img src="https://image.pollinations.ai/prompt/tandoori%20lamb%20chops" alt="Tandoori Lamb Chops" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-serif text-xl text-white">Tandoori Lamb Chops</h3>
+                            <span class="text-brandGold font-bold">£18.99</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6 h-10">Clay oven roasted lamb, saffron yogurt glaze.</p>
+                        <button onclick="openModal('Tandoori Lamb Chops')" class="w-full py-2 border border-brandGold text-brandGold hover:bg-brandGold hover:text-brandDark transition-colors duration-300 text-sm uppercase tracking-wider">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="bg-brandDark border border-gray-800 rounded-sm overflow-hidden group hover:scale-105 transition-transform duration-300 fade-in-up delay-200">
+                    <img src="https://image.pollinations.ai/prompt/paneer%20tikka" alt="Paneer Tikka Royale" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-serif text-xl text-white">Paneer Tikka Royale</h3>
+                            <span class="text-brandGold font-bold">£12.99</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6 h-10">Marinated cottage cheese cubes, grilled peppers, mint chutney.</p>
+                        <button onclick="openModal('Paneer Tikka Royale')" class="w-full py-2 border border-brandGold text-brandGold hover:bg-brandGold hover:text-brandDark transition-colors duration-300 text-sm uppercase tracking-wider">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="bg-brandDark border border-gray-800 rounded-sm overflow-hidden group hover:scale-105 transition-transform duration-300 fade-in-up">
+                    <img src="https://image.pollinations.ai/prompt/chicken%20biryani%20top%20view" alt="Saffron Biryani Deluxe" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-serif text-xl text-white">Saffron Biryani Deluxe</h3>
+                            <span class="text-brandGold font-bold">£16.99</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6 h-10">Aromatic basmati rice layered with slow cooked spiced chicken.</p>
+                        <button onclick="openModal('Saffron Biryani Deluxe')" class="w-full py-2 border border-brandGold text-brandGold hover:bg-brandGold hover:text-brandDark transition-colors duration-300 text-sm uppercase tracking-wider">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="bg-brandDark border border-gray-800 rounded-sm overflow-hidden group hover:scale-105 transition-transform duration-300 fade-in-up delay-100">
+                    <img src="https://image.pollinations.ai/prompt/garlic%20naan%20bread" alt="Garlic Naan Basket" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-serif text-xl text-white">Garlic Naan Basket</h3>
+                            <span class="text-brandGold font-bold">£4.99</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6 h-10">Freshly baked in the tandoor with garlic and butter.</p>
+                        <button onclick="openModal('Garlic Naan Basket')" class="w-full py-2 border border-brandGold text-brandGold hover:bg-brandGold hover:text-brandDark transition-colors duration-300 text-sm uppercase tracking-wider">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="bg-brandDark border border-gray-800 rounded-sm overflow-hidden group hover:scale-105 transition-transform duration-300 fade-in-up delay-200">
+                    <img src="https://image.pollinations.ai/prompt/mango%20lassi%20glass" alt="Mango Lassi" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-serif text-xl text-white">Mango Lassi</h3>
+                            <span class="text-brandGold font-bold">£3.99</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6 h-10">Traditional chilled yogurt drink with sweet mango.</p>
+                        <button onclick="openModal('Mango Lassi')" class="w-full py-2 border border-brandGold text-brandGold hover:bg-brandGold hover:text-brandDark transition-colors duration-300 text-sm uppercase tracking-wider">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-4 max-w-7xl mx-auto">
+        <h2 class="font-serif text-4xl text-center text-brandGold mb-16 fade-in-up">What Our Guests Say</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div class="bg-brandGray p-6 rounded-sm border border-gray-800 fade-in-up">
+                <div class="text-brandGold mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="text-sm italic mb-4 text-gray-300">"The best butter chicken I’ve had in London. Rich, creamy, unforgettable."</p>
+                <p class="text-xs text-brandGold font-bold uppercase tracking-wider">— James R.</p>
+            </div>
+            <div class="bg-brandGray p-6 rounded-sm border border-gray-800 fade-in-up delay-100">
+                <div class="text-brandGold mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="text-sm italic mb-4 text-gray-300">"The ambiance feels luxurious and intimate. Perfect for date night."</p>
+                <p class="text-xs text-brandGold font-bold uppercase tracking-wider">— Sophia M.</p>
+            </div>
+            <div class="bg-brandGray p-6 rounded-sm border border-gray-800 fade-in-up delay-200">
+                <div class="text-brandGold mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="text-sm italic mb-4 text-gray-300">"Their biryani is deeply flavorful and beautifully presented."</p>
+                <p class="text-xs text-brandGold font-bold uppercase tracking-wider">— Ahmed K.</p>
+            </div>
+            <div class="bg-brandGray p-6 rounded-sm border border-gray-800 fade-in-up delay-300">
+                <div class="text-brandGold mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="text-sm italic mb-4 text-gray-300">"Staff is professional and attentive. Highly recommend."</p>
+                <p class="text-xs text-brandGold font-bold uppercase tracking-wider">— Olivia T.</p>
+            </div>
+            <div class="bg-brandGray p-6 rounded-sm border border-gray-800 fade-in-up delay-300">
+                <div class="text-brandGold mb-3"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="text-sm italic mb-4 text-gray-300">"Authentic flavors with a modern twist. Stunning experience."</p>
+                <p class="text-xs text-brandGold font-bold uppercase tracking-wider">— Daniel W.</p>
+            </div>
+            </div>
+    </section>
+
+    <section class="py-24 bg-brandGray px-4">
+        <h2 class="font-serif text-4xl text-center text-brandGold mb-16 fade-in-up">Gallery</h2>
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-4">
+            <img src="https://image.pollinations.ai/prompt/indian%20fine%20dining%20plating" alt="Plating" class="w-full h-64 object-cover rounded-sm hover:opacity-80 transition-opacity">
+            <img src="https://image.pollinations.ai/prompt/luxury%20restaurant%20table%20setup" alt="Table Setup" class="w-full h-64 object-cover rounded-sm hover:opacity-80 transition-opacity">
+            <img src="https://image.pollinations.ai/prompt/chef%20plating%20food" alt="Chef" class="w-full h-64 object-cover rounded-sm hover:opacity-80 transition-opacity">
+            <img src="https://image.pollinations.ai/prompt/indian%20spices%20close%20up" alt="Spices" class="w-full h-64 object-cover rounded-sm hover:opacity-80 transition-opacity">
+            <img src="https://image.pollinations.ai/prompt/tandoor%20oven%20cooking" alt="Tandoor" class="w-full h-64 object-cover rounded-sm hover:opacity-80 transition-opacity">
+            <img src="https://image.pollinations.ai/prompt/restaurant%20candle%20light%20table" alt="Candle Light" class="w-full h-64 object-cover rounded-sm hover:opacity-80 transition-opacity">
+        </div>
+    </section>
+
+    <footer class="bg-brandDark pt-24 pb-8 px-4 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+            <div>
+                <h3 class="font-serif text-3xl text-brandGold mb-6">Visit Us</h3>
+                <p class="mb-2"><i class="fas fa-map-marker-alt text-brandGold w-6"></i> 221 Spice Street, London, UK</p>
+                <p class="mb-2"><i class="fas fa-phone text-brandGold w-6"></i> +44 7876 137354</p>
+                <div class="mt-8">
+                    <h4 class="text-brandGold font-serif text-xl mb-4">Opening Hours</h4>
+                    <p class="text-sm">Mon to Thu: 12 PM - 10 PM</p>
+                    <p class="text-sm">Fri to Sun: 12 PM - 11 PM</p>
+                </div>
+            </div>
+            <div class="h-64 bg-gray-900 rounded-sm flex items-center justify-center border border-gray-800">
+                <p class="text-gray-500 text-sm uppercase tracking-widest">[ Google Map Placeholder ]</p>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center border-t border-gray-800 pt-8">
+            <p class="text-sm text-brandGold">&copy; 2026 Saffron Flame. All rights reserved.</p>
+            <div class="flex gap-6 mt-4 md:mt-0">
+                <a href="#" class="text-brandGold hover:text-white transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                <a href="#" class="text-brandGold hover:text-white transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+                <a href="#" class="text-brandGold hover:text-white transition-colors"><i class="fab fa-whatsapp text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/447876137354?text=Hello%20I%20would%20like%20to%20place%20an%20order" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-2xl hover:bg-green-600 transition-transform hover:scale-110 z-50">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <div id="orderModal" class="fixed inset-0 bg-black bg-opacity-80 hidden z-50 flex items-center justify-center px-4">
+        <div class="bg-brandGray border border-brandGold p-8 rounded-sm w-full max-w-md relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-brandGold text-xl">&times;</button>
+            <h3 class="font-serif text-2xl text-brandGold mb-6">Complete Your Order</h3>
+            
+            <form id="whatsappForm" onsubmit="submitOrder(event)">
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Dish Name</label>
+                    <input type="text" id="dishName" readonly class="w-full bg-brandDark border border-gray-700 text-white px-4 py-2 focus:outline-none focus:border-brandGold">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Quantity</label>
+                    <input type="number" id="qty" min="1" value="1" required class="w-full bg-brandDark border border-gray-700 text-white px-4 py-2 focus:outline-none focus:border-brandGold">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Preferred Time</label>
+                    <input type="time" id="time" required class="w-full bg-brandDark border border-gray-700 text-white px-4 py-2 focus:outline-none focus:border-brandGold" style="color-scheme: dark;">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm text-gray-400 mb-2">Customer Name</label>
+                    <input type="text" id="customerName" required class="w-full bg-brandDark border border-gray-700 text-white px-4 py-2 focus:outline-none focus:border-brandGold">
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-3 hover:bg-green-700 transition-colors uppercase tracking-wider text-sm flex items-center justify-center gap-2">
+                    <i class="fab fa-whatsapp"></i> Send Order to WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal Logic
+        function openModal(dish) {
+            document.getElementById('dishName').value = dish;
+            document.getElementById('orderModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+        }
+
+        function submitOrder(event) {
+            event.preventDefault();
+            const dish = document.getElementById('dishName').value;
+            const qty = document.getElementById('qty').value;
+            const time = document.getElementById('time').value;
+            const name = document.getElementById('customerName').value;
+            
+            // Format message for WhatsApp
+            const text = `*New Order Request*%0A%0ADish: ${dish}%0AQuantity: ${qty}%0AOrder Time: ${time}%0ACustomer Name: ${name}`;
+            const whatsappUrl = `https://wa.me/447876137354?text=${text}`;
+            
+            window.open(whatsappUrl, '_blank');
+            closeModal();
+        }
+
+        // Close modal on outside click
+        document.getElementById('orderModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
