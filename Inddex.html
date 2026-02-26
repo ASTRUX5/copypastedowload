@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savor & Sage | AI-Native Dining Experience</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js for 3D Elements -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "Savor & Sage",
+        "description": "Farm-to-table modern American cuisine with AI-personalized dining experiences",
+        "url": "https://savorandsage.com",
+        "telephone": "+1-555-SAVOR-01",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "1420 Culinary Avenue",
+            "addressLocality": "San Francisco",
+            "addressRegion": "CA",
+            "postalCode": "94110",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 37.7749,
+            "longitude": -122.4194
+        },
+        "openingHours": "Mo-Su 11:00-23:00",
+        "priceRange": "$$$",
+        "servesCuisine": ["Modern American", "Farm-to-Table", "Sustainable"],
+        "acceptsReservations": "True",
+        "menu": "https://savorandsage.com/menu",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "1247"
+        }
+    }
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        sage: {
+                            50: '#f6f7f4',
+                            100: '#e8ebe3',
+                            200: '#d5dcc9',
+                            300: '#b8c4a5',
+                            400: '#9aa67f',
+                            500: '#7d8a61',
+                            600: '#626d4b',
+                            700: '#4e573d',
+                            800: '#404733',
+                            900: '#363c2d',
+                        },
+                        clay: {
+                            50: '#fdf8f6',
+                            100: '#f2e8e5',
+                            200: '#eaddd7',
+                            300: '#e0cec7',
+                            400: '#d2bab0',
+                            500: '#a1887f',
+                            600: '#8d6e63',
+                            700: '#795548',
+                            800: '#5d4037',
+                            900: '#3e2723',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f6f7f4;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7d8a61;
+            border-radius: 4px;
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 3D Card Effect */
+        .dish-card {
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dish-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+        }
+        
+        /* AR Overlay */
+        .ar-overlay {
+            background: linear-gradient(135deg, rgba(125, 138, 97, 0.9), rgba(62, 39, 35, 0.9));
+            backdrop-filter: blur(20px);
+        }
+        
+        /* Voice Wave Animation */
+        .voice-wave {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            height: 20px;
+        }
+        
+        .voice-wave span {
+            width: 3px;
+            background: #7d8a61;
+            border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
+        }
+        
+        .voice-wave span:nth-child(2) { animation-delay: 0.1s; }
+        .voice-wave span:nth-child(3) { animation-delay: 0.2s; }
+        .voice-wave span:nth-child(4) { animation-delay: 0.3s; }
+        .voice-wave span:nth-child(5) { animation-delay: 0.4s; }
+        
+        @keyframes wave {
+            0%, 100% { height: 8px; }
+            50% { height: 20px; }
+        }
+        
+        /* Menu Item Schema Markup */
+        .menu-item-schema {
+            display: none;
+        }
+        
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #7d8a61;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        
+        /* Hide cursor on touch devices */
+        @media (hover: none) {
+            .custom-cursor { display: none; }
+        }
+    </style>
+</head>
+<body class="bg-sage-50 text-gray-900 font-sans antialiased overflow-x-hidden">
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor hidden md:block" id="cursor"></div>
+
+    <!-- AI Assistant Chat Widget -->
+    <div id="ai-chat-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
+        <!-- Chat Window -->
+        <div id="chat-window" class="hidden w-96 h-[500px] bg-white rounded-2xl shadow-2xl border border-sage-200 overflow-hidden flex flex-col transform transition-all duration-300 origin-bottom-right">
+            <div class="bg-sage-600 text-white p-4 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                        <i data-lucide="bot" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold">Sage AI</h3>
+                        <p class="text-xs text-sage-100">Personal Dining Assistant</p>
+                    </div>
+                </div>
+                <button onclick="toggleChat()" class="p-2 hover:bg-white/20 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-sage-50">
+                <div class="flex gap-3">
+                    <div class="w-8 h-8 bg-sage-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="bot" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm max-w-[80%]">
+                        <p class="text-sm">Hello! I'm Sage, your AI dining assistant. I can help you:</p>
+                        <ul class="text-xs mt-2 space-y-1 text-gray-600">
+                            <li>• Find dishes based on dietary needs</li>
+                            <li>• Suggest wine pairings</li>
+                            <li>• Check real-time availability</li>
+                            <li>• Modify ingredients</li>
+                        </ul>
+                        <p class="text-sm mt-2">What are you craving today?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-4 bg-white border-t border-sage-100">
+                <div class="flex gap-2">
+                    <input type="text" id="chat-input" placeholder="Ask about menu, dietary needs, or pairings..." 
+                           class="flex-1 px-4 py-2 rounded-full border border-sage-200 focus:outline-none focus:border-sage-500 text-sm"
+                           onkeypress="handleChatKeypress(event)">
+                    <button onclick="sendMessage()" class="p-2 bg-sage-600 text-white rounded-full hover:bg-sage-700 transition-colors">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="startVoiceInput()" class="p-2 bg-clay-600 text-white rounded-full hover:bg-clay-700 transition-colors" title="Voice input">
+                        <i data-lucide="mic" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <div class="flex gap-2 mt-2 overflow-x-auto pb-1">
+                    <button onclick="quickAsk('vegan options')" class="px-3 py-1 bg-sage-100 text-sage-700 rounded-full text-xs whitespace-nowrap hover:bg-sage-200 transition-colors">Vegan options</button>
+                    <button onclick="quickAsk('gluten-free')" class="px-3 py-1 bg-sage-100 text-sage-700 rounded-full text-xs whitespace-nowrap hover:bg-sage-200 transition-colors">Gluten-free</button>
+                    <button onclick="quickAsk('romantic dinner')" class="px-3 py-1 bg-sage-100 text-sage-700 rounded-full text-xs whitespace-nowrap hover:bg-sage-200 transition-colors">Romantic dinner</button>
+                    <button onclick="quickAsk('happy hour')" class="px-3 py-1 bg-sage-100 text-sage-700 rounded-full text-xs whitespace-nowrap hover:bg-sage-200 transition-colors">Happy hour</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Toggle Button -->
+        <button onclick="toggleChat()" class="w-14 h-14 bg-sage-600 text-white rounded-full shadow-lg hover:bg-sage-700 transition-all hover:scale-110 flex items-center justify-center relative group">
+            <i data-lucide="message-circle" class="w-7 h-7"></i>
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs flex items-center justify-center animate-pulse">1</span>
+            <span class="absolute right-full mr-3 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Ask Sage AI</span>
+        </button>
+    </div>
+
+    <!-- AR Mode Overlay -->
+    <div id="ar-overlay" class="fixed inset-0 z-[60] hidden ar-overlay flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl transform transition-all scale-95 opacity-0" id="ar-modal">
+            <div class="relative h-64 bg-gradient-to-br from-sage-100 to-clay-100 flex items-center justify-center overflow-hidden">
+                <button onclick="closeAR()" class="absolute top-4 right-4 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center hover:bg-white transition-colors z-10">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                <div class="text-center">
+                    <div class="w-32 h-32 mx-auto bg-white rounded-2xl shadow-xl flex items-center justify-center mb-4 animate-float">
+                        <span class="text-6xl">🥗</span>
+                    </div>
+                    <div class="voice-wave justify-center mb-2">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <p class="text-sage-800 font-medium">Scanning your table...</p>
+                </div>
+            </div>
+            <div class="p-6">
+                <h3 class="text-2xl font-serif font-bold text-gray-900 mb-2">AR Experience Active</h3>
+                <p class="text-gray-600 mb-6">Point your camera at a flat surface to see our signature dishes in true-to-scale 3D.</p>
+                
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <button onclick="placeDish('heirloom')" class="p-3 border-2 border-sage-200 rounded-xl hover:border-sage-500 transition-colors text-center">
+                        <span class="text-3xl block mb-1">🥗</span>
+                        <span class="text-xs font-medium">Heirloom Salad</span>
+                    </button>
+                    <button onclick="placeDish('steak')" class="p-3 border-2 border-sage-200 rounded-xl hover:border-sage-500 transition-colors text-center">
+                        <span class="text-3xl block mb-1">🥩</span>
+                        <span class="text-xs font-medium">Wagyu Steak</span>
+                    </button>
+                    <button onclick="placeDish('dessert')" class="p-3 border-2 border-sage-200 rounded-xl hover:border-sage-500 transition-colors text-center">
+                        <span class="text-3xl block mb-1">🍰</span>
+                        <span class="text-xs font-medium">Lavender Crème</span>
+                    </button>
+                </div>
+                
+                <div class="bg-sage-50 p-4 rounded-xl">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i data-lucide="info" class="w-5 h-5 text-sage-600"></i>
+                        <span class="font-medium text-sage-900">Pro Tip</span>
+                    </div>
+                    <p class="text-sm text-sage-700">Tap any dish to see ingredient breakdowns, nutritional info, and customization options in AR space.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-40 transition-all duration-300 top-0">
+        <div class="glass border-b border-white/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <!-- Logo -->
+                    <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                        <div class="w-10 h-10 bg-sage-600 rounded-full flex items-center justify-center">
+                            <i data-lucide="leaf" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="font-serif text-2xl font-bold text-gray-900">Savor & Sage</h1>
+                            <p class="text-xs text-sage-600 -mt-1">AI-Native Dining</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex items-center gap-8">
+                        <a href="#experience" class="text-gray-700 hover:text-sage-600 font-medium transition-colors">Experience</a>
+                        <a href="#menu" class="text-gray-700 hover:text-sage-600 font-medium transition-colors">Smart Menu</a>
+                        <a href="#ar-section" class="text-gray-700 hover:text-sage-600 font-medium transition-colors">AR Preview</a>
+                        <a href="#sustainability" class="text-gray-700 hover:text-sage-600 font-medium transition-colors">Our Impact</a>
+                    </div>
+                    
+                    <!-- Actions -->
+                    <div class="flex items-center gap-4">
+                        <button onclick="toggleWeather()" class="hidden md:flex items-center gap-2 px-4 py-2 bg-white/50 rounded-full hover:bg-white transition-colors border border-sage-200">
+                            <i data-lucide="cloud-sun" class="w-4 h-4 text-sage-600"></i>
+                            <span class="text-sm font-medium" id="weather-display">72°F Sunny</span>
+                        </button>
+                        
+                        <button onclick="openReservation()" class="hidden md:flex items-center gap-2 px-6 py-3 bg-sage-600 text-white rounded-full hover:bg-sage-700 transition-all hover:shadow-lg font-medium">
+                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                            Reserve Table
+                        </button>
+                        
+                        <button onclick="toggleMobileMenu()" class="md:hidden p-2">
+                            <i data-lucide="menu" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass border-b border-white/20">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#experience" class="block px-3 py-2 rounded-lg hover:bg-sage-100 text-gray-700">Experience</a>
+                <a href="#menu" class="block px-3 py-2 rounded-lg hover:bg-sage-100 text-gray-700">Smart Menu</a>
+                <a href="#ar-section" class="block px-3 py-2 rounded-lg hover:bg-sage-100 text-gray-700">AR Preview</a>
+                <button onclick="openReservation()" class="w-full mt-4 px-6 py-3 bg-sage-600 text-white rounded-full font-medium">Reserve Table</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Video Background -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Video Background -->
+        <div class="absolute inset-0 z-0">
+            <video autoplay muted loop playsinline class="w-full h-full object-cover" poster="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-preparing-a-salad-with-oil-42913-large.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-sage-900/90"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-6 animate-fade-in-up">
+                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                <span class="text-white/90 text-sm font-medium">AI-Powered Personalized Dining</span>
+            </div>
+            
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight animate-fade-in-up" style="animation-delay: 0.1s">
+                Taste the<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-sage-300 to-clay-300">Future</span> of Food
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto font-light animate-fade-in-up" style="animation-delay: 0.2s">
+                Where artificial intelligence meets culinary artistry. Experience personalized menus, AR visualization, and zero-commission ordering.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style="animation-delay: 0.3s">
+                <button onclick="scrollToMenu()" class="px-8 py-4 bg-sage-500 text-white rounded-full font-semibold hover:bg-sage-400 transition-all hover:scale-105 shadow-lg flex items-center gap-2">
+                    <i data-lucide="utensils" class="w-5 h-5"></i>
+                    Explore Smart Menu
+                </button>
+                <button onclick="openAR()" class="px-8 py-4 bg-white/10 backdrop-blur-md text-white border-2 border-white/30 rounded-full font-semibold hover:bg-white/20 transition-all flex items-center gap-2">
+                    <i data-lucide="scan" class="w-5 h-5"></i>
+                    Try AR Preview
+                </button>
+            </div>
+            
+            <!-- Trust Indicators -->
+            <div class="mt-12 flex flex-wrap justify-center gap-8 text-white/80 text-sm animate-fade-in-up" style="animation-delay: 0.4s">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                    <span class="font-semibold">4.9</span>
+                    <span>(1,247 reviews)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                    <span>San Francisco, CA</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="clock" class="w-5 h-5"></i>
+                    <span>Open until 11 PM</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-8 h-8 text-white/60"></i>
+        </div>
+    </section>
+
+    <!-- AI Personalization Bar -->
+    <div class="sticky top-20 z-30 bg-white border-b border-sage-200 shadow-sm transform transition-transform duration-300" id="personalization-bar">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-4 overflow-x-auto">
+                <div class="flex items-center gap-2 text-sm text-gray-600 whitespace-nowrap">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-sage-600"></i>
+                    <span class="font-medium">Personalized for:</span>
+                </div>
+                <div class="flex gap-2" id="preference-tags">
+                    <span class="px-3 py-1 bg-sage-100 text-sage-700 rounded-full text-xs font-medium flex items-center gap-1">
+                        Vegetarian <button onclick="removeTag(this)" class="hover:text-sage-900">×</button>
+                    </span>
+                    <span class="px-3 py-1 bg-clay-100 text-clay-700 rounded-full text-xs font-medium flex items-center gap-1">
+                        Low Sodium <button onclick="removeTag(this)" class="hover:text-clay-900">×</button>
+                    </span>
+                </div>
+                <button onclick="openPreferenceModal()" class="text-xs text-sage-600 hover:text-sage-800 font-medium whitespace-nowrap">+ Add preferences</button>
+            </div>
+            <div class="hidden md:flex items-center gap-2 text-xs text-gray-500">
+                <i data-lucide="zap" class="w-4 h-4 text-yellow-500"></i>
+                <span>Menu adapted to your dietary profile</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Smart Menu Section -->
+    <section id="menu" class="py-20 bg-sage-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">Intelligent Menu</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our AI analyzes your preferences, local weather, and real-time kitchen capacity to recommend the perfect dishes.</p>
+            </div>
+            
+            <!-- Category Filter -->
+            <div class="flex justify-center gap-2 mb-12 overflow-x-auto pb-2">
+                <button onclick="filterMenu('all')" class="menu-filter active px-6 py-2 rounded-full bg-sage-600 text-white font-medium transition-all" data-category="all">All</button>
+                <button onclick="filterMenu('starters')" class="menu-filter px-6 py-2 rounded-full bg-white text-gray-700 hover:bg-sage-100 font-medium transition-all" data-category="starters">Starters</button>
+                <button onclick="filterMenu('mains')" class="menu-filter px-6 py-2 rounded-full bg-white text-gray-700 hover:bg-sage-100 font-medium transition-all" data-category="mains">Mains</button>
+                <button onclick="filterMenu('desserts')" class="menu-filter px-6 py-2 rounded-full bg-white text-gray-700 hover:bg-sage-100 font-medium transition-all" data-category="desserts">Desserts</button>
+            </div>
+            
+            <!-- Menu Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="menu-grid">
+                <!-- Dish Card 1 -->
+                <article class="dish-card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer group" onclick="openDishDetail('heirloom')" itemscope itemtype="https://schema.org/MenuItem">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800" alt="Heirloom Tomato Salad" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" itemprop="image">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-bold text-sage-700" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <span itemprop="price">$18</span>
+                            <meta itemprop="priceCurrency" content="USD">
+                        </div>
+                        <div class="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">AI Recommended</div>
+                        <button onclick="event.stopPropagation(); toggleARPreview('heirloom')" class="absolute bottom-4 right-4 w-12 h-12 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-lg hover:bg-sage-500 hover:text-white transition-all transform hover:scale-110" title="View in AR">
+                            <i data-lucide="scan-line" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-serif text-xl font-bold text-gray-900" itemprop="name">Heirloom Tomato Salad</h3>
+                            <div class="flex gap-1">
+                                <span class="w-2 h-2 bg-green-500 rounded-full" title="Vegetarian"></span>
+                                <span class="w-2 h-2 bg-yellow-500 rounded-full" title="Gluten-Free"></span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2" itemprop="description">Ancient grains, basil oil, cashew cheese. 340 calories.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-sm text-gray-500">
+                                <i data-lucide="flame" class="w-4 h-4 text-orange-500"></i>
+                                <span>Popular now</span>
+                            </div>
+                            <button onclick="event.stopPropagation(); addToCart('heirloom')" class="px-4 py-2 bg-sage-100 text-sage-700 rounded-full text-sm font-medium hover:bg-sage-200 transition-colors flex items-center gap-2">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                    <meta itemprop="suitableForDiet" content="https://schema.org/VegetarianDiet">
+                    <meta itemprop="nutrition" itemscope itemtype="https://schema.org/NutritionInformation" itemref="nutrition1">
+                    <div id="nutrition1" class="menu-item-schema">
+                        <span itemprop="calories">340 calories</span>
+                    </div>
+                </article>
+
+                <!-- Dish Card 2 -->
+                <article class="dish-card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer group" onclick="openDishDetail('wagyu')" itemscope itemtype="https://schema.org/MenuItem">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1546241072-48010ad2862c?w=800" alt="Wagyu Ribeye" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" itemprop="image">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-bold text-sage-700" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <span itemprop="price">$65</span>
+                            <meta itemprop="priceCurrency" content="USD">
+                        </div>
+                        <button onclick="event.stopPropagation(); toggleARPreview('wagyu')" class="absolute bottom-4 right-4 w-12 h-12 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-lg hover:bg-sage-500 hover:text-white transition-all transform hover:scale-110">
+                            <i data-lucide="scan-line" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-serif text-xl font-bold text-gray-900" itemprop="name">A5 Wagyu Ribeye</h3>
+                            <div class="flex gap-1">
+                                <span class="w-2 h-2 bg-red-500 rounded-full" title="Contains Meat"></span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4" itemprop="description">Charred spring onion, miso butter, 8oz. Pair with: Cabernet Sauvignon.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-sm text-gray-500">
+                                <i data-lucide="wine" class="w-4 h-4 text-purple-500"></i>
+                                <span>AI Pairing</span>
+                            </div>
+                            <button onclick="event.stopPropagation(); addToCart('wagyu')" class="px-4 py-2 bg-sage-100 text-sage-700 rounded-full text-sm font-medium hover:bg-sage-200 transition-colors flex items-center gap-2">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Dish Card 3 -->
+                <article class="dish-card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer group" onclick="openDishDetail('lavender')" itemscope itemtype="https://schema.org/MenuItem">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800" alt="Lavender Crème" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" itemprop="image">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-bold text-sage-700" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <span itemprop="price">$14</span>
+                            <meta itemprop="priceCurrency" content="USD">
+                        </div>
+                        <div class="absolute top-4 left-4 bg-clay-500 text-white px-3 py-1 rounded-full text-xs font-bold">Seasonal</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-serif text-xl font-bold text-gray-900" itemprop="name">Lavender Honey Crème</h3>
+                            <div class="flex gap-1">
+                                <span class="w-2 h-2 bg-yellow-500 rounded-full" title="Gluten-Free"></span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4" itemprop="description">Bee pollen, shortbread crumble, edible flowers.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-sm text-gray-500">
+                                <i data-lucide="leaf" class="w-4 h-4 text-sage-500"></i>
+                                <span>Local honey</span>
+                            </div>
+                            <button onclick="event.stopPropagation(); addToCart('lavender')" class="px-4 py-2 bg-sage-100 text-sage-700 rounded-full text-sm font-medium hover:bg-sage-200 transition-colors flex items-center gap-2">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- View Full Menu CTA -->
+            <div class="text-center mt-12">
+                <button onclick="openFullMenu()" class="inline-flex items-center gap-2 text-sage-600 font-semibold hover:text-sage-800 transition-colors">
+                    View Complete AI-Optimized Menu
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- AR Feature Section -->
+    <section id="ar-section" class="py-20 bg-gray-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full border border-white/20 mb-6">
+                        <i data-lucide="scan" class="w-5 h-5 text-sage-400"></i>
+                        <span class="text-sage-300 font-medium">Augmented Reality</span>
+                    </div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6">See Your Meal Before You Order</h2>
+                    <p class="text-gray-300 text-lg mb-8">Our AR technology places photorealistic 3D models of our dishes directly on your table. Check portion sizes, explore ingredients, and customize in real-time.</p>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-sage-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="maximize" class="w-6 h-6 text-sage-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">True-to-Scale Visualization</h4>
+                                <p class="text-gray-400 text-sm">See exactly how dishes will look on your table with accurate dimensions.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-sage-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="layers" class="w-6 h-6 text-sage-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Ingredient Breakdown</h4>
+                                <p class="text-gray-400 text-sm">Tap any component to see sourcing info, allergens, and nutritional data.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-sage-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="sliders" class="w-6 h-6 text-sage-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Real-time Customization</h4>
+                                <p class="text-gray-400 text-sm">Modify ingredients and see updates instantly with price and nutrition changes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openAR()" class="px-8 py-4 bg-sage-500 text-white rounded-full font-semibold hover:bg-sage-400 transition-all hover:shadow-lg hover:shadow-sage-500/25 flex items-center gap-2">
+                        <i data-lucide="camera" class="w-5 h-5"></i>
+                        Launch AR Experience
+                    </button>
+                </div>
+                
+                <div class="relative">
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800" alt="AR Preview" class="w-full">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        
+                        <!-- AR UI Overlay -->
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <div class="glass-dark rounded-2xl p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium">Heirloom Tomato Salad</span>
+                                    <span class="text-sage-400 font-bold">$18</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="flex-1 py-2 bg-white/10 rounded-lg text-xs hover:bg-white/20 transition-colors">Rotate</button>
+                                    <button class="flex-1 py-2 bg-white/10 rounded-lg text-xs hover:bg-white/20 transition-colors">Ingredients</button>
+                                    <button class="flex-1 py-2 bg-sage-600 rounded-lg text-xs hover:bg-sage-500 transition-colors">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating AR Elements -->
+                        <div class="absolute top-6 right-6 glass-dark px-4 py-2 rounded-full text-xs flex items-center gap-2 animate-pulse">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            AR Active
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-4 -right-4 w-24 h-24 bg-sage-500/30 rounded-full blur-2xl"></div>
+                    <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-clay-500/30 rounded-full blur-2xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainability & Transparency -->
+    <section id="sustainability" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">Radical Transparency</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">We believe you deserve to know exactly where your food comes from and its impact on the planet.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Supply Chain Map -->
+                <div class="bg-sage-50 rounded-3xl p-8 hover:shadow-xl transition-shadow">
+                    <div class="w-14 h-14 bg-sage-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="map" class="w-7 h-7 text-sage-600"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-3">Farm to Table Tracking</h3>
+                    <p class="text-gray-600 mb-6">Every ingredient traced to its source. Scan any dish to see the farm, harvest date, and journey to your plate.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-600">Local sourcing</span>
+                            <span class="font-bold text-sage-700">85%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-sage-500 h-2 rounded-full" style="width: 85%"></div>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-600">Organic ingredients</span>
+                            <span class="font-bold text-sage-700">92%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-sage-500 h-2 rounded-full" style="width: 92%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Carbon Footprint -->
+                <div class="bg-clay-50 rounded-3xl p-8 hover:shadow-xl transition-shadow">
+                    <div class="w-14 h-14 bg-clay-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="leaf" class="w-7 h-7 text-clay-600"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-3">Carbon Impact</h3>
+                    <p class="text-gray-600 mb-6">Real-time carbon calculations for every menu item. Choose lower-impact options without sacrificing taste.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-2xl text-center">
+                            <div class="text-2xl font-bold text-clay-700">-34%</div>
+                            <div class="text-xs text-gray-500">Food waste vs. industry avg</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl text-center">
+                            <div class="text-2xl font-bold text-clay-700">2.1kg</div>
+                            <div class="text-xs text-gray-500">Avg CO2 per meal</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Community Impact -->
+                <div class="bg-gray-50 rounded-3xl p-8 hover:shadow-xl transition-shadow">
+                    <div class="w-14 h-14 bg-gray-200 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="heart" class="w-7 h-7 text-gray-700"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-3">Community First</h3>
+                    <p class="text-gray-600 mb-6">Living wages for all staff, partnerships with local food banks, and 1% for the planet commitment.</p>
+                    <div class="flex -space-x-2 mb-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" class="w-10 h-10 rounded-full border-2 border-white" alt="Team">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" class="w-10 h-10 rounded-full border-2 border-white" alt="Team">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100" class="w-10 h-10 rounded-full border-2 border-white" alt="Team">
+                        <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-800 flex items-center justify-center text-white text-xs font-bold">+24</div>
+                    </div>
+                    <p class="text-sm text-gray-600">Meet our team living wage certified</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UGC & Social Proof -->
+    <section class="py-20 bg-sage-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6">Real Moments,<br>Real Guests</h2>
+                    <p class="text-gray-600 text-lg mb-8">We trust our guests more than professional photographers. Explore authentic experiences shared by our community.</p>
+                    
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="flex -space-x-2">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100" class="w-12 h-12 rounded-full border-2 border-white" alt="Customer">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100" class="w-12 h-12 rounded-full border-2 border-white" alt="Customer">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100" class="w-12 h-12 rounded-full border-2 border-white" alt="Customer">
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1 text-yellow-500">
+                                <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            </div>
+                            <p class="text-sm text-gray-600">From 1,247 verified reviews</p>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openReviewGallery()" class="px-6 py-3 bg-white border-2 border-sage-200 text-sage-700 rounded-full font-medium hover:bg-sage-50 transition-colors flex items-center gap-2">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                        View #SavorAndSage Gallery
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400" class="w-full h-48 object-cover rounded-2xl shadow-lg transform hover:scale-105 transition-transform" alt="Customer photo">
+                        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400" class="w-full h-64 object-cover rounded-2xl shadow-lg transform hover:scale-105 transition-transform" alt="Customer photo">
+                    </div>
+                    <div class="space-y-4 pt-8">
+                        <img src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?w=400" class="w-full h-64 object-cover rounded-2xl shadow-lg transform hover:scale-105 transition-transform" alt="Customer photo">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400" class="w-full h-48 object-cover rounded-2xl shadow-lg transform hover:scale-105 transition-transform" alt="Customer photo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Direct Ordering CTA -->
+    <section class="py-20 bg-sage-600 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/food.png')]"></div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+            <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6">Zero Commission. Maximum Flavor.</h2>
+            <p class="text-xl text-sage-100 mb-8">Order directly through our AI-powered platform. Save 15-30% vs. delivery apps, earn loyalty points, and get personalized recommendations.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <button onclick="startOrder()" class="px-8 py-4 bg-white text-sage-700 rounded-full font-bold hover:bg-sage-50 transition-all hover:scale-105 shadow-xl flex items-center justify-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    Order Direct & Save
+                </button>
+                <button onclick="openReservation()" class="px-8 py-4 bg-sage-700 text-white border-2 border-sage-500 rounded-full font-bold hover:bg-sage-800 transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="calendar" class="w-5 h-5"></i>
+                    Book a Table
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto text-center">
+                <div>
+                    <div class="text-3xl font-bold mb-1">15%</div>
+                    <div class="text-sage-200 text-sm">Average savings</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold mb-1">0%</div>
+                    <div class="text-sage-200 text-sm">Commission fees</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold mb-1">2x</div>
+                    <div class="text-sage-200 text-sm">Loyalty points</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-sage-600 rounded-full flex items-center justify-center">
+                            <i data-lucide="leaf" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="font-serif text-xl font-bold">Savor & Sage</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">AI-native dining experiences with radical transparency and zero-commission ordering.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-sage-600 transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-sage-600 transition-colors">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-sage-600 transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Experience</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Smart Menu</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">AR Preview</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Private Dining</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Our Story</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Sustainability</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                            1420 Culinary Ave, SF, CA
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                            (555) SAVOR-01
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                            hello@savorandsage.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">© 2026 Savor & Sage. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+            <h3 class="font-serif text-xl font-bold">Your Order</h3>
+            <button onclick="toggleCart()" class="p-2 hover:bg-gray-100 rounded-full">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <div class="text-center text-gray-500 py-12">
+                <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto mb-4 opacity-30"></i>
+                <p>Your cart is empty</p>
+                <button onclick="toggleCart(); scrollToMenu()" class="mt-4 text-sage-600 font-medium hover:underline">Browse menu</button>
+            </div>
+        </div>
+        
+        <div class="p-6 border-t border-gray-100 bg-gray-50">
+            <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">Subtotal</span>
+                    <span class="font-medium" id="cart-subtotal">$0.00</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">Tax (8.5%)</span>
+                    <span class="font-medium" id="cart-tax">$0.00</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold pt-2 border-t border-gray-200">
+                    <span>Total</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+            </div>
+            
+            <div class="bg-sage-50 p-3 rounded-lg mb-4 flex items-center gap-2 text-sm text-sage-700">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                <span>You saved $12.40 vs. delivery apps!</span>
+            </div>
+            
+            <button onclick="checkout()" class="w-full py-4 bg-sage-600 text-white rounded-full font-bold hover:bg-sage-700 transition-colors flex items-center justify-center gap-2">
+                Checkout
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-24 right-6 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+        <span id="toast-message">Item added to cart</span>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        
+        // Global State
+        let cart = [];
+        let preferences = ['vegetarian', 'low-sodium'];
+        let currentFilter = 'all';
+        
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+        });
+        
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+                cursor.style.opacity = '0.5';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.opacity = '1';
+            });
+        });
+        
+        // Chat Widget Functions
+        function toggleChat() {
+            const chatWindow = document.getElementById('chat-window');
+            chatWindow.classList.toggle('hidden');
+            if (!chatWindow.classList.contains('hidden')) {
+                setTimeout(() => {
+                    document.getElementById('chat-input').focus();
+                }, 100);
+            }
+        }
+        
+        function handleChatKeypress(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+        
+        function quickAsk(topic) {
+            document.getElementById('chat-input').value = topic;
+            sendMessage();
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Simulate AI response
+            setTimeout(() => {
+                const response = generateAIResponse(message);
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+        
+        function addMessage(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = 'flex gap-3 ' + (sender === 'user' ? 'flex-row-reverse' : '');
+            
+            const avatar = sender === 'bot' 
+                ? `<div class="w-8 h-8 bg-sage-600 rounded-full flex items-center justify-center flex-shrink-0"><i data-lucide="bot" class="w-4 h-4 text-white"></i></div>`
+                : `<div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0"><i data-lucide="user" class="w-4 h-4 text-gray-600"></i></div>`;
+            
+            const bubble = `<div class="${sender === 'user' ? 'bg-sage-600 text-white' : 'bg-white'} p-3 rounded-2xl ${sender === 'user' ? 'rounded-tr-none' : 'rounded-tl-none'} shadow-sm max-w-[80%] text-sm">${text}</div>`;
+            
+            div.innerHTML = avatar + bubble;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            lucide.createIcons();
+        }
+        
+        function generateAIResponse(input) {
+            const lower = input.toLowerCase();
+            if (lower.includes('vegan') || lower.includes('vegetarian')) {
+                return "Based on your preferences, I recommend our Heirloom Tomato Salad (vegan) or the Wild Mushroom Risotto. Both are chef's favorites! Would you like to see nutritional information?";
+            } else if (lower.includes('gluten')) {
+                return "We have 15 gluten-free options marked with 🌾. The A5 Wagyu and Lavender Crème are both naturally gluten-free. Shall I filter the menu for you?";
+            } else if (lower.includes('romantic') || lower.includes('date')) {
+                return "For a romantic evening, I recommend our corner table by the window (Table 12) and the Chef's Tasting Menu with wine pairing. Would you like me to check availability for Saturday?";
+            } else if (lower.includes('happy hour')) {
+                return "Happy Hour is 4-6 PM daily! $8 craft cocktails and 50% off appetizers. Our AI suggests arriving by 4:30 for the best selection.";
+            } else {
+                return "I'd love to help! I can check real-time availability, suggest wine pairings, or modify any dish to fit your dietary needs. What would you like to know?";
+            }
+        }
+        
+        function startVoiceInput() {
+            addMessage("🎤 Listening... (Voice recognition active)", 'user');
+            setTimeout(() => {
+                addMessage("I heard: 'Show me spicy options'. Here are our chef's recommended spicy dishes...", 'bot');
+            }, 2000);
+        }
+        
+        // AR Functions
+        function openAR() {
+            const overlay = document.getElementById('ar-overlay');
+            const modal = document.getElementById('ar-modal');
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('scale-95', 'opacity-0');
+                modal.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+        
+        function closeAR() {
+            const overlay = document.getElementById('ar-overlay');
+            const modal = document.getElementById('ar-modal');
+            modal.classList.remove('scale-100', 'opacity-100');
+            modal.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300);
+        }
+        
+        function placeDish(dish) {
+            showToast(`Placing ${dish} on your table...`);
+            setTimeout(() => {
+                closeAR();
+                showToast('AR experience saved! Check your gallery.');
+            }, 1500);
+        }
+        
+        // Menu Functions
+        function filterMenu(category) {
+            currentFilter = category;
+            document.querySelectorAll('.menu-filter').forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.add('bg-sage-600', 'text-white');
+                    btn.classList.remove('bg-white', 'text-gray-700');
+                } else {
+                    btn.classList.remove('bg-sage-600', 'text-white');
+                    btn.classList.add('bg-white', 'text-gray-700');
+                }
+            });
+            
+            // Animate filtered items
+            const cards = document.querySelectorAll('.dish-card');
+            cards.forEach((card, index) => {
+                if (category === 'all' || index % 3 === 0) { // Simplified filtering logic
+                    card.style.display = 'block';
+                    gsap.fromTo(card, {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.5, delay: index * 0.1});
+                } else {
+                    card.style.display = category === 'all' ? 'block' : 'none';
+                }
+            });
+        }
+        
+        function openDishDetail(dish) {
+            showToast(`Opening ${dish} details with AR preview...`);
+        }
+        
+        function toggleARPreview(dish) {
+            openAR();
+        }
+        
+        // Cart Functions
+        function addToCart(item) {
+            const items = {
+                'heirloom': {name: 'Heirloom Tomato Salad', price: 18, image: '🥗'},
+                'wagyu': {name: 'A5 Wagyu Ribeye', price: 65, image: '🥩'},
+                'lavender': {name: 'Lavender Honey Crème', price: 14, image: '🍰'}
+            };
+            
+            const product = items[item];
+            cart.push(product);
+            updateCart();
+            showToast(`${product.name} added to cart`);
+            
+            // Open cart automatically on first item
+            if (cart.length === 1) {
+                setTimeout(() => toggleCart(), 500);
+            }
+        }
+        
+        function updateCart() {
+            const container = document.getElementById('cart-items');
+            const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+            const tax = subtotal * 0.085;
+            const total = subtotal + tax;
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-12">
+                        <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto mb-4 opacity-30"></i>
+                        <p>Your cart is empty</p>
+                        <button onclick="toggleCart(); scrollToMenu()" class="mt-4 text-sage-600 font-medium hover:underline">Browse menu</button>
+                    </div>
