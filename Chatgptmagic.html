@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hi Tech Dental Clinic</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Lato:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<!-- AOS Animation -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+
+<style>
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Lato',sans-serif;
+background:#f8fafc;
+}
+
+h1,h2,h3{
+font-family:'Playfair Display',serif;
+}
+
+.glass{
+background:rgba(255,255,255,0.8);
+backdrop-filter:blur(10px);
+}
+
+</style>
+
+</head>
+
+<body class="text-gray-800">
+
+<!-- NAVBAR -->
+
+<header class="fixed w-full z-50 glass shadow">
+<div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+
+<h1 class="text-2xl font-semibold text-blue-900">
+Hi Tech Dental Clinic
+</h1>
+
+<nav class="hidden md:flex space-x-8 text-blue-900 font-medium">
+
+<a href="#home">Home</a>
+<a href="#services">Services</a>
+<a href="#appointment">Appointment</a>
+<a href="#contact">Contact</a>
+
+</nav>
+
+</div>
+</header>
+
+
+<!-- HERO -->
+
+<section id="home" class="h-screen flex items-center justify-center text-center text-white relative">
+
+<div class="absolute inset-0">
+<img src="https://images.unsplash.com/photo-1588776814546-ec7e9d34d5a6?auto=format&fit=crop&w=1600&q=80"
+class="w-full h-full object-cover">
+</div>
+
+<div class="absolute inset-0 bg-blue-900 opacity-70"></div>
+
+<div class="relative z-10 max-w-3xl px-6" data-aos="fade-up">
+
+<h1 class="text-4xl md:text-6xl font-semibold mb-6">
+Premium Dental Care You Can Trust
+</h1>
+
+<p class="mb-8 text-lg">
+Modern equipment. Expert care. Comfortable experience.
+</p>
+
+<div class="space-x-4">
+
+<a href="#appointment"
+class="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded font-semibold">
+Book Appointment
+</a>
+
+<a href="tel:09924445333"
+class="border border-white px-6 py-3 rounded hover:bg-white hover:text-blue-900 font-semibold">
+Call Now
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SERVICES -->
+
+<section id="services" class="py-20 bg-white">
+
+<div class="max-w-7xl mx-auto px-6">
+
+<h2 class="text-4xl text-center text-blue-900 mb-12 font-semibold" data-aos="fade-up">
+Our Dental Services
+</h2>
+
+<div class="grid md:grid-cols-4 gap-8">
+
+<div class="bg-white shadow-lg rounded-lg p-6 text-center" data-aos="fade-up">
+
+<i class="fa-solid fa-tooth text-4xl text-yellow-500 mb-4"></i>
+
+<h3 class="text-xl font-semibold mb-2">General Dentistry</h3>
+
+<p>Regular checkups and treatments to keep your teeth healthy.</p>
+
+</div>
+
+
+<div class="bg-white shadow-lg rounded-lg p-6 text-center" data-aos="fade-up">
+
+<i class="fa-solid fa-wand-magic-sparkles text-4xl text-yellow-500 mb-4"></i>
+
+<h3 class="text-xl font-semibold mb-2">Cosmetic Dentistry</h3>
+
+<p>Smile makeovers and whitening for a perfect confident smile.</p>
+
+</div>
+
+
+<div class="bg-white shadow-lg rounded-lg p-6 text-center" data-aos="fade-up">
+
+<i class="fa-solid fa-user-doctor text-4xl text-yellow-500 mb-4"></i>
+
+<h3 class="text-xl font-semibold mb-2">Expert Doctors</h3>
+
+<p>Highly skilled dentists with years of experience.</p>
+
+</div>
+
+
+<div class="bg-white shadow-lg rounded-lg p-6 text-center" data-aos="fade-up">
+
+<i class="fa-solid fa-syringe text-4xl text-yellow-500 mb-4"></i>
+
+<h3 class="text-xl font-semibold mb-2">Root Canal</h3>
+
+<p>Advanced painless root canal treatment with modern tools.</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- APPOINTMENT FORM -->
+
+<section id="appointment" class="py-20 bg-gray-50">
+
+<div class="max-w-3xl mx-auto px-6">
+
+<h2 class="text-4xl text-center text-blue-900 mb-10 font-semibold" data-aos="fade-up">
+Book Appointment
+</h2>
+
+<div class="bg-white p-8 rounded-lg shadow-lg" data-aos="fade-up">
+
+<form id="appointmentForm" class="space-y-4">
+
+<input type="text" id="name" placeholder="Full Name"
+class="w-full border p-3 rounded" required>
+
+<input type="number" id="age" placeholder="Age"
+class="w-full border p-3 rounded" required>
+
+<input type="tel" id="phone" placeholder="Phone Number"
+class="w-full border p-3 rounded" required>
+
+<textarea id="problem" rows="4"
+placeholder="Describe your dental issue"
+class="w-full border p-3 rounded"></textarea>
+
+<button type="submit"
+class="w-full bg-blue-900 text-white py-3 rounded font-semibold hover:bg-blue-800">
+
+Send via WhatsApp
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact" class="py-20 bg-white">
+
+<div class="max-w-6xl mx-auto px-6 text-center">
+
+<h2 class="text-4xl text-blue-900 mb-8 font-semibold" data-aos="fade-up">
+Clinic Information
+</h2>
+
+<p class="mb-6" data-aos="fade-up">
+2nd Floor, 24 Carat Complex, Abu Street Society, Sabarmati, Ahmedabad, Gujarat 380005
+</p>
+
+<p class="mb-4" data-aos="fade-up">
+Phone: 099244 45333
+</p>
+
+<p data-aos="fade-up">
+Mon-Sat: 10am–1pm | 5pm–9pm
+</p>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer class="bg-blue-900 text-white text-center p-6">
+
+<p>© 2026 Hi Tech Dental Clinic. All Rights Reserved.</p>
+
+</footer>
+
+
+<!-- FLOATING BUTTONS -->
+
+<a href="https://wa.me/919924445333"
+class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 flex items-center justify-center rounded-full shadow-lg text-2xl">
+
+<i class="fa-brands fa-whatsapp"></i>
+
+</a>
+
+
+<a href="tel:09924445333"
+class="fixed bottom-24 right-6 bg-blue-900 text-white w-14 h-14 flex items-center justify-center rounded-full shadow-lg text-xl">
+
+<i class="fa-solid fa-phone"></i>
+
+</a>
+
+
+<!-- JS -->
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+
+AOS.init({
+duration:1000,
+once:true
+});
+
+
+document.getElementById("appointmentForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let name=document.getElementById("name").value;
+let age=document.getElementById("age").value;
+let phone=document.getElementById("phone").value;
+let problem=document.getElementById("problem").value;
+
+let message=
+`*New Patient Inquiry*
+---------------------
+Name: ${name}
+Age: ${age}
+Phone: ${phone}
+Issue: ${problem}`;
+
+let url=`https://wa.me/919924445333?text=${encodeURIComponent(message)}`;
+
+window.open(url,"_blank");
+
+});
+
+</script>
+
+
+</body>
+</html>
