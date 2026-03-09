@@ -1,113 +1,107 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<!DOCTYPE html><html lang="en">
+<head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Hi Tech Dental Clinic</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Lato:wght@300;400;500&display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/><link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/><style>
 
-html{
-scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
 font-family:'Lato',sans-serif;
 background:#f9fafb;
-color:#1f2937;
+color:#1f2937
 }
 
 h1,h2,h3{
-font-family:'Playfair Display',serif;
+font-family:'Playfair Display',serif
 }
 
-.gold{
-color:#c9a227;
-}
-
-.bg-gold{
-background:#c9a227;
-}
+.gold{color:#c9a227}
+.bg-gold{background:#c9a227}
 
 .glass{
-background:rgba(255,255,255,0.75);
-backdrop-filter:blur(10px);
+background:rgba(255,255,255,.8);
+backdrop-filter:blur(12px)
 }
 
-.hero-overlay{
-background:linear-gradient(to bottom,rgba(2,10,36,.6),rgba(2,10,36,.85));
+.hero-gradient{
+background:linear-gradient(135deg,#020b36,#0a2c6a)
+}
+
+.hero-shape{
+position:absolute;
+border-radius:999px;
+opacity:.15;
+filter:blur(60px);
+animation:float 12s infinite ease-in-out
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-40px)}
+100%{transform:translateY(0)}
 }
 
 </style></head><body><header class="fixed w-full z-50 glass shadow"><div class="max-w-7xl mx-auto flex justify-between items-center p-5"><h1 class="text-2xl font-semibold text-blue-900">
 Hi Tech Dental Clinic
-</h1><nav class="hidden md:flex space-x-8 font-medium text-blue-900"><a href="#home">Home</a>
-<a href="#services">Services</a>
+</h1><nav class="hidden md:flex space-x-8 text-blue-900 font-medium"><a href="#services">Services</a>
+<a href="#gallery">Gallery</a>
 <a href="#doctor">Doctor</a>
 <a href="#reviews">Reviews</a>
 <a href="#appointment">Appointment</a>
 
-</nav></div></header><section id="home" class="h-screen relative flex items-center pt-24"><img
-src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=2070"
-class="absolute w-full h-full object-cover">
-
-<div class="absolute inset-0 hero-overlay"></div><div class="relative z-10 max-w-6xl mx-auto px-6 text-white"><div class="max-w-2xl" data-aos="fade-up"><h1 class="text-5xl md:text-6xl font-semibold leading-tight mb-6">
-Luxury Dental Care With Modern Technology
-</h1><p class="text-lg mb-8 text-gray-200">
-Advanced dental treatments with comfort and precision.
-Trusted by hundreds of happy patients.
-</p><div class="flex gap-4"><a href="#appointment" class="bg-gold text-black px-6 py-3 rounded font-semibold">
+</nav></div></header><section class="hero-gradient text-white pt-32 pb-24 relative overflow-hidden"><div class="hero-shape w-96 h-96 bg-yellow-400 top-10 left-10"></div>
+<div class="hero-shape w-80 h-80 bg-blue-400 bottom-10 right-10"></div><div class="max-w-6xl mx-auto px-6 text-center"><h1 class="text-5xl md:text-6xl font-semibold mb-6" data-aos="fade-up">
+Premium Dental Care
+</h1><p class="text-lg text-gray-200 mb-10" data-aos="fade-up">
+Modern equipment. Expert dentist. Comfortable treatment.
+</p><div class="flex justify-center gap-4 mb-16"><a href="#appointment" class="bg-gold text-black px-6 py-3 rounded font-semibold">
 Book Appointment
-</a><a href="tel:09924445333" class="border px-6 py-3 rounded hover:bg-white hover:text-blue-900">
+</a><a href="tel:09924445333" class="border px-6 py-3 rounded">
 Call Now
-</a></div></div></div></section><section id="services" class="py-24"><div class="max-w-7xl mx-auto px-6"><h2 class="text-4xl text-center text-blue-900 mb-16" data-aos="fade-up">
+</a></div><div class="grid md:grid-cols-3 gap-8 text-center"><div data-aos="fade-up">
+<h2 class="text-4xl font-bold counter" data-target="12">0</h2>
+<p class="text-gray-200">Google Reviews</p>
+</div><div data-aos="fade-up">
+<h2 class="text-4xl font-bold counter" data-target="500">0</h2>
+<p class="text-gray-200">Happy Patients</p>
+</div><div data-aos="fade-up">
+<h2 class="text-4xl font-bold counter" data-target="10">0</h2>
+<p class="text-gray-200">Years Experience</p>
+</div></div></div></section><section id="services" class="py-24"><div class="max-w-7xl mx-auto px-6"><h2 class="text-4xl text-center text-blue-900 mb-16">
 Our Dental Services
-</h2><div class="grid md:grid-cols-4 gap-10"><div class="bg-white p-8 rounded-xl shadow hover:shadow-xl transition text-center" data-aos="fade-up"><i class="fa-solid fa-tooth text-4xl gold mb-5"></i>
+</h2><div class="grid md:grid-cols-4 gap-10"><div class="bg-white p-8 rounded-xl shadow hover:shadow-2xl transition text-center"><i class="fa-solid fa-tooth text-4xl gold mb-5"></i>
 
-<h3 class="text-xl font-semibold mb-2">General Dentistry</h3><p class="text-gray-600">
-Regular dental checkups and preventive care.
-</p></div><div class="bg-white p-8 rounded-xl shadow hover:shadow-xl transition text-center" data-aos="fade-up"><i class="fa-solid fa-wand-magic-sparkles text-4xl gold mb-5"></i>
+<h3 class="text-xl font-semibold mb-2">General Dentistry</h3></div><div class="bg-white p-8 rounded-xl shadow hover:shadow-2xl transition text-center"><i class="fa-solid fa-wand-magic-sparkles text-4xl gold mb-5"></i>
 
-<h3 class="text-xl font-semibold mb-2">Cosmetic Dentistry</h3><p class="text-gray-600">
-Teeth whitening and smile makeover.
-</p></div><div class="bg-white p-8 rounded-xl shadow hover:shadow-xl transition text-center" data-aos="fade-up"><i class="fa-solid fa-syringe text-4xl gold mb-5"></i>
+<h3 class="text-xl font-semibold mb-2">Cosmetic Dentistry</h3></div><div class="bg-white p-8 rounded-xl shadow hover:shadow-2xl transition text-center"><i class="fa-solid fa-syringe text-4xl gold mb-5"></i>
 
-<h3 class="text-xl font-semibold mb-2">Root Canal</h3><p class="text-gray-600">
-Pain free root canal treatment.
-</p></div><div class="bg-white p-8 rounded-xl shadow hover:shadow-xl transition text-center" data-aos="fade-up"><i class="fa-solid fa-user-doctor text-4xl gold mb-5"></i>
+<h3 class="text-xl font-semibold mb-2">Root Canal</h3></div><div class="bg-white p-8 rounded-xl shadow hover:shadow-2xl transition text-center"><i class="fa-solid fa-teeth-open text-4xl gold mb-5"></i>
 
-<h3 class="text-xl font-semibold mb-2">Expert Dentist</h3><p class="text-gray-600">
-Highly experienced professional care.
-</p></div></div></div></section><section id="doctor" class="py-24 bg-white"><div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center"><img
-src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=2070"
-class="rounded-xl shadow-lg"
-data-aos="fade-right">
+<h3 class="text-xl font-semibold mb-2">Teeth Cleaning</h3></div></div></div></section><section id="gallery" class="py-24 bg-white"><div class="max-w-6xl mx-auto px-6"><h2 class="text-4xl text-center text-blue-900 mb-16">
+Clinic Gallery
+</h2><div class="grid md:grid-cols-3 gap-6"><img src="https://images.unsplash.com/photo-1588776814546-ec7e9d34d5a6" class="rounded-xl shadow"><img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe" class="rounded-xl shadow"><img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09" class="rounded-xl shadow"></div></div></section><section id="doctor" class="py-24"><div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center"><img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d"
+class="rounded-xl shadow-lg">
 
-<div data-aos="fade-left"><h2 class="text-4xl text-blue-900 mb-6">
+<div><h2 class="text-4xl text-blue-900 mb-6">
 Meet Your Dentist
-</h2><p class="text-gray-600 mb-6">
-At Hi Tech Dental Clinic we provide modern dental treatment with sterilized equipment and patient comfort as priority.
-Our clinic is known for professional care and friendly staff.
-</p><p class="text-gray-600">
-Hundreds of satisfied patients trust us for root canal treatment, dental cleaning, cosmetic procedures and more.
-</p></div></div></section><section id="reviews" class="py-24"><div class="max-w-6xl mx-auto px-6"><h2 class="text-4xl text-center text-blue-900 mb-16">
+</h2><p class="text-gray-600 mb-4">
+Highly experienced dental professional providing safe and comfortable treatment.
+</p><div class="flex gap-4 mt-6"><div class="bg-gray-100 p-4 rounded">
+<i class="fa-solid fa-certificate gold"></i>
+Experienced
+</div><div class="bg-gray-100 p-4 rounded">
+<i class="fa-solid fa-hospital gold"></i>
+Modern Clinic
+</div></div></div></div></section><section id="reviews" class="py-24 bg-gray-100"><div class="max-w-6xl mx-auto px-6"><h2 class="text-4xl text-center text-blue-900 mb-16">
 Patient Reviews
-</h2><div class="grid md:grid-cols-3 gap-8"><div class="bg-white p-6 rounded-xl shadow"><p class="text-gray-600 mb-4">
-Best doctor with polite nature. We came from Bhuj for treatment and our experience was excellent.
-</p><strong class="gold">★★★★★</strong>
-
-</div><div class="bg-white p-6 rounded-xl shadow"><p class="text-gray-600 mb-4">
-Very patient friendly clinic and equipment is well sterilized.
-</p><strong class="gold">★★★★★</strong>
-
-</div><div class="bg-white p-6 rounded-xl shadow"><p class="text-gray-600 mb-4">
-Very nice clinic with sophisticated tools and expert dentist.
-</p><strong class="gold">★★★★★</strong>
-
-</div></div></div></section><section id="appointment" class="py-24 bg-gray-100"><div class="max-w-3xl mx-auto px-6"><h2 class="text-4xl text-center text-blue-900 mb-10">
+</h2><div class="grid md:grid-cols-3 gap-8"><div class="bg-white p-6 rounded-xl shadow"><p>Excellent treatment and polite doctor.</p>
+<strong class="gold">★★★★★</strong></div><div class="bg-white p-6 rounded-xl shadow"><p>Very clean clinic and modern equipment.</p>
+<strong class="gold">★★★★★</strong></div><div class="bg-white p-6 rounded-xl shadow"><p>Best dental experience I had.</p>
+<strong class="gold">★★★★★</strong></div></div></div></section><section id="appointment" class="py-24"><div class="max-w-3xl mx-auto px-6"><h2 class="text-4xl text-center text-blue-900 mb-10">
 Book Appointment
-</h2><div class="bg-white p-10 rounded-xl shadow"><form id="form" class="space-y-5"><input id="name" placeholder="Full Name" required class="w-full border p-3 rounded"><input id="age" placeholder="Age" required class="w-full border p-3 rounded"><input type="tel" id="phone" placeholder="Phone Number" required class="w-full border p-3 rounded"><textarea id="problem" rows="4" placeholder="Describe your problem" class="w-full border p-3 rounded"></textarea><button class="w-full bg-blue-900 text-white py-3 rounded font-semibold hover:bg-blue-800">
+</h2><div class="bg-white p-10 rounded-xl shadow"><form id="form" class="space-y-5"><input id="name" placeholder="Full Name" required class="w-full border p-3 rounded"><input id="age" placeholder="Age" required class="w-full border p-3 rounded"><input type="tel" id="phone" placeholder="Phone Number" required class="w-full border p-3 rounded"><textarea id="problem" rows="4" placeholder="Describe your problem" class="w-full border p-3 rounded"></textarea><button class="w-full bg-blue-900 text-white py-3 rounded font-semibold">
 Send on WhatsApp
-</button></form></div></div></section><section class="py-24"><div class="max-w-6xl mx-auto px-6"><h2 class="text-4xl text-center text-blue-900 mb-10">
-Our Location
-</h2><iframe
-class="w-full h-[400px] rounded-xl shadow"
-src="https://www.google.com/maps?q=Hi%20Tech%20Dental%20Clinic%20Ahmedabad&output=embed">
-</iframe></div></section><footer class="bg-blue-900 text-white text-center p-8"><p>Hi Tech Dental Clinic</p><p class="text-sm mt-2">
-2nd Floor, 24 Carat Complex, Sabarmati, Ahmedabad
+</button></form></div></div></section><footer class="bg-blue-900 text-white text-center p-8"><p>Hi Tech Dental Clinic</p><p class="text-sm mt-2">
+Sabarmati, Ahmedabad
 </p></footer><a href="https://wa.me/919924445333"
 class="fixed bottom-6 right-6 bg-green-500 w-14 h-14 flex items-center justify-center text-white rounded-full shadow-lg text-2xl">
 
@@ -120,10 +114,27 @@ class="fixed bottom-24 right-6 bg-blue-900 w-14 h-14 flex items-center justify-c
 
 </a><script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script><script>
 
-AOS.init({
-duration:1000,
-once:true
+AOS.init({duration:1000,once:true})
+
+const counters=document.querySelectorAll(".counter")
+
+counters.forEach(counter=>{
+counter.innerText="0"
+const update=()=>{
+const target=+counter.getAttribute("data-target")
+const c=+counter.innerText
+const inc=target/200
+
+if(c<target){
+counter.innerText=`${Math.ceil(c+inc)}`
+setTimeout(update,10)
+}else{
+counter.innerText=target
+}
+}
+update()
 })
+
 
 document.getElementById("form").addEventListener("submit",function(e){
 
