@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Meet's Dental Clinic | Premium Dental Care in Sabarmati, Ahmedabad</title>
+    <meta name="description" content="Experience luxury dental care at Dr. Meet's Dental Clinic. 5-star rated, award-winning dental services in Sabarmati, Ahmedabad. Book your consultation today.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#0F172A',
+                            800: '#1E293B',
+                            700: '#334155',
+                        },
+                        gold: {
+                            400: '#D4AF37',
+                            500: '#C5A028',
+                            300: '#E5C76B',
+                            600: '#B8941F',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'luxury': '0 25px 50px -12px rgba(15, 23, 42, 0.15)',
+                        'gold': '0 10px 40px -10px rgba(212, 175, 55, 0.3)',
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'card-hover': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B8941F;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #E5C76B 50%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Hero Background Animation */
+        .hero-bg {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=2068&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Shimmer Effect for Gold Elements */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+        }
+
+        /* Smooth Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Card Hover Lift */
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Navigation Blur */
+        .nav-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Custom Button Hover */
+        .btn-luxury {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .btn-luxury::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .btn-luxury:hover::before {
+            left: 100%;
+        }
+
+        /* Testimonial Slider */
+        .testimonial-slide {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .testimonial-slide.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Mobile Menu Animation */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Input Focus Animation */
+        .input-group {
+            position: relative;
+        }
+        .input-group input:focus ~ label,
+        .input-group input:not(:placeholder-shown) ~ label,
+        .input-group textarea:focus ~ label,
+        .input-group textarea:not(:placeholder-shown) ~ label,
+        .input-group select:focus ~ label,
+        .input-group select:not(:placeholder-shown) ~ label {
+            top: -0.5rem;
+            left: 0.5rem;
+            font-size: 0.75rem;
+            color: #D4AF37;
+            background: white;
+            padding: 0 0.25rem;
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-700 bg-white antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2" data-aos="fade-right">
+                    <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center shadow-gold">
+                        <i data-lucide="smile" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl font-serif font-bold text-white tracking-wide">Dr. Meet's</span>
+                        <span class="text-xs text-gold-400 uppercase tracking-widest">Dental Clinic</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8" data-aos="fade-down">
+                    <a href="#home" class="text-white/90 hover:text-gold-400 transition-colors text-sm font-medium tracking-wide">Home</a>
+                    <a href="#services" class="text-white/90 hover:text-gold-400 transition-colors text-sm font-medium tracking-wide">Services</a>
+                    <a href="#about" class="text-white/90 hover:text-gold-400 transition-colors text-sm font-medium tracking-wide">About</a>
+                    <a href="#testimonials" class="text-white/90 hover:text-gold-400 transition-colors text-sm font-medium tracking-wide">Reviews</a>
+                    <a href="#contact" class="text-white/90 hover:text-gold-400 transition-colors text-sm font-medium tracking-wide">Contact</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block" data-aos="fade-left">
+                    <button onclick="openBookingModal()" class="btn-luxury bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-6 py-3 rounded-full font-semibold text-sm shadow-gold hover:shadow-lg transform hover:scale-105 transition-all">
+                        Book Appointment
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white p-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-80 h-full bg-navy-900 shadow-2xl z-50 p-6 md:hidden">
+            <button onclick="toggleMobileMenu()" class="absolute top-4 right-4 text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="mt-12 flex flex-col space-y-6">
+                <a href="#home" onclick="toggleMobileMenu()" class="text-white text-lg font-medium hover:text-gold-400 transition-colors">Home</a>
+                <a href="#services" onclick="toggleMobileMenu()" class="text-white text-lg font-medium hover:text-gold-400 transition-colors">Services</a>
+                <a href="#about" onclick="toggleMobileMenu()" class="text-white text-lg font-medium hover:text-gold-400 transition-colors">About</a>
+                <a href="#testimonials" onclick="toggleMobileMenu()" class="text-white text-lg font-medium hover:text-gold-400 transition-colors">Reviews</a>
+                <a href="#contact" onclick="toggleMobileMenu()" class="text-white text-lg font-medium hover:text-gold-400 transition-colors">Contact</a>
+                <button onclick="openBookingModal(); toggleMobileMenu();" class="btn-luxury bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-6 py-3 rounded-full font-semibold text-center mt-4">
+                    Book Appointment
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/10"></div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 right-10 w-64 h-64 bg-gold-400/20 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-20 left-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 mb-6 border border-white/20">
+                        <i data-lucide="star" class="w-4 h-4 text-gold-400 fill-gold-400"></i>
+                        <span class="text-white/90 text-sm font-medium">5-Star Rated Clinic in Sabarmati</span>
+                    </div>
+                    
+                    <h1 class="font-serif text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+                        Redefining Your <br>
+                        <span class="text-gradient italic">Smile</span> Experience
+                    </h1>
+                    
+                    <p class="text-lg text-white/80 mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+                        Experience world-class dental care with Dr. Meet & Dr. Unnati. 
+                        Where advanced technology meets compassionate treatment in the heart of Ahmedabad.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <button onclick="openBookingModal()" class="btn-luxury bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 px-8 py-4 rounded-full font-semibold text-lg shadow-gold hover:shadow-xl transform hover:scale-105 transition-all flex items-center justify-center space-x-2">
+                            <i data-lucide="calendar" class="w-5 h-5"></i>
+                            <span>Book Consultation</span>
+                        </button>
+                        <a href="#services" class="group bg-white/10 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/20 transition-all flex items-center justify-center space-x-2">
+                            <span>Our Services</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+
+                    <!-- Quick Contact -->
+                    <div class="mt-12 flex flex-col sm:flex-row items-center gap-6 text-white/80">
+                        <a href="tel:+919586330088" class="flex items-center space-x-2 hover:text-gold-400 transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                                <i data-lucide="phone" class="w-5 h-5"></i>
+                            </div>
+                            <span class="font-medium">+91 95863 30088</span>
+                        </a>
+                        <div class="hidden sm:block w-px h-8 bg-white/20"></div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <span class="font-medium">Sabarmati, Ahmedabad</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Image/Visual -->
+                <div class="hidden md:block relative" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="relative z-10 bg-white/5 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=1000&auto=format&fit=crop" alt="Modern Dental Clinic" class="rounded-2xl shadow-2xl w-full object-cover h-96">
+                        
+                        <!-- Floating Stats Card -->
+                        <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-luxury" data-aos="zoom-in" data-aos-delay="500">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gold-100 rounded-full flex items-center justify-center">
+                                    <i data-lucide="users" class="w-6 h-6 text-gold-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-2xl font-bold text-navy-900">5000+</p>
+                                    <p class="text-sm text-slate-500">Happy Patients</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rating Card -->
+                        <div class="absolute -top-6 -right-6 bg-navy-900 rounded-2xl p-6 shadow-luxury text-white" data-aos="zoom-in" data-aos-delay="700">
+                            <div class="flex items-center space-x-1 mb-2">
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                            </div>
+                            <p class="text-sm font-medium">5.0 Rating</p>
+                            <p class="text-xs text-white/60">21 Google Reviews</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#trust" class="text-white/50 hover:text-white transition-colors">
+                <i data-lucide="chevron-down" class="w-8 h-8"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Trust Indicators Strip -->
+    <section id="trust" class="bg-white py-12 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8" data-aos="fade-up">
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-16 h-16 bg-gold-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-gold-100 transition-colors">
+                        <i data-lucide="award" class="w-8 h-8 text-gold-600"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-navy-900 mb-1">5-Star Rated</h3>
+                    <p class="text-sm text-slate-500">Google Reviews</p>
+                </div>
+                
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-16 h-16 bg-gold-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-gold-100 transition-colors">
+                        <i data-lucide="trophy" class="w-8 h-8 text-gold-600"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-navy-900 mb-1">Award Winning</h3>
+                    <p class="text-sm text-slate-500">Best Dental Clinic</p>
+                </div>
+
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-16 h-16 bg-gold-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-gold-100 transition-colors">
+                        <i data-lucide="clock" class="w-8 h-8 text-gold-600"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-navy-900 mb-1">20+ Years</h3>
+                    <p class="text-sm text-slate-500">Combined Experience</p>
+                </div>
+
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-16 h-16 bg-gold-50 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-gold-100 transition-colors">
+                        <i data-lucide="shield-check" class="w-8 h-8 text-gold-600"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-navy-900 mb-1">100% Safe</h3>
+                    <p class="text-sm text-slate-500">Sterilized Equipment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <span class="text-gold-600 font-semibold tracking-wider uppercase text-sm">Our Expertise</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-navy-900 mt-4 mb-6">Comprehensive Dental Solutions</h2>
+                <p class="text-slate-600 text-lg">From routine checkups to advanced cosmetic procedures, we offer a full spectrum of dental services tailored to your needs.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service Card 1 -->
+                <div class="service-card bg-white rounded-2xl p-8 shadow-card hover:shadow-card-hover border border-slate-100 group cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-gold">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-navy-900 mb-3">Cosmetic Dentistry</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">Transform your smile with veneers, whitening, and smile makeovers designed for natural beauty.</p>
+                    <a href="#contact" class="inline-flex items-center text-gold-600 font-semibold group-hover:text-gold-700 transition-colors">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="service-card bg-white rounded-2xl p-8 shadow-card hover:shadow-card-hover border border-slate-100 group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="cylinder" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-navy-900 mb-3">Dental Implants</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">Permanent tooth replacement solutions using state-of-the-art implant technology for a seamless look.</p>
+                    <a href="#contact" class="inline-flex items-center text-gold-600 font-semibold group-hover:text-gold-700 transition-colors">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="service-card bg-white rounded-2xl p-8 shadow-card hover:shadow-card-hover border border-slate-100 group cursor-pointer" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-gold">
+                        <i data-lucide="align-center-horizontal" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-navy-900 mb-3">Orthodontics</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">Straighten your teeth with modern braces and clear aligners for all ages. Comfortable and effective.</p>
+                    <a href="#contact" class="inline-flex items-center text-gold-600 font-semibold group-hover:text-gold-700 transition-colors">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Service Card 4 -->
+                <div class="service-card bg-white rounded-2xl p-8 shadow-card hover:shadow-card-hover border border-slate-100 group cursor-pointer" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="heart-pulse" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-navy-900 mb-3">General Care</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">Comprehensive checkups, cleanings, fillings, and preventive care to maintain your oral health.</p>
+                    <a href="#contact" class="inline-flex items-center text-gold-600 font-semibold group-hover:text-gold-700 transition-colors">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Additional Services Row -->
+            <div class="grid md:grid-cols-3 gap-8 mt-8">
+                <div class="bg-white rounded-2xl p-6 shadow-card border border-slate-100 flex items-center space-x-4 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="baby" class="w-6 h-6 text-gold-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-navy-900">Pediatric Dentistry</h4>
+                        <p class="text-sm text-slate-500">Gentle care for children</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-card border border-slate-100 flex items-center space-x-4 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="scissors" class="w-6 h-6 text-gold-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-navy-900">Root Canal Treatment</h4>
+                        <p class="text-sm text-slate-500">Painless procedure</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-card border border-slate-100 flex items-center space-x-4 hover:shadow-lg transition-shadow" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="scan" class="w-6 h-6 text-gold-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-navy-900">Digital X-Rays</h4>
+                        <p class="text-sm text-slate-500">Advanced diagnostics</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="about" class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Image Side -->
+                <div class="relative" data-aos="fade-right">
+                    <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1000&auto=format&fit=crop" alt="Dr. Meet's Clinic Interior" class="w-full h-[600px] object-cover">
+                        
+                        <!-- Experience Badge -->
+                        <div class="absolute bottom-8 left-8 bg-white rounded-2xl p-6 shadow-luxury max-w-xs">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-14 h-14 bg-gold-400 rounded-full flex items-center justify-center text-white font-bold text-2xl font-serif">
+                                    20+
+                                </div>
+                                <div>
+                                    <p class="font-bold text-navy-900 text-lg">Years of</p>
+                                    <p class="text-slate-600">Excellence</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-4 -left-4 w-24 h-24 bg-gold-400/20 rounded-full blur-2xl"></div>
+                    <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-navy-900/10 rounded-full blur-2xl"></div>
+                </div>
+
+                <!-- Content Side -->
+                <div data-aos="fade-left">
+                    <span class="text-gold-600 font-semibold tracking-wider uppercase text-sm">Why Choose Us</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-navy-900 mt-4 mb-6 leading-tight">
+                        The Luxury Dental <br>
+                        <span class="text-gradient">Experience</span>
+                    </h2>
+                    
+                    <p class="text-slate-600 text-lg mb-8 leading-relaxed">
+                        At Dr. Meet's Dental Clinic, we believe that visiting the dentist should be a comfortable, 
+                        even enjoyable experience. Our clinic combines clinical excellence with spa-like amenities.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4 group">
+                            <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold-100 transition-colors">
+                                <i data-lucide="shield-plus" class="w-6 h-6 text-gold-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-navy-900 text-lg mb-2">Painless Treatment</h4>
+                                <p class="text-slate-600">Advanced anesthesia techniques and gentle procedures ensure your comfort throughout every treatment.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 group">
+                            <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold-100 transition-colors">
+                                <i data-lucide="sofa" class="w-6 h-6 text-gold-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-navy-900 text-lg mb-2">Premium Lounge Area</h4>
+                                <p class="text-slate-600">Relax in our comfortable waiting area with complimentary beverages, Wi-Fi, and entertainment options.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 group">
+                            <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold-100 transition-colors">
+                                <i data-lucide="microscope" class="w-6 h-6 text-gold-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-navy-900 text-lg mb-2">State-of-the-Art Technology</h4>
+                                <p class="text-slate-600">Digital X-rays, intraoral cameras, and modern sterilization equipment for precise diagnostics.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 group">
+                            <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold-100 transition-colors">
+                                <i data-lucide="user-check" class="w-6 h-6 text-gold-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-navy-900 text-lg mb-2">Expert Team</h4>
+                                <p class="text-slate-600">Dr. Meet and Dr. Unnati bring years of specialized training and a gentle touch to every patient.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 flex items-center space-x-6">
+                        <button onclick="openBookingModal()" class="btn-luxury bg-navy-900 text-white px-8 py-4 rounded-full font-semibold hover:bg-navy-800 transition-all shadow-lg hover:shadow-xl">
+                            Schedule Visit
+                        </button>
+                        <a href="tel:+919586330088" class="flex items-center space-x-2 text-navy-900 font-semibold hover:text-gold-600 transition-colors">
+                            <i data-lucide="phone-call" class="w-5 h-5"></i>
+                            <span>Call Now</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 bg-navy-900 relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <span class="text-gold-400 font-semibold tracking-wider uppercase text-sm">Testimonials</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mt-4 mb-6">What Our Patients Say</h2>
+                <div class="flex items-center justify-center space-x-1 mb-4">
+                    <i data-lucide="star" class="w-6 h-6 text-gold-400 fill-gold-400"></i>
+                    <i data-lucide="star" class="w-6 h-6 text-gold-400 fill-gold-400"></i>
+                    <i data-lucide="star" class="w-6 h-6 text-gold-400 fill-gold-400"></i>
+                    <i data-lucide="star" class="w-6 h-6 text-gold-400 fill-gold-400"></i>
+                    <i data-lucide="star" class="w-6 h-6 text-gold-400 fill-gold-400"></i>
+                </div>
+                <p class="text-white/80 text-lg">Rated 5.0 out of 21 Google Reviews</p>
+            </div>
+
+            <!-- Testimonials Slider -->
+            <div class="relative max-w-4xl mx-auto" data-aos="fade-up">
+                <div id="testimonial-container" class="bg-white/5 backdrop-blur-lg rounded-3xl p-8 md:p-12 border border-white/10">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-slide active">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-white text-2xl font-serif font-bold mb-6">
+                                H
+                            </div>
+                            <div class="flex items-center space-x-1 mb-4">
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                            </div>
+                            <p class="text-white text-xl md:text-2xl font-light italic mb-6 leading-relaxed">
+                                "Absolutely love this clinic! Dr. Meet and Dr. Unnati are not only incredibly skilled but also kind and patient. 
+                                You can tell right away that they genuinely care about your comfort and dental health."
+                            </p>
+                            <h4 class="text-white font-bold text-lg">Hitakshi Gajan</h4>
+                            <p class="text-gold-400 text-sm">Local Guide • 7 Reviews</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-slide">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-white text-2xl font-serif font-bold mb-6">
+                                J
+                            </div>
+                            <div class="flex items-center space-x-1 mb-4">
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                            </div>
+                            <p class="text-white text-xl md:text-2xl font-light italic mb-6 leading-relaxed">
+                                "Dr. Meet was very thorough and patient, explained the procedures, answered my questions, 
+                                and made me feel comfortable and at ease. The clinic was clean and well-maintained."
+                            </p>
+                            <h4 class="text-white font-bold text-lg">Jesmin Chauhan</h4>
+                            <p class="text-gold-400 text-sm">Verified Patient</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-slide">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-white text-2xl font-serif font-bold mb-6">
+                                S
+                            </div>
+                            <div class="flex items-center space-x-1 mb-4">
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                            </div>
+                            <p class="text-white text-xl md:text-2xl font-light italic mb-6 leading-relaxed">
+                                "Good and affordable treatment and the in-house service offered were tremendous. 
+                                The staff behaviour is very nice and the doctors are very kind and humble."
+                            </p>
+                            <h4 class="text-white font-bold text-lg">Shubham Srivastav</h4>
+                            <p class="text-gold-400 text-sm">Verified Patient</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 4 -->
+                    <div class="testimonial-slide">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center text-white text-2xl font-serif font-bold mb-6">
+                                R
+                            </div>
+                            <div class="flex items-center space-x-1 mb-4">
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                            </div>
+                            <p class="text-white text-xl md:text-2xl font-light italic mb-6 leading-relaxed">
+                                "I visited Dr. Meet's dental clinic, very neat & hygienic and the doctor explained entire procedure very patiently. 
+                                Highly recommend for all dental problems."
+                            </p>
+                            <h4 class="text-white font-bold text-lg">Ritika Jain</h4>
+                            <p class="text-gold-400 text-sm">Verified Patient</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slider Controls -->
+                <div class="flex justify-center items-center space-x-4 mt-8">
+                    <button onclick="changeTestimonial(-1)" class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors border border-white/20">
+                        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                    </button>
+                    <div class="flex space-x-2" id="testimonial-dots">
+                        <button onclick="goToTestimonial(0)" class="w-3 h-3 rounded-full bg-gold-400 transition-all"></button>
+                        <button onclick="goToTestimonial(1)" class="w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all"></button>
+                        <button onclick="goToTestimonial(2)" class="w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all"></button>
+                        <button onclick="goToTestimonial(3)" class="w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all"></button>
+                    </div>
+                    <button onclick="changeTestimonial(1)" class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors border border-white/20">
+                        <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- View All Reviews Button -->
+            <div class="text-center mt-12">
+                <a href="https://maps.app.goo.gl/UjQnrniX7a1avPxz6" target="_blank" class="inline-flex items-center space-x-2 text-white/80 hover:text-gold-400 transition-colors border-b border-gold-400/50 pb-1">
+                    <span>View all 21 reviews on Google</span>
+                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Booking Section -->
+    <section id="contact" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Contact Info -->
+                <div data-aos="fade-right">
+                    <span class="text-gold-600 font-semibold tracking-wider uppercase text-sm">Get In Touch</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-navy-900 mt-4 mb-6">Visit Our Clinic</h2>
+                    <p class="text-slate-600 text-lg mb-8">
+                        Ready to transform your smile? Visit us at our state-of-the-art facility in Sabarmati, Ahmedabad. 
+                        We offer flexible scheduling including Sunday hours.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4 bg-white p-6 rounded-2xl shadow-card">
+                            <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-gold-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-navy-900 mb-1">Address</h4>
+                                <p class="text-slate-600">124, First Floor, Police Station Tolnaka,<br>Opposite Sabarmati, Sabarmati,<br>Ahmedabad, Gujarat 380005</p>
+                                <a href="https://maps.app.goo.gl/UjQnrniX7a1avPxz6" target="_blank" class="inline-flex items-center text-gold-600 text-sm font-semibold mt-2 hover:text-gold-700">
+                                    Get Directions <i data-lucide="navigation" class="w-4 h-4 ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 bg-white p-6 rounded-2xl shadow-card">
+                            <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="clock" class="w-6 h-6 text-gold-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-navy-900 mb-1">Opening Hours</h4>
+                                <div class="space-y-1 text-slate-600 text-sm">
+                                    <div class="flex justify-between"><span>Monday - Saturday:</span> <span class="font-semibold">9:00 AM - 9:00 PM</span></div>
+                                    <div class="flex justify-between"><span>Sunday:</span> <span class="font-semibold">9:00 AM - 1:00 PM</span></div>
+                                </div>
+                                <div class="mt-2 inline-flex items-center space-x-2 text-green-600 text-sm font-semibold">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                    <span>Open Now</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 bg-white p-6 rounded-2xl shadow-card">
+                            <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="phone" class="w-6 h-6 text-gold-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-navy-900 mb-1">Contact</h4>
+                                <p class="text-slate-600 mb-2">Call us directly for immediate assistance</p>
+                                <a href="tel:+919586330088" class="text-2xl font-bold text-navy-900 hover:text-gold-600 transition-colors flex items-center space-x-2">
+                                    <span>+91 95863 30088</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Embed -->
+                    <div class="mt-8 rounded-2xl overflow-hidden shadow-lg h-64 bg-slate-200">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.1234567890123!2d72.12345678901234!3d23.123456789012345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDA3JzI0LjQiTiA3MsKwMDcnMjQuNCJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Booking Form -->
+                <div data-aos="fade-left">
+                    <div class="bg-white rounded-3xl p-8 md:p-10 shadow-luxury border border-slate-100 sticky top-24">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center">
+                                <i data-lucide="calendar-plus" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold text-navy-900">Book Appointment</h3>
+                        </div>
+                        
+                        <p class="text-slate-600 mb-6">Fill in your details and we'll confirm your appointment via WhatsApp.</p>
+
+                        <form id="bookingForm" onsubmit="sendToWhatsApp(event)" class="space-y-5">
+                            <div class="input-group">
+                                <input type="text" id="patientName" required placeholder=" " 
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all peer">
+                                <label for="patientName" class="absolute left-4 top-3 text-slate-400 transition-all pointer-events-none">Patient Name *</label>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="input-group">
+                                    <input type="tel" id="phoneNumber" required placeholder=" " 
+                                        class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all peer">
+                                    <label for="phoneNumber" class="absolute left-4 top-3 text-slate-400 transition-all pointer-events-none">Phone Number *</label>
+                                </div>
+                                <div class="input-group">
+                                    <input type="number" id="age" min="1" max="120" placeholder=" " 
+                                        class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all peer">
+                                    <label for="age" class="absolute left-4 top-3 text-slate-400 transition-all pointer-events-none">Age</label>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <select id="service" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all bg-white peer">
+                                    <option value="" disabled selected>Select Service *</option>
+                                    <option value="General Checkup">General Checkup</option>
+                                    <option value="Teeth Cleaning">Teeth Cleaning</option>
+                                    <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
+                                    <option value="Dental Implants">Dental Implants</option>
+                                    <option value="Orthodontics">Orthodontics (Braces/Aligners)</option>
+                                    <option value="Root Canal">Root Canal Treatment</option>
+                                    <option value="Tooth Extraction">Tooth Extraction</option>
+                                    <option value="Pediatric Dentistry">Pediatric Dentistry</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="input-group">
+                                    <input type="date" id="preferredDate" required placeholder=" " 
+                                        class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all peer text-slate-600">
+                                    <label for="preferredDate" class="absolute left-4 -top-2 bg-white px-1 text-xs text-gold-600 font-semibold">Preferred Date *</label>
+                                </div>
+                                <div class="input-group">
+                                    <select id="preferredTime" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all bg-white peer">
+                                        <option value="" disabled selected>Preferred Time *</option>
+                                        <option value="Morning (9AM - 12PM)">Morning (9AM - 12PM)</option>
+                                        <option value="Afternoon (12PM - 4PM)">Afternoon (12PM - 4PM)</option>
+                                        <option value="Evening (4PM - 9PM)">Evening (4PM - 9PM)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <textarea id="problem" rows="3" placeholder=" " 
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all resize-none peer"></textarea>
+                                <label for="problem" class="absolute left-4 top-3 text-slate-400 transition-all pointer-events-none">Describe your dental concern (Optional)</label>
+                            </div>
+
+                            <button type="submit" class="btn-luxury w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all flex items-center justify-center space-x-2">
+                                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                                <span>Book via WhatsApp</span>
+                            </button>
+
+                            <p class="text-xs text-slate-500 text-center">
+                                By booking, you agree to our terms. We'll confirm your appointment shortly.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Call Button (Mobile) -->
+    <div class="fixed bottom-6 right-6 z-40 md:hidden">
+        <a href="tel:+919586330088" class="flex items-center justify-center w-14 h-14 bg-green-500 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all animate-pulse">
+            <i data-lucide="phone" class="w-6 h-6 text-white"></i>
+        </a>
+    </div>
+
+    <!-- Sticky Bottom Bar (Mobile) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 md:hidden z-30 shadow-lg">
+        <div class="flex space-x-3">
+            <a href="tel:+919586330088" class="flex-1 bg-navy-900 text-white py-3 rounded-full font-semibold flex items-center justify-center space-x-2">
+                <i data-lucide="phone" class="w-5 h-5"></i>
+                <span>Call Now</span>
+            </a>
+            <button onclick="openBookingModal()" class="flex-1 bg-gradient-to-r from-gold-400 to-gold-600 text-navy-900 py-3 rounded-full font-semibold flex items-center justify-center space-x-2">
+                <i data-lucide="calendar" class="w-5 h-5"></i>
+                <span>Book</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-navy-900 text-white pt-20 pb-32 md:pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center">
+                            <i data-lucide="smile" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-serif font-bold tracking-wide">Dr. Meet's</span>
+                            <span class="text-xs text-gold-400 uppercase tracking-widest">Dental Clinic</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Premium dental care in the heart of Sabarmati, Ahmedabad. 
+                        Experience the perfect blend of expertise and comfort.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gold-400 transition-colors group">
+                            <i data-lucide="facebook" class="w-5 h-5 group-hover:text-navy-900"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gold-400 transition-colors group">
+                            <i data-lucide="instagram" class="w-5 h-5 group-hover:text-navy-900"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gold-400 transition-colors group">
+                            <i data-lucide="twitter" class="w-5 h-5 group-hover:text-navy-900"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-serif text-lg font-bold mb-6 text-gold-400">Quick Links</h4>
+                    <ul class="space-y-3 text-slate-400">
+                        <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#testimonials" class="hover:text-white transition-colors">Reviews</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h4 class="font-serif text-lg font-bold mb-6 text-gold-400">Services</h4>
+                    <ul class="space-y-3 text-slate-400">
+                        <li><a href="#services" class="hover:text-white transition-colors">Cosmetic Dentistry</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Dental Implants</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Orthodontics</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Root Canal</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Teeth Whitening</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="font-serif text-lg font-bold mb-6 text-gold-400">Contact</h4>
+                    <ul class="space-y-4 text-slate-400">
+                        <li class="flex items-start space-x-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-gold-400 flex-shrink-0 mt-0.5"></i>
+                            <span class="text-sm">124, First Floor, Police Station Tolnaka, Opposite Sabarmati, Ahmedabad, Gujarat 380005</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i data-lucide="phone" class="w-5 h-5 text-gold-400"></i>
+                            <a href="tel:+919586330088" class="hover:text-white transition-colors">+91 95863 30088</a>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i data-lucide="clock" class="w-5 h-5 text-gold-400"></i>
+                            <span class="text-sm">Mon-Sat: 9AM - 9PM<br>Sun: 9AM - 1PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <p class="text-slate-500 text-sm">
+                    © 2026 Dr. Meet's Dental Clinic. All rights reserved.
+                </p>
+                <div class="flex items-center space-x-2 text-slate-500 text-sm">
+                    <span>Crafted with</span>
+                    <i data-lucide="heart" class="w-4 h-4 text-red-500 fill-red-500"></i>
+                    <span>in Ahmedabad</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeBookingModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl transform transition-all scale-100">
+                <div class="sticky top-0 bg-white border-b border-slate-100 p-6 flex justify-between items-center">
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold text-navy-900">Book Appointment</h3>
+                        <p class="text-slate-500 text-sm mt-1">We'll confirm via WhatsApp</p>
+                    </div>
+                    <button onclick="closeBookingModal()" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors">
+                        <i data-lucide="x" class="w-5 h-5 text-slate-600"></i>
+                    </button>
+                </div>
+                
+                <div class="p-6">
+                    <form onsubmit="sendToWhatsApp(event, true)" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-navy-900 mb-2">Patient Name *</label>
+                            <input type="text" id="modalName" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-navy-900 mb-2">Phone *</label>
+                                <input type="tel" id="modalPhone" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-navy-900 mb-2">Age</label>
+                                <input type="number" id="modalAge" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-navy-900 mb-2">Service *</label>
+                            <select id="modalService" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all bg-white">
+                                <option value="" disabled selected>Select Service</option>
+                                <option value="General Checkup">General Checkup</option>
+                                <option value="Teeth Cleaning">Teeth Cleaning</option>
+                                <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
+                                <option value="Dental Implants">Dental Implants</option>
+                                <option value="Orthodontics">Orthodontics</option>
+                                <option value="Root Canal">Root Canal Treatment</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-navy-900 mb-2">Preferred Date *</label>
+                            <input type="date" id="modalDate" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-navy-900 mb-2">Problem Description</label>
+                            <textarea id="modalProblem" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 outline-none transition-all resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-luxury w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all flex items-center justify-center space-x-2 mt-6">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                            <span>Send Booking Request</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Initialize AOS Animation
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('bg-navy-900/95', 'nav-blur', 'shadow-lg');
+                navbar.classList.remove('bg-transparent', 'py-4');
+                navbar.classList.add('py-2');
+            } else {
+                navbar.classList.remove('bg-navy-900/95', 'nav-blur', 'shadow-lg', 'py-2');
+                navbar.classList.add('bg-transparent', 'py-4');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+        }
+
+        // Testimonial Slider
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-slide');
+        const dots = document.querySelectorAll('#testimonial-dots button');
+
+        function showTestimonial(index) {
+            testimonials.forEach((t, i) => {
+                t.classList.remove('active');
+                dots[i].classList.remove('bg-gold-400');
+                dots[i].classList.add('bg-white/30');
+            });
+            
+            testimonials[index].classList.add('active');
+            dots[index].classList.remove('bg-white/30');
+            dots[index].classList.add('bg-gold-400');
+        }
+
+        function changeTestimonial(direction) {
+            currentTestimonial += direction;
+            if (currentTestimonial >= testimonials.length) currentTestimonial = 0;
+            if (currentTestimonial < 0) currentTestimonial = testimonials.length - 1;
+            showTestimonial(currentTestimonial);
+        }
+
+        function goToTestimonial(index) {
+            currentTestimonial = index;
+            showTestimonial(currentTestimonial);
+        }
+
+        // Auto-advance testimonials
+        setInterval(() => {
+            changeTestimonial(1);
+        }, 6000);
+
+        // Booking Modal
+        function openBookingModal() {
+            document.getElementById('bookingModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // WhatsApp Integration
+        function sendToWhatsApp(event, isModal = false) {
+            event.preventDefault();
+            
+            const prefix = isModal ? 'modal' : '';
+            const name = document.getElementById(prefix + (isModal ? 'Name' : 'patientName')).value;
+            const phone = document.getElementById(prefix + (isModal ? 'Phone' : 'phoneNumber')).value;
+            const age = document.getElementById(prefix + (isModal ? 'Age' : 'age')).value || 'Not specified';
+            const service = document.getElementById(prefix + (isModal ? 'Service' : 'service')).value;
+            const date = isModal ? document.getElementById('modalDate').value : document.getElementById('preferredDate').value;
+            const time = isModal ? 'Not specified' : document.getElementById('preferredTime').value;
+            const problem = document.getElementById(prefix + (isModal ? 'Problem' : 'problem')).value || 'Not specified';
+            
+            const clinicNumber = '919586330088'; // WhatsApp format with country code
+            
+            const message = `*New Appointment Request*%0A%0A` +
+                `*Patient Name:* ${name}%0A` +
+                `*Phone:* ${phone}%0A` +
+                `*Age:* ${age}%0A` +
+                `*Service:* ${service}%0A` +
+                `*Preferred Date:* ${date}%0A` +
+                `*Preferred Time:* ${time}%0A` +
+                `*Problem:* ${problem}%0A%0A` +
+                `*Source:* Website Booking Form`;
+            
+            const whatsappUrl = `https://wa.me/${clinicNumber}?text=${message}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Close modal if open
+            if (isModal) {
+                closeBookingModal();
+            }
+            
+            // Reset form
+            event.target.reset();
+            
+            // Show success feedback (optional - could add a toast notification here)
+            alert('Thank you! Redirecting you to WhatsApp to complete your booking...');
+        }
+
+        // Set minimum date to today
+        const dateInputs = document.querySelectorAll('input[type="date"]');
+        const today = new Date().toISOString().split('T')[0];
+        dateInputs.forEach(input => {
+            input.min = today;
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeBookingModal();
+            }
+        });
+    </script>
+</body>
+</html>
