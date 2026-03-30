@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astrux Marketing | Digital Excellence</title>
+    <meta name="description" content="Astrux Marketing provides top tier digital marketing, web development, and SEO services to help your business grow online.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: blur(12px);
+            --primary: #4f46e5;
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e1b4b, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism Utility */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Layout & Typography */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        h1, h2, h3 {
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            background: -webkit-linear-gradient(#fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            transition: 0.3s;
+        }
+        
+        nav .glass {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            border-radius: 50px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 50px;
+        }
+
+        .typing-container {
+            font-size: 3rem;
+            font-weight: 800;
+            min-height: 80px;
+            margin-bottom: 20px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #fff;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: var(--primary);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s transform;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background: #4338ca;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Cards */
+        .card {
+            padding: 30px;
+            transition: 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .project-tag {
+            font-size: 0.8rem;
+            background: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .project-link {
+            color: #fff;
+            text-decoration: none;
+            margin-top: 15px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Forms */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--primary);
+        }
+
+        /* Chatbot Widget placeholder */
+        .chatbot-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1000;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-15px);}
+            60% {transform: translateY(-7px);}
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .typing-container { font-size: 2rem; }
+            .nav-links { display: none; }
+            .hero-content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <div class="glass" data-aos="fade-down" data-aos-duration="1000">
+                <div class="logo">Astrux</div>
+                <div class="nav-links">
+                    <a href="#hero">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#services">Services</a>
+                    <a href="#portfolio">Work</a>
+                    <a href="#reviews">Reviews</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="container">
+            <div class="glass hero-content" data-aos="zoom-in" data-aos-duration="1500">
+                <div class="typing-container">
+                    <span id="typing-text"></span><span class="cursor"></span>
+                </div>
+                <p style="margin-bottom: 30px; color: var(--text-muted);">We blend cutting edge SEO strategies with stunning glassmorphism design to elevate your brand. No generic templates just pure digital excellence tailored for your business growth.</p>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="#portfolio" class="btn"><i class="fas fa-folder-open"></i> View Work</a>
+                    <a href="https://wa.me/916006555193" target="_blank" class="btn" style="background: #25D366;"><i class="fab fa-whatsapp"></i> Chat Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 data-aos="fade-up">About Astrux Marketing</h2>
+            <div class="glass card" data-aos="fade-up" data-aos-delay="200">
+                <p style="font-size: 1.1rem; line-height: 1.8;">At Astrux Marketing we do not just build websites we craft digital experiences. Our focus is on modern aesthetics like glassmorphism combined with powerful SEO foundations. Whether you need a simple landing page or a complex corporate portal we build platforms that capture attention and drive conversions. We believe in custom solutions that speak directly to your target audience ensuring your brand stands out in a crowded digital space.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2 data-aos="fade-up">Our Expertise</h2>
+            <div class="grid">
+                <div class="glass card" data-aos="flip-left" data-aos-delay="100">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Web Development</h3>
+                    <p>Custom built websites featuring fluid animations modern frameworks and responsive design to ensure flawless performance on any device.</p>
+                </div>
+                <div class="glass card" data-aos="flip-left" data-aos-delay="200">
+                    <i class="fas fa-search-chart"></i>
+                    <h3>Advanced SEO</h3>
+                    <p>Data driven search engine optimization techniques to improve your rankings drive organic traffic and dominate your local market.</p>
+                </div>
+                <div class="glass card" data-aos="flip-left" data-aos-delay="300">
+                    <i class="fas fa-robot"></i>
+                    <h3>AI Integration</h3>
+                    <p>Implementation of smart AI chatbots and automation tools to streamline your customer service and keep your business running around the clock.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="container">
+            <h2 data-aos="fade-up">Recent Projects</h2>
+            <div class="grid" id="portfolio-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="reviews">
+        <div class="container">
+            <h2 data-aos="fade-up">Client Feedback</h2>
+            <div class="grid" id="reviews-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 data-aos="fade-up">Let's Connect</h2>
+            <div class="glass card" data-aos="fade-up" data-aos-delay="200" style="padding: 50px;">
+                <form onsubmit="event.preventDefault(); alert('Form submission logic will go here.');">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea rows="5" placeholder="Tell us about your project" required></textarea>
+                    <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="glass chatbot-widget" title="AI Chatbot Assistant">
+        <i class="fas fa-comment-dots" style="color: #fff;"></i>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize Animations
+        AOS.init({
+            once: true,
+            offset: 50,
+        });
+
+        // Typing Effect
+        const words = ["We Build Digital Experiences", "Glassmorphism Aesthetics", "SEO Optimized Platforms", "Astrux Marketing"];
+        let i = 0;
+        let timer;
+        let isDeleting = false;
+        let wordIndex = 0;
+
+        function type() {
+            const currentWord = words[wordIndex];
+            const textElement = document.getElementById("typing-text");
+            
+            if (isDeleting) {
+                textElement.textContent = currentWord.substring(0, i - 1);
+                i--;
+            } else {
+                textElement.textContent = currentWord.substring(0, i + 1);
+                i++;
+            }
+
+            let typingSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && i === currentWord.length) {
+                typingSpeed = 2000; 
+                isDeleting = true;
+            } else if (isDeleting && i === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typingSpeed = 500;
+            }
+
+            setTimeout(type, typingSpeed);
+        }
+        
+        // Start typing effect
+        setTimeout(type, 1000);
+
+        // Portfolio Data Loading
+        const projects = [
+            {title:'Nayan Demo v2', tag:'Demo', url:'https://nayandemoversion2.pages.dev'},
+            {title:'Akshar Dental', tag:'Dental', url:'https://akshar-dental-clinic.pages.dev'},
+            {title:'Bhakti Dental', tag:'Dental', url:'https://bhakti-dental-clinic.pages.dev'},
+            {title:"Dr. Meet's Clinic", tag:'Medical', url:'https://drrmeetsss.pages.dev'},
+            {title:"Dr. Meet's v2", tag:'Medical', url:'https://drmeetsclinic2.pages.dev'},
+            {title:"Dr. Meet's v3", tag:'Medical', url:'https://dr-meetsclinic.pages.dev'},
+            {title:"Dr. Meet's v4", tag:'Medical', url:'https://drmeetsclinic.pages.dev'},
+            {title:'New Dentist Site', tag:'Dental', url:'https://newdentistwebsyte.pages.dev'},
+            {title:'Astrux Corp', tag:'Corporate', url:'https://astruxcorpwebsitebynayan.pages.dev'},
+            {title:'Nayan Demo v66', tag:'Demo', url:'https://nayandemoversion66767.pages.dev'},
+            {title:'AI Stitch', tag:'Tech', url:'https://websitegooglestitchai.pages.dev'},
+            {title:'Hi-Tech Dental', tag:'Dental', url:'https://hi-tech-dental-clinic.pages.dev'},
+            {title:'Hi-Tech Dental 2', tag:'Dental', url:'https://hi-tech-dental-clinic-2.pages.dev'},
+            {title:'Hi-Tech Dental 3', tag:'Dental', url:'https://hi-tech-dental-clinic3.pages.dev'},
+            {title:'Hi-Tech Dental 75', tag:'Dental', url:'https://hi-tech-dental-clinic75.pages.dev'},
+            {title:'Hi-Tech Dental O', tag:'Dental', url:'https://hi-tech-dental-clinic-o.pages.dev'},
+            {title:'Chunk City Ganderbal', tag:'Restaurant', url:'https://chunk-city-ganderbal-new.pages.dev/'},
+            {title:'Chinar Communications', tag:'Phone Shop', url:'https://chinarcommunications.pages.dev'},
+            {title:'Srinagar Tourism', tag:'Travel agency', url:'https://srinagartourism.pages.dev'}
+        ];
+
+        const portfolioGrid = document.getElementById('portfolio-grid');
+        let delay = 100;
+
+        projects.forEach(project => {
+            const card = document.createElement('div');
+            card.className = 'glass card';
+            card.setAttribute('data-aos', 'fade-up');
+            // Reset delay after a few items to keep animations snappy
+            if(delay > 400) delay = 100;
+            card.setAttribute('data-aos-delay', delay.toString());
+            
+            card.innerHTML = `
+                <div class="project-tag">${project.tag}</div>
+                <h3>${project.title}</h3>
+                <a href="${project.url}" target="_blank" class="project-link">View Project <i class="fas fa-arrow-right" style="font-size: 1rem; margin-left: 5px;"></i></a>
+            `;
+            portfolioGrid.appendChild(card);
+            delay += 100;
+        });
+
+        // Reviews Data Loading
+        const names = [
+            // Kashmiri Names (80%)
+            "Tariq Bhat", "Sameer Lone", "Adil Dar", "Rubeena Wani", "Asif Sheikh", 
+            "Ishfaq Ahmed", "Sajad Mir", "Mehwish Zargar", "Faisal Qureshi", "Imran Shah", 
+            "Zahoor Khanday", "Insha Rasool", "Mudasir Malik", "Bilal Sofi", "Yawar Parray", 
+            "Nisar Wani", "Rafiq Mattoo", "Shabir Geelani", "Uzma Shah", "Danish Ganjoo",
+            // Other Indian Names (20%)
+            "Rahul Sharma", "Priya Singh", "Vikram Reddy", "Anjali Desai", "Rohan Gupta"
+        ];
+
+        const reviewTexts = [
+            "Astrux Marketing completely changed how we get clients online. Highly recommend them.",
+            "Good service and fast response. They understood exactly what we needed.",
+            "The glassmorphism design they did for us was amazing. Our site looks very premium.",
+            "Very professional team. They handled our SEO and we saw results quickly.",
+            "I loved the animations they added to my portfolio. Great work.",
+            "Clear communication and excellent delivery. The best agency we have worked with.",
+            "Their AI chatbot integration saved us so much time with customer inquiries.",
+            "Top quality web development. The site runs smoothly on mobile phones too.",
+            "They really know what they are doing. The entire process was very easy for us.",
+            "Incredible attention to detail. The colors and design fit our brand perfectly.",
+            "Very creative and technical. A rare combination to find these days.",
+            "They helped our local business get found on Google. We are getting more calls now.",
+            "Fast loading speeds and great design. Could not ask for more.",
+            "Working with Astrux has been great for our growth. They are true experts.",
+            "Our new website has generated leads consistently since it launched.",
+            "They took our outdated site and made it look like it belongs in the future.",
+            "Friendly team and very knowledgeable about modern web standards.",
+            "We were impressed by the typing effects and sleek UI they implemented.",
+            "Affordable pricing for the high quality work they deliver.",
+            "They optimized everything perfectly. Sales have gone up significantly.",
+            "I highly recommend them for anyone needing a fresh modern website.",
+            "The team is responsive and fixed any small issues immediately.",
+            "They transformed our ideas into a beautiful functional platform.",
+            "Exceptional work on our corporate portal. It is exactly what we envisioned.",
+            "Trustworthy and reliable. Astrux Marketing is our go to digital partner."
+        ];
+
+        // Shuffle arrays securely
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        const shuffledNames = shuffle([...names]);
+        const shuffledTexts = shuffle([...reviewTexts]);
+        
+        const reviewsGrid = document.getElementById('reviews-grid');
+        let revDelay = 100;
+
+        for (let j = 0; j < 25; j++) {
+            const reviewCard = document.createElement('div');
+            reviewCard.className = 'glass card';
+            reviewCard.setAttribute('data-aos', 'zoom-in');
+            if(revDelay > 400) revDelay = 100;
+            reviewCard.setAttribute('data-aos-delay', revDelay.toString());
+
+            // Random 4 or 5 star rating
+            const stars = Math.random() > 0.2 ? 5 : 4;
+            let starHtml = '';
+            for(let s=0; s<5; s++) {
+                starHtml += s < stars ? '<i class="fas fa-star" style="color: #fbbf24; font-size: 1rem; margin-bottom: 10px;"></i>' : '<i class="far fa-star" style="color: #fbbf24; font-size: 1rem; margin-bottom: 10px;"></i>';
+            }
+
+            reviewCard.innerHTML = `
+                <div>${starHtml}</div>
+                <p style="font-style: italic; margin-bottom: 15px;">"${shuffledTexts[j]}"</p>
+                <h4 style="color: var(--primary);">${shuffledNames[j]}</h4>
+            `;
+            reviewsGrid.appendChild(reviewCard);
+            revDelay += 100;
+        }
+    </script>
+</body>
+</html>
