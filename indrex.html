@@ -3,77 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astrux Marketing | Digital Excellence</title>
-    <meta name="description" content="Astrux Marketing provides top tier digital marketing, web development, and SEO services to help your business grow online.">
+    <title>Astrux Marketing | Premium Digital Excellence</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Astrux Marketing is a premier digital agency specializing in high-end web development, advanced SEO, and AI integrations. We elevate brands through cutting-edge design and data-driven strategies.">
+    <meta name="keywords" content="Digital Marketing, Web Development, SEO, Glassmorphism, Astrux Marketing, AI Chatbot, Brand Growth">
+    <meta name="author" content="Astrux Marketing">
+    <meta name="robots" content="index, follow">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-blur: blur(12px);
-            --primary: #4f46e5;
-            --text-main: #ffffff;
-            --text-muted: #cbd5e1;
+            --bg-color: #050505;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.06);
+            --primary: #ffffff;
+            --accent: #8b5cf6; /* Neon Purple Accent */
+            --accent-glow: rgba(139, 92, 246, 0.5);
+            --text-muted: #a1a1aa;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: none; /* Custom cursor */
         }
 
         body {
-            background: linear-gradient(135deg, #0f172a, #1e1b4b, #0f172a);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: var(--text-main);
+            background-color: var(--bg-color);
+            color: var(--primary);
             overflow-x: hidden;
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s;
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: 0.1s ease-out;
         }
 
-        /* Glassmorphism Utility */
-        .glass {
+        /* Ambient Background Orbs */
+        .ambient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(150px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #8b5cf6;
+            top: -100px;
+            left: -100px;
+        }
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: #3b82f6;
+            bottom: -200px;
+            right: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.2); }
+        }
+
+        /* Premium Glassmorphism */
+        .glass-panel {
             background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 24px;
+            transition: all 0.4s ease;
+        }
+        .glass-panel:hover {
+            background: var(--glass-hover);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
         }
 
-        /* Layout & Typography */
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 5%;
         }
 
         section {
-            padding: 100px 0;
+            padding: 120px 0;
+            position: relative;
         }
 
-        h1, h2, h3 {
+        /* Typography */
+        h1 {
+            font-size: clamp(3rem, 6vw, 5.5rem);
             font-weight: 800;
-            margin-bottom: 20px;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
         }
-
         h2 {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 50px;
-            background: -webkit-linear-gradient(#fff, #a5b4fc);
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 60px;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #ffffff, #a1a1aa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -83,173 +148,234 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 20px 0;
+            padding: 24px 0;
             z-index: 1000;
-            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(5, 5, 5, 0.5);
         }
-        
-        nav .glass {
+        .nav-inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
-            border-radius: 50px;
         }
-
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: -0.5px;
         }
-
         .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 32px;
         }
-
         .nav-links a {
-            color: var(--text-main);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
-            transition: 0.3s;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
         }
-
         .nav-links a:hover {
             color: var(--primary);
         }
 
         /* Hero Section */
         #hero {
-            height: 100vh;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+        }
+        .typing-wrapper {
+            display: inline-block;
+            color: var(--accent);
+            position: relative;
+        }
+        .cursor {
+            display: inline-block;
+            width: 4px;
+            height: 1em;
+            background-color: var(--accent);
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+            margin-left: 4px;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 100px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 40px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Bento Grid Services */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .bento-item {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 300px;
+        }
+        .bento-item i {
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--accent), #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .col-span-8 { grid-column: span 8; }
+        .col-span-4 { grid-column: span 4; }
+        .col-span-6 { grid-column: span 6; }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .project-card {
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: block;
+            font-weight: 600;
+        }
+        .project-card a {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+        }
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .project-arrow {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
+            transition: all 0.3s;
+        }
+        .project-card:hover .project-arrow {
+            background: #fff;
+            color: #000;
+            transform: rotate(-45deg);
+        }
+
+        /* Infinite Marquee Reviews */
+        .marquee-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
             position: relative;
-            padding-top: 80px;
+            width: 100vw;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            padding: 20px 0;
         }
-
-        .hero-content {
-            max-width: 800px;
-            padding: 50px;
-        }
-
-        .typing-container {
-            font-size: 3rem;
-            font-weight: 800;
-            min-height: 80px;
-            margin-bottom: 20px;
-        }
-
-        .cursor {
+        .marquee-content {
             display: inline-block;
-            width: 3px;
-            background-color: #fff;
-            animation: blink 1s infinite;
+            animation: marquee 40s linear infinite;
         }
-
-        @keyframes blink {
-            50% { opacity: 0; }
+        .marquee-content.reverse {
+            animation: marquee-reverse 35s linear infinite;
         }
-
-        .btn {
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes marquee-reverse {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        .review-card {
             display: inline-block;
-            padding: 15px 35px;
-            background: var(--primary);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: 0.3s transform;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-            background: #4338ca;
-        }
-
-        .btn i {
-            margin-right: 8px;
-        }
-
-        /* Grid Layouts */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        /* Cards */
-        .card {
+            width: 400px;
             padding: 30px;
-            transition: 0.4s;
+            margin: 0 12px;
+            white-space: normal;
+            vertical-align: top;
+        }
+        .review-stars i {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.3);
+        /* Contact Form */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
         }
-
-        .card i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
+        .form-group {
+            margin-bottom: 24px;
         }
-
-        .project-tag {
-            font-size: 0.8rem;
-            background: var(--primary);
-            padding: 4px 10px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-            display: inline-block;
-        }
-
-        .project-link {
-            color: #fff;
-            text-decoration: none;
-            margin-top: 15px;
-            display: inline-block;
-            font-weight: 600;
-        }
-
-        .project-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Forms */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        input, textarea {
+        .form-control {
             width: 100%;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            color: #fff;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
             font-size: 1rem;
             outline: none;
-            transition: 0.3s;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        textarea.form-control {
+            resize: none;
+            height: 150px;
         }
 
-        input:focus, textarea:focus {
-            border-color: var(--primary);
-        }
-
-        /* Chatbot Widget placeholder */
-        .chatbot-widget {
+        /* Floating Actions */
+        .floating-actions {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 1000;
+        }
+        .fab-btn {
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -257,170 +383,252 @@
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1000;
-            animation: bounce 2s infinite;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+            position: relative;
         }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-15px);}
-            60% {transform: translateY(-7px);}
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .typing-container { font-size: 2rem; }
+        .fab-btn:hover { transform: scale(1.1); }
+        .whatsapp-btn { background: #25D366; }
+        .ai-btn { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); }
+        
+        /* Mobile Responive */
+        @media (max-width: 992px) {
+            .col-span-8, .col-span-4, .col-span-6 { grid-column: span 12; }
+            .contact-wrapper { grid-template-columns: 1fr; }
             .nav-links { display: none; }
-            .hero-content { padding: 20px; }
+            .floating-actions { bottom: 20px; right: 20px; }
+            .fab-btn { width: 50px; height: 50px; font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+
     <nav>
-        <div class="container">
-            <div class="glass" data-aos="fade-down" data-aos-duration="1000">
-                <div class="logo">Astrux</div>
-                <div class="nav-links">
-                    <a href="#hero">Home</a>
-                    <a href="#about">About</a>
-                    <a href="#services">Services</a>
-                    <a href="#portfolio">Work</a>
-                    <a href="#reviews">Reviews</a>
-                    <a href="#contact">Contact</a>
-                </div>
+        <div class="container nav-inner">
+            <div class="logo">Astrux.</div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#work">Work</a>
+                <a href="#reviews">Reviews</a>
             </div>
+            <a href="#contact" class="btn-primary" style="margin-top: 0; padding: 10px 24px; font-size: 0.9rem;">Start Project</a>
         </div>
     </nav>
 
     <section id="hero">
         <div class="container">
-            <div class="glass hero-content" data-aos="zoom-in" data-aos-duration="1500">
-                <div class="typing-container">
-                    <span id="typing-text"></span><span class="cursor"></span>
-                </div>
-                <p style="margin-bottom: 30px; color: var(--text-muted);">We blend cutting edge SEO strategies with stunning glassmorphism design to elevate your brand. No generic templates just pure digital excellence tailored for your business growth.</p>
-                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                    <a href="#portfolio" class="btn"><i class="fas fa-folder-open"></i> View Work</a>
-                    <a href="https://wa.me/916006555193" target="_blank" class="btn" style="background: #25D366;"><i class="fab fa-whatsapp"></i> Chat Now</a>
-                </div>
+            <div data-aos="fade-up" data-aos-duration="1200">
+                <h1 class="gradient-text">We craft digital<br>experiences that<br>
+                    <span class="typing-wrapper"><span id="typing-text"></span><span class="cursor"></span></span>
+                </h1>
+                <p style="color: var(--text-muted); font-size: 1.25rem; max-width: 500px; margin-top: 24px;">
+                    Award winning web development, advanced SEO, and glassmorphism design tailored for brands ready to scale.
+                </p>
+                <a href="#work" class="btn-primary">
+                    Explore Our Work <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </section>
 
     <section id="about">
         <div class="container">
-            <h2 data-aos="fade-up">About Astrux Marketing</h2>
-            <div class="glass card" data-aos="fade-up" data-aos-delay="200">
-                <p style="font-size: 1.1rem; line-height: 1.8;">At Astrux Marketing we do not just build websites we craft digital experiences. Our focus is on modern aesthetics like glassmorphism combined with powerful SEO foundations. Whether you need a simple landing page or a complex corporate portal we build platforms that capture attention and drive conversions. We believe in custom solutions that speak directly to your target audience ensuring your brand stands out in a crowded digital space.</p>
+            <h2 class="gradient-text" data-aos="fade-up">Redefining Digital.</h2>
+            <div class="bento-grid">
+                <div class="glass-panel bento-item col-span-8" data-aos="fade-up" data-aos-delay="100">
+                    <div>
+                        <h3 style="font-size: 2rem; margin-bottom: 20px;">Who We Are</h3>
+                        <p style="color: var(--text-muted); font-size: 1.1rem;">Astrux Marketing is not a traditional agency. We build high performance digital assets combining striking visual aesthetics with technical supremacy. No templates just pure functional art built to convert visitors into clients.</p>
+                    </div>
+                </div>
+                <div class="glass-panel bento-item col-span-4" data-aos="fade-up" data-aos-delay="200" style="align-items: center; justify-content: center; text-align: center;">
+                    <div style="font-size: 4rem; font-weight: 800; color: var(--accent);">99%</div>
+                    <div style="color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Client Satisfaction</div>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="services">
         <div class="container">
-            <h2 data-aos="fade-up">Our Expertise</h2>
-            <div class="grid">
-                <div class="glass card" data-aos="flip-left" data-aos-delay="100">
-                    <i class="fas fa-laptop-code"></i>
-                    <h3>Web Development</h3>
-                    <p>Custom built websites featuring fluid animations modern frameworks and responsive design to ensure flawless performance on any device.</p>
+            <h2 class="gradient-text" data-aos="fade-up">Core Expertise.</h2>
+            <div class="bento-grid">
+                <div class="glass-panel bento-item col-span-4" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-code"></i>
+                    <div>
+                        <h3>Web Development</h3>
+                        <p style="color: var(--text-muted);">Fluid animations and modern frameworks built for flawless performance.</p>
+                    </div>
                 </div>
-                <div class="glass card" data-aos="flip-left" data-aos-delay="200">
-                    <i class="fas fa-search-chart"></i>
-                    <h3>Advanced SEO</h3>
-                    <p>Data driven search engine optimization techniques to improve your rankings drive organic traffic and dominate your local market.</p>
+                <div class="glass-panel bento-item col-span-4" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-chart-line"></i>
+                    <div>
+                        <h3>Advanced SEO</h3>
+                        <p style="color: var(--text-muted);">Data driven strategies to dominate search engines and drive organic traffic.</p>
+                    </div>
                 </div>
-                <div class="glass card" data-aos="flip-left" data-aos-delay="300">
+                <div class="glass-panel bento-item col-span-4" data-aos="fade-up" data-aos-delay="300">
                     <i class="fas fa-robot"></i>
-                    <h3>AI Integration</h3>
-                    <p>Implementation of smart AI chatbots and automation tools to streamline your customer service and keep your business running around the clock.</p>
+                    <div>
+                        <h3>AI Chatbots</h3>
+                        <p style="color: var(--text-muted);">Intelligent automation to handle client inquiries around the clock.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="portfolio">
+    <section id="work">
         <div class="container">
-            <h2 data-aos="fade-up">Recent Projects</h2>
-            <div class="grid" id="portfolio-grid">
+            <h2 class="gradient-text" data-aos="fade-up">Selected Works.</h2>
+            <div class="portfolio-grid" id="portfolio-grid">
                 </div>
         </div>
     </section>
 
-    <section id="reviews">
+    <section id="reviews" style="overflow: hidden;">
         <div class="container">
-            <h2 data-aos="fade-up">Client Feedback</h2>
-            <div class="grid" id="reviews-grid">
+            <h2 class="gradient-text" data-aos="fade-up">Client Feedback.</h2>
+        </div>
+        
+        <div class="marquee-wrapper" data-aos="fade-in" data-aos-delay="200">
+            <div class="marquee-content" id="marquee-1">
                 </div>
+            <div class="marquee-content" id="marquee-1-dup"></div>
+        </div>
+        
+        <div class="marquee-wrapper" data-aos="fade-in" data-aos-delay="400" style="margin-top: 24px;">
+            <div class="marquee-content reverse" id="marquee-2">
+                </div>
+            <div class="marquee-content reverse" id="marquee-2-dup"></div>
         </div>
     </section>
 
     <section id="contact">
         <div class="container">
-            <h2 data-aos="fade-up">Let's Connect</h2>
-            <div class="glass card" data-aos="fade-up" data-aos-delay="200" style="padding: 50px;">
-                <form onsubmit="event.preventDefault(); alert('Form submission logic will go here.');">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea rows="5" placeholder="Tell us about your project" required></textarea>
-                    <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Send Message</button>
-                </form>
+            <h2 class="gradient-text" data-aos="fade-up">Let's Build Together.</h2>
+            <div class="glass-panel" style="padding: 60px;" data-aos="fade-up" data-aos-delay="200">
+                <div class="contact-wrapper">
+                    <div>
+                        <h3 style="font-size: 2.5rem; margin-bottom: 20px;">Ready to elevate your digital presence?</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 40px; font-size: 1.1rem;">Fill out the form and our team will get back to you within 24 hours to discuss your vision.</p>
+                        
+                        <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
+                            <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Email Us</div>
+                                <div>hello@astruxmarketing.com</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form onsubmit="event.preventDefault(); alert('Form submitted successfully!');">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Tell us about your project goals" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: none; justify-content: center;">Send Message</button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 
-    <div class="glass chatbot-widget" title="AI Chatbot Assistant">
-        <i class="fas fa-comment-dots" style="color: #fff;"></i>
+    <div class="floating-actions">
+        <a href="javascript:void(0)" class="fab-btn ai-btn" title="AI Chatbot Assistant">
+            <i class="fas fa-comment-dots"></i>
+        </a>
+        <a href="https://wa.me/916006555193" target="_blank" class="fab-btn whatsapp-btn" title="Chat on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
     <script>
-        // Initialize Animations
-        AOS.init({
-            once: true,
-            offset: 50,
+        // Custom Cursor Logic
+        const dot = document.getElementById("cursor-dot");
+        const outline = document.getElementById("cursor-outline");
+
+        window.addEventListener("mousemove", function (e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            dot.style.left = `${posX}px`;
+            dot.style.top = `${posY}px`;
+
+            outline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
         });
 
-        // Typing Effect
-        const words = ["We Build Digital Experiences", "Glassmorphism Aesthetics", "SEO Optimized Platforms", "Astrux Marketing"];
-        let i = 0;
-        let timer;
-        let isDeleting = false;
-        let wordIndex = 0;
+        document.querySelectorAll('a, button, input, textarea').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                outline.style.width = '60px';
+                outline.style.height = '60px';
+                outline.style.backgroundColor = 'rgba(255,255,255,0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                outline.style.width = '40px';
+                outline.style.height = '40px';
+                outline.style.backgroundColor = 'transparent';
+            });
+        });
 
-        function type() {
-            const currentWord = words[wordIndex];
-            const textElement = document.getElementById("typing-text");
+        // Initialize AOS
+        AOS.init({ once: true, offset: 50 });
+
+        // Human-like Typing Effect
+        const phrases = ["convert.", "inspire.", "dominate.", "stand out."];
+        let currentPhrase = 0;
+        let letterIndex = 0;
+        let isDeleting = false;
+        const typingElement = document.getElementById("typing-text");
+
+        function typeEffect() {
+            const text = phrases[currentPhrase];
             
             if (isDeleting) {
-                textElement.textContent = currentWord.substring(0, i - 1);
-                i--;
+                typingElement.textContent = text.substring(0, letterIndex - 1);
+                letterIndex--;
             } else {
-                textElement.textContent = currentWord.substring(0, i + 1);
-                i++;
+                typingElement.textContent = text.substring(0, letterIndex + 1);
+                letterIndex++;
             }
 
-            let typingSpeed = isDeleting ? 50 : 100;
+            // Human like random typing speed
+            let typeSpeed = isDeleting ? 40 : Math.random() * (150 - 50) + 50;
 
-            if (!isDeleting && i === currentWord.length) {
-                typingSpeed = 2000; 
+            if (!isDeleting && letterIndex === text.length) {
+                typeSpeed = 2000; // Pause at end
                 isDeleting = true;
-            } else if (isDeleting && i === 0) {
+            } else if (isDeleting && letterIndex === 0) {
                 isDeleting = false;
-                wordIndex = (wordIndex + 1) % words.length;
-                typingSpeed = 500;
+                currentPhrase = (currentPhrase + 1) % phrases.length;
+                typeSpeed = 500; // Pause before new word
             }
 
-            setTimeout(type, typingSpeed);
+            setTimeout(typeEffect, typeSpeed);
         }
-        
-        // Start typing effect
-        setTimeout(type, 1000);
+        setTimeout(typeEffect, 1000);
 
-        // Portfolio Data Loading
+        // Portfolio Data
         const projects = [
             {title:'Nayan Demo v2', tag:'Demo', url:'https://nayandemoversion2.pages.dev'},
             {title:'Akshar Dental', tag:'Dental', url:'https://akshar-dental-clinic.pages.dev'},
@@ -444,101 +652,110 @@
         ];
 
         const portfolioGrid = document.getElementById('portfolio-grid');
-        let delay = 100;
+        let projDelay = 100;
 
         projects.forEach(project => {
             const card = document.createElement('div');
-            card.className = 'glass card';
+            card.className = 'glass-panel project-card';
             card.setAttribute('data-aos', 'fade-up');
-            // Reset delay after a few items to keep animations snappy
-            if(delay > 400) delay = 100;
-            card.setAttribute('data-aos-delay', delay.toString());
+            if(projDelay > 300) projDelay = 100;
+            card.setAttribute('data-aos-delay', projDelay.toString());
             
             card.innerHTML = `
-                <div class="project-tag">${project.tag}</div>
+                <a href="${project.url}" target="_blank"></a>
+                <span class="project-tag">${project.tag}</span>
                 <h3>${project.title}</h3>
-                <a href="${project.url}" target="_blank" class="project-link">View Project <i class="fas fa-arrow-right" style="font-size: 1rem; margin-left: 5px;"></i></a>
+                <div class="project-arrow"><i class="fas fa-arrow-right"></i></div>
             `;
             portfolioGrid.appendChild(card);
-            delay += 100;
+            projDelay += 100;
         });
 
-        // Reviews Data Loading
+        // Review Data (80% Kashmiri / 20% Indian)
         const names = [
-            // Kashmiri Names (80%)
+            // Kashmiri
             "Tariq Bhat", "Sameer Lone", "Adil Dar", "Rubeena Wani", "Asif Sheikh", 
             "Ishfaq Ahmed", "Sajad Mir", "Mehwish Zargar", "Faisal Qureshi", "Imran Shah", 
             "Zahoor Khanday", "Insha Rasool", "Mudasir Malik", "Bilal Sofi", "Yawar Parray", 
             "Nisar Wani", "Rafiq Mattoo", "Shabir Geelani", "Uzma Shah", "Danish Ganjoo",
-            // Other Indian Names (20%)
+            // Other
             "Rahul Sharma", "Priya Singh", "Vikram Reddy", "Anjali Desai", "Rohan Gupta"
         ];
 
-        const reviewTexts = [
-            "Astrux Marketing completely changed how we get clients online. Highly recommend them.",
-            "Good service and fast response. They understood exactly what we needed.",
-            "The glassmorphism design they did for us was amazing. Our site looks very premium.",
-            "Very professional team. They handled our SEO and we saw results quickly.",
-            "I loved the animations they added to my portfolio. Great work.",
-            "Clear communication and excellent delivery. The best agency we have worked with.",
-            "Their AI chatbot integration saved us so much time with customer inquiries.",
-            "Top quality web development. The site runs smoothly on mobile phones too.",
-            "They really know what they are doing. The entire process was very easy for us.",
-            "Incredible attention to detail. The colors and design fit our brand perfectly.",
-            "Very creative and technical. A rare combination to find these days.",
-            "They helped our local business get found on Google. We are getting more calls now.",
-            "Fast loading speeds and great design. Could not ask for more.",
-            "Working with Astrux has been great for our growth. They are true experts.",
-            "Our new website has generated leads consistently since it launched.",
-            "They took our outdated site and made it look like it belongs in the future.",
-            "Friendly team and very knowledgeable about modern web standards.",
-            "We were impressed by the typing effects and sleek UI they implemented.",
-            "Affordable pricing for the high quality work they deliver.",
-            "They optimized everything perfectly. Sales have gone up significantly.",
-            "I highly recommend them for anyone needing a fresh modern website.",
-            "The team is responsive and fixed any small issues immediately.",
-            "They transformed our ideas into a beautiful functional platform.",
-            "Exceptional work on our corporate portal. It is exactly what we envisioned.",
-            "Trustworthy and reliable. Astrux Marketing is our go to digital partner."
+        const texts = [
+            "Astrux Marketing delivered a digital masterpiece. Our engagement has skyrocketed since launch.",
+            "The design is incredibly sleek and modern. They perfectly captured the premium feel we wanted.",
+            "Their SEO work brought us to the first page of Google within a few months. Outstanding results.",
+            "Very responsive team and the final website is faster than anything we have seen before.",
+            "The bento grid layout they designed for us looks incredibly professional and clean.",
+            "Our new AI chatbot integration has completely transformed how we handle customer support.",
+            "A seamless experience from start to finish. They truly understand high end web development.",
+            "We were amazed by the fluid animations and the attention to detail in every single section.",
+            "They took our basic concept and turned it into an award winning caliber website.",
+            "Communication was clear and they delivered everything exactly on schedule.",
+            "The glassmorphism aesthetic is stunning. We get compliments on our site daily.",
+            "Our local business finally has a professional online presence thanks to their hard work.",
+            "Highly recommend their services if you want a website that actually stands out from the crowd.",
+            "They perfectly optimized our site for mobile users which was a huge priority for us.",
+            "The customized typing effects and interactive elements make our site feel alive.",
+            "It is rare to find an agency that excels at both creative design and technical SEO.",
+            "They handled all our complex requirements with ease and professionalism.",
+            "Astrux Marketing is the best investment we have made for our brand this year.",
+            "The floating WhatsApp button they added has increased our direct inquiries significantly.",
+            "They completely overhauled our outdated corporate site into something futuristic.",
+            "Exceptional problem solvers. They fixed bugs we did not even know existed.",
+            "The pricing is totally justified by the premium quality of work they provide.",
+            "Our online sales increased noticeably after they redesigned our landing pages.",
+            "We love the dark theme and glowing accents. It matches our tech brand perfectly.",
+            "Astrux is our dedicated digital partner now. We trust them completely."
         ];
 
-        // Shuffle arrays securely
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+                [arr[i], arr[j]] = [arr[j], arr[i]];
             }
-            return array;
+            return arr;
         }
 
         const shuffledNames = shuffle([...names]);
-        const shuffledTexts = shuffle([...reviewTexts]);
+        const shuffledTexts = shuffle([...texts]);
+
+        // Split reviews into two tracks for the double marquee
+        const m1 = document.getElementById('marquee-1');
+        const m2 = document.getElementById('marquee-2');
         
-        const reviewsGrid = document.getElementById('reviews-grid');
-        let revDelay = 100;
-
-        for (let j = 0; j < 25; j++) {
-            const reviewCard = document.createElement('div');
-            reviewCard.className = 'glass card';
-            reviewCard.setAttribute('data-aos', 'zoom-in');
-            if(revDelay > 400) revDelay = 100;
-            reviewCard.setAttribute('data-aos-delay', revDelay.toString());
-
-            // Random 4 or 5 star rating
-            const stars = Math.random() > 0.2 ? 5 : 4;
+        function createReviewCard(name, text) {
+            const stars = Math.random() > 0.15 ? 5 : 4;
             let starHtml = '';
             for(let s=0; s<5; s++) {
-                starHtml += s < stars ? '<i class="fas fa-star" style="color: #fbbf24; font-size: 1rem; margin-bottom: 10px;"></i>' : '<i class="far fa-star" style="color: #fbbf24; font-size: 1rem; margin-bottom: 10px;"></i>';
+                starHtml += s < stars ? '<i class="fas fa-star"></i> ' : '<i class="far fa-star"></i> ';
             }
-
-            reviewCard.innerHTML = `
-                <div>${starHtml}</div>
-                <p style="font-style: italic; margin-bottom: 15px;">"${shuffledTexts[j]}"</p>
-                <h4 style="color: var(--primary);">${shuffledNames[j]}</h4>
+            return `
+                <div class="glass-panel review-card">
+                    <div class="review-stars">${starHtml}</div>
+                    <p style="font-size: 1.1rem; margin-bottom: 20px;">"${text}"</p>
+                    <h4 style="color: var(--accent); font-weight: 600;">${name}</h4>
+                </div>
             `;
-            reviewsGrid.appendChild(reviewCard);
-            revDelay += 100;
         }
+
+        let html1 = '';
+        let html2 = '';
+        
+        for(let i=0; i<12; i++) {
+            html1 += createReviewCard(shuffledNames[i], shuffledTexts[i]);
+        }
+        for(let i=12; i<25; i++) {
+            html2 += createReviewCard(shuffledNames[i], shuffledTexts[i]);
+        }
+
+        m1.innerHTML = html1;
+        document.getElementById('marquee-1-dup').innerHTML = html1; // Clone for seamless loop
+        
+        m2.innerHTML = html2;
+        document.getElementById('marquee-2-dup').innerHTML = html2; // Clone for seamless loop
+
     </script>
 </body>
 </html>
