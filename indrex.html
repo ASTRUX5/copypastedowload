@@ -3,632 +3,421 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astrux Marketing | Premium Digital Excellence</title>
+    <title>Astrux Marketing | Ultra Modern Agency</title>
     
-    <meta name="description" content="Astrux Marketing is a premier digital agency specializing in high-end web development, advanced SEO, and AI integrations. We elevate brands through cutting-edge design and data-driven strategies.">
-    <meta name="keywords" content="Digital Marketing, Web Development, SEO, Glassmorphism, Astrux Marketing, AI Chatbot, Brand Growth">
-    <meta name="author" content="Astrux Marketing">
-    <meta name="robots" content="index, follow">
-
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=syne@400,600,800&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
         :root {
-            --bg-color: #050505;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-hover: rgba(255, 255, 255, 0.06);
-            --primary: #ffffff;
-            --accent: #8b5cf6; /* Neon Purple Accent */
-            --accent-glow: rgba(139, 92, 246, 0.5);
-            --text-muted: #a1a1aa;
+            --bg-dark: #070707;
+            --text-light: #f4f4f5;
+            --text-dim: #a1a1aa;
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --accent: #ffffff;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
             cursor: none; /* Custom cursor */
         }
 
+        /* Lenis Smooth Scroll Recommended CSS */
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+
         body {
-            background-color: var(--bg-color);
-            color: var(--primary);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Satoshi', sans-serif;
             overflow-x: hidden;
-            line-height: 1.6;
-            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Custom Cursor */
+        h1, h2, h3, .brand-text {
+            font-family: 'Syne', sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* Premium Custom Cursor */
         .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
             position: fixed;
+            top: 0; left: 0;
+            width: 10px; height: 10px;
+            background: #fff;
+            border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
+            mix-blend-mode: difference;
             transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s;
         }
-        .cursor-outline {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
+        .cursor-follower {
             position: fixed;
+            top: 0; left: 0;
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
             pointer-events: none;
             z-index: 9998;
             transform: translate(-50%, -50%);
-            transition: 0.1s ease-out;
+            transition: width 0.3s, height 0.3s, background 0.3s;
         }
 
-        /* Ambient Background Orbs */
-        .ambient-orb {
+        /* Ambient Glow */
+        .glow-blob {
             position: fixed;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 70%);
             border-radius: 50%;
-            filter: blur(150px);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
             z-index: -1;
-            opacity: 0.4;
-            animation: float 20s infinite ease-in-out alternate;
-        }
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: #8b5cf6;
-            top: -100px;
-            left: -100px;
-        }
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: #3b82f6;
-            bottom: -200px;
-            right: -100px;
-            animation-delay: -10s;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 50px) scale(1.2); }
-        }
-
-        /* Premium Glassmorphism */
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            transition: all 0.4s ease;
-        }
-        .glass-panel:hover {
-            background: var(--glass-hover);
-            border-color: rgba(255, 255, 255, 0.15);
-            transform: translateY(-5px);
+            pointer-events: none;
         }
 
         .container {
-            max-width: 1300px;
+            max-width: 90%;
             margin: 0 auto;
-            padding: 0 5%;
-        }
-
-        section {
-            padding: 120px 0;
-            position: relative;
-        }
-
-        /* Typography */
-        h1 {
-            font-size: clamp(3rem, 6vw, 5.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 24px;
-        }
-        h2 {
-            font-size: clamp(2.5rem, 4vw, 4rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 60px;
-        }
-        .gradient-text {
-            background: linear-gradient(to right, #ffffff, #a1a1aa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
         /* Navbar */
         nav {
             position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 24px 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--glass-border);
-            background: rgba(5, 5, 5, 0.5);
-        }
-        .nav-inner {
+            top: 0; width: 100%;
+            padding: 30px 5%;
+            z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            mix-blend-mode: difference;
         }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 32px;
-        }
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover {
-            color: var(--primary);
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
+        
+        /* Modern Glassmorphism */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
         }
 
         /* Hero Section */
-        #hero {
-            min-height: 100vh;
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 10vh;
+        }
+        .hero h1 {
+            font-size: clamp(4rem, 10vw, 10rem);
+            line-height: 0.85;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            overflow: hidden;
+        }
+        .hero h1 span {
+            display: inline-block;
+            transform: translateY(100%);
+        }
+        .hero-sub {
+            margin-top: 40px;
+            max-width: 500px;
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            opacity: 0;
+        }
+
+        /* Services / Large List */
+        .services { padding: 150px 0; }
+        .section-title {
+            font-size: clamp(3rem, 6vw, 6rem);
+            margin-bottom: 80px;
+            font-weight: 800;
+        }
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--glass-border);
+            transition: padding 0.4s;
+        }
+        .service-item:hover { padding: 40px 20px; background: rgba(255,255,255,0.01); }
+        .service-item h3 { font-size: clamp(2rem, 4vw, 4rem); font-weight: 600; }
+        .service-item i { font-size: 2rem; color: var(--text-dim); }
+
+        /* Horizontal Scroll Portfolio */
+        .work-container {
+            height: 100vh;
             display: flex;
             align-items: center;
-            padding-top: 100px;
-        }
-        .typing-wrapper {
-            display: inline-block;
-            color: var(--accent);
+            overflow: hidden;
             position: relative;
         }
-        .cursor {
-            display: inline-block;
-            width: 4px;
-            height: 1em;
-            background-color: var(--accent);
-            vertical-align: middle;
-            animation: blink 1s step-end infinite;
-            margin-left: 4px;
+        .work-track {
+            display: flex;
+            gap: 40px;
+            padding: 0 5vw;
         }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 32px;
-            background: #ffffff;
-            color: #000000;
-            border-radius: 100px;
-            font-weight: 600;
-            text-decoration: none;
-            margin-top: 40px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .btn-primary:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
-        }
-
-        /* Bento Grid Services */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 24px;
-        }
-        .bento-item {
+        .work-card {
+            width: 450px;
+            height: 600px;
+            flex-shrink: 0;
             padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 300px;
-        }
-        .bento-item i {
-            font-size: 2.5rem;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, var(--accent), #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .col-span-8 { grid-column: span 8; }
-        .col-span-4 { grid-column: span 4; }
-        .col-span-6 { grid-column: span 6; }
-
-        /* Portfolio Grid */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-        }
-        .project-card {
-            padding: 30px;
             position: relative;
             overflow: hidden;
+            transition: border-color 0.4s;
         }
-        .project-tag {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent);
-            margin-bottom: 12px;
-            display: block;
-            font-weight: 600;
+        .work-card:hover { border-color: rgba(255,255,255,0.2); }
+        .work-card h3 { font-size: 2.5rem; z-index: 2; }
+        .work-tag { font-family: 'Satoshi', sans-serif; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; color: var(--text-dim); }
+        .work-link {
+            position: absolute; inset: 0; z-index: 10;
         }
-        .project-card a {
-            position: absolute;
-            inset: 0;
-            z-index: 10;
-        }
-        .project-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        .project-arrow {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            width: 40px;
-            height: 40px;
+        .work-icon {
+            width: 60px; height: 60px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
+            background: #fff; color: #000;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            transform: scale(0);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: absolute; bottom: 40px; right: 40px; z-index: 2;
         }
-        .project-card:hover .project-arrow {
-            background: #fff;
-            color: #000;
-            transform: rotate(-45deg);
-        }
+        .work-card:hover .work-icon { transform: scale(1); }
 
-        /* Infinite Marquee Reviews */
-        .marquee-wrapper {
+        /* Modern Reviews Flow */
+        .reviews-section {
+            padding: 150px 0;
             overflow: hidden;
+        }
+        .marquee {
+            display: flex;
             white-space: nowrap;
-            position: relative;
-            width: 100vw;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
-            padding: 20px 0;
+            will-change: transform;
         }
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 40s linear infinite;
-        }
-        .marquee-content.reverse {
-            animation: marquee-reverse 35s linear infinite;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        @keyframes marquee-reverse {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
-        }
-        .review-card {
-            display: inline-block;
+        .review-box {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: space-between;
             width: 400px;
+            height: 250px;
             padding: 30px;
-            margin: 0 12px;
+            margin-right: 30px;
             white-space: normal;
-            vertical-align: top;
         }
-        .review-stars i {
-            color: var(--accent);
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-        }
+        .review-text { font-size: 1.1rem; line-height: 1.5; color: var(--text-light); }
+        .review-author { font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
+        .stars i { color: #fff; font-size: 0.8rem; margin-right: 4px; }
 
-        /* Contact Form */
-        .contact-wrapper {
+        /* Contact & Form */
+        .contact { padding: 150px 0; }
+        .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 100px;
         }
-        .form-group {
-            margin-bottom: 24px;
-        }
-        .form-control {
+        .huge-text { font-size: clamp(3rem, 5vw, 5rem); line-height: 1; margin-bottom: 20px; }
+        form { display: flex; flex-direction: column; gap: 30px; }
+        input, textarea {
             width: 100%;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: white;
-            font-size: 1rem;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--glass-border);
+            padding: 20px 0;
+            font-size: 1.2rem;
+            color: #fff;
+            font-family: 'Satoshi', sans-serif;
             outline: none;
-            transition: all 0.3s;
+            transition: border-color 0.3s;
         }
-        .form-control:focus {
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.05);
-        }
-        textarea.form-control {
-            resize: none;
-            height: 150px;
-        }
-
-        /* Floating Actions */
-        .floating-actions {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            z-index: 1000;
-        }
-        .fab-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-            text-decoration: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        input:focus, textarea:focus { border-color: #fff; }
+        textarea { resize: none; height: 100px; }
+        .submit-btn {
+            background: #fff; color: #000;
+            border: none; padding: 20px;
+            border-radius: 100px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800; font-size: 1.2rem;
+            text-transform: uppercase;
+            margin-top: 20px;
             transition: transform 0.3s;
-            position: relative;
         }
-        .fab-btn:hover { transform: scale(1.1); }
-        .whatsapp-btn { background: #25D366; }
-        .ai-btn { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); }
-        
-        /* Mobile Responive */
-        @media (max-width: 992px) {
-            .col-span-8, .col-span-4, .col-span-6 { grid-column: span 12; }
-            .contact-wrapper { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-            .floating-actions { bottom: 20px; right: 20px; }
-            .fab-btn { width: 50px; height: 50px; font-size: 1.2rem; }
+        .submit-btn:hover { transform: scale(0.98); }
+
+        /* Fixed Widgets */
+        .widgets {
+            position: fixed; bottom: 30px; right: 30px;
+            display: flex; flex-direction: column; gap: 15px; z-index: 100;
+        }
+        .widget-btn {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: #fff; text-decoration: none;
+            transition: transform 0.3s;
+        }
+        .widget-btn:hover { transform: scale(1.1); }
+        .wa-btn { background: #25D366; color: #000; }
+        .ai-btn { border: 1px solid var(--glass-border); background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+
+        @media (max-width: 1024px) {
+            .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+            .work-card { width: 350px; height: 500px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
-
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-follower"></div>
+    <div class="glow-blob"></div>
 
     <nav>
-        <div class="container nav-inner">
-            <div class="logo">Astrux.</div>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#services">Services</a>
-                <a href="#work">Work</a>
-                <a href="#reviews">Reviews</a>
-            </div>
-            <a href="#contact" class="btn-primary" style="margin-top: 0; padding: 10px 24px; font-size: 0.9rem;">Start Project</a>
-        </div>
+        <div class="logo brand-text">ASTRUX.</div>
+        <div style="font-family: 'Satoshi'; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;">Digital Excellence</div>
     </nav>
 
-    <section id="hero">
-        <div class="container">
-            <div data-aos="fade-up" data-aos-duration="1200">
-                <h1 class="gradient-text">We craft digital<br>experiences that<br>
-                    <span class="typing-wrapper"><span id="typing-text"></span><span class="cursor"></span></span>
-                </h1>
-                <p style="color: var(--text-muted); font-size: 1.25rem; max-width: 500px; margin-top: 24px;">
-                    Award winning web development, advanced SEO, and glassmorphism design tailored for brands ready to scale.
-                </p>
-                <a href="#work" class="btn-primary">
-                    Explore Our Work <i class="fas fa-arrow-right"></i>
-                </a>
+    <section class="hero container">
+        <h1 class="brand-text"><span class="hero-title-word">Digital</span></h1>
+        <h1 class="brand-text" style="margin-left: 10vw;"><span class="hero-title-word">Mastery</span></h1>
+        <p class="hero-sub">We blend sophisticated web development with brutalist glassmorphism and data-backed SEO. No templates. Just high-end digital experiences built for impact.</p>
+    </section>
+
+    <section class="services container">
+        <h2 class="section-title brand-text" data-speed="0.9">Our Output</h2>
+        <div class="service-list">
+            <div class="service-item">
+                <div>
+                    <div style="color: var(--text-dim); margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">01</div>
+                    <h3>Web Development</h3>
+                </div>
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <div class="service-item">
+                <div>
+                    <div style="color: var(--text-dim); margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">02</div>
+                    <h3>Advanced SEO</h3>
+                </div>
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="service-item">
+                <div>
+                    <div style="color: var(--text-dim); margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">03</div>
+                    <h3>AI Integration</h3>
+                </div>
+                <i class="fas fa-microchip"></i>
             </div>
         </div>
     </section>
 
-    <section id="about">
-        <div class="container">
-            <h2 class="gradient-text" data-aos="fade-up">Redefining Digital.</h2>
-            <div class="bento-grid">
-                <div class="glass-panel bento-item col-span-8" data-aos="fade-up" data-aos-delay="100">
-                    <div>
-                        <h3 style="font-size: 2rem; margin-bottom: 20px;">Who We Are</h3>
-                        <p style="color: var(--text-muted); font-size: 1.1rem;">Astrux Marketing is not a traditional agency. We build high performance digital assets combining striking visual aesthetics with technical supremacy. No templates just pure functional art built to convert visitors into clients.</p>
-                    </div>
-                </div>
-                <div class="glass-panel bento-item col-span-4" data-aos="fade-up" data-aos-delay="200" style="align-items: center; justify-content: center; text-align: center;">
-                    <div style="font-size: 4rem; font-weight: 800; color: var(--accent);">99%</div>
-                    <div style="color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Client Satisfaction</div>
-                </div>
+    <section class="work-container">
+        <div class="work-track" id="work-track">
+            </div>
+    </section>
+
+    <section class="reviews-section">
+        <h2 class="container section-title brand-text" style="margin-bottom: 40px; font-size: clamp(2rem, 4vw, 4rem);">Client Feedback</h2>
+        <div class="marquee" id="marquee-1"></div>
+        <div class="marquee" id="marquee-2" style="margin-top: 30px;"></div>
+    </section>
+
+    <section class="contact container">
+        <div class="contact-grid">
+            <div>
+                <h2 class="huge-text brand-text">Let's Talk.</h2>
+                <p style="color: var(--text-dim); font-size: 1.2rem; max-width: 400px;">Ready to push the boundaries of your digital presence? Reach out today.</p>
+            </div>
+            <div class="glass" style="padding: 50px;">
+                <form onsubmit="event.preventDefault(); alert('Form logic goes here');">
+                    <input type="text" placeholder="What's your name?" required>
+                    <input type="email" placeholder="What's your email?" required>
+                    <textarea placeholder="Tell us about your project..." required></textarea>
+                    <button type="submit" class="submit-btn">Send Inquiry</button>
+                </form>
             </div>
         </div>
     </section>
 
-    <section id="services">
-        <div class="container">
-            <h2 class="gradient-text" data-aos="fade-up">Core Expertise.</h2>
-            <div class="bento-grid">
-                <div class="glass-panel bento-item col-span-4" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-code"></i>
-                    <div>
-                        <h3>Web Development</h3>
-                        <p style="color: var(--text-muted);">Fluid animations and modern frameworks built for flawless performance.</p>
-                    </div>
-                </div>
-                <div class="glass-panel bento-item col-span-4" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-chart-line"></i>
-                    <div>
-                        <h3>Advanced SEO</h3>
-                        <p style="color: var(--text-muted);">Data driven strategies to dominate search engines and drive organic traffic.</p>
-                    </div>
-                </div>
-                <div class="glass-panel bento-item col-span-4" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fas fa-robot"></i>
-                    <div>
-                        <h3>AI Chatbots</h3>
-                        <p style="color: var(--text-muted);">Intelligent automation to handle client inquiries around the clock.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="work">
-        <div class="container">
-            <h2 class="gradient-text" data-aos="fade-up">Selected Works.</h2>
-            <div class="portfolio-grid" id="portfolio-grid">
-                </div>
-        </div>
-    </section>
-
-    <section id="reviews" style="overflow: hidden;">
-        <div class="container">
-            <h2 class="gradient-text" data-aos="fade-up">Client Feedback.</h2>
-        </div>
-        
-        <div class="marquee-wrapper" data-aos="fade-in" data-aos-delay="200">
-            <div class="marquee-content" id="marquee-1">
-                </div>
-            <div class="marquee-content" id="marquee-1-dup"></div>
-        </div>
-        
-        <div class="marquee-wrapper" data-aos="fade-in" data-aos-delay="400" style="margin-top: 24px;">
-            <div class="marquee-content reverse" id="marquee-2">
-                </div>
-            <div class="marquee-content reverse" id="marquee-2-dup"></div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="container">
-            <h2 class="gradient-text" data-aos="fade-up">Let's Build Together.</h2>
-            <div class="glass-panel" style="padding: 60px;" data-aos="fade-up" data-aos-delay="200">
-                <div class="contact-wrapper">
-                    <div>
-                        <h3 style="font-size: 2.5rem; margin-bottom: 20px;">Ready to elevate your digital presence?</h3>
-                        <p style="color: var(--text-muted); margin-bottom: 40px; font-size: 1.1rem;">Fill out the form and our team will get back to you within 24 hours to discuss your vision.</p>
-                        
-                        <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
-                            <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Email Us</div>
-                                <div>hello@astruxmarketing.com</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <form onsubmit="event.preventDefault(); alert('Form submitted successfully!');">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control" placeholder="Tell us about your project goals" required></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: none; justify-content: center;">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="floating-actions">
-        <a href="javascript:void(0)" class="fab-btn ai-btn" title="AI Chatbot Assistant">
-            <i class="fas fa-comment-dots"></i>
-        </a>
-        <a href="https://wa.me/916006555193" target="_blank" class="fab-btn whatsapp-btn" title="Chat on WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
+    <div class="widgets">
+        <div class="widget-btn ai-btn hover-target" title="AI Chatbot"><i class="fas fa-robot"></i></div>
+        <a href="https://wa.me/916006555193" target="_blank" class="widget-btn wa-btn hover-target"><i class="fab fa-whatsapp"></i></a>
     </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
     <script>
-        // Custom Cursor Logic
-        const dot = document.getElementById("cursor-dot");
-        const outline = document.getElementById("cursor-outline");
+        gsap.registerPlugin(ScrollTrigger);
 
-        window.addEventListener("mousemove", function (e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
-
-            dot.style.left = `${posX}px`;
-            dot.style.top = `${posY}px`;
-
-            outline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
+        // 1. Lenis Smooth Scroll Setup
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
         });
 
-        document.querySelectorAll('a, button, input, textarea').forEach(el => {
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Sync GSAP and Lenis
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time)=>{ lenis.raf(time * 1000) });
+        gsap.ticker.lagSmoothing(0, 0);
+
+        // 2. Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1 });
+            gsap.to(cursorFollower, { x: e.clientX, y: e.clientY, duration: 0.3 });
+        });
+
+        document.querySelectorAll('a, button, input, textarea, .hover-target, .work-card').forEach(el => {
             el.addEventListener('mouseenter', () => {
-                outline.style.width = '60px';
-                outline.style.height = '60px';
-                outline.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                gsap.to(cursorFollower, { width: 80, height: 80, background: 'rgba(255,255,255,0.1)' });
             });
             el.addEventListener('mouseleave', () => {
-                outline.style.width = '40px';
-                outline.style.height = '40px';
-                outline.style.backgroundColor = 'transparent';
+                gsap.to(cursorFollower, { width: 40, height: 40, background: 'transparent' });
             });
         });
 
-        // Initialize AOS
-        AOS.init({ once: true, offset: 50 });
+        // 3. Hero Animation
+        gsap.to('.hero-title-word', {
+            y: 0,
+            duration: 1.5,
+            ease: "power4.out",
+            stagger: 0.2,
+            delay: 0.2
+        });
+        gsap.to('.hero-sub', {
+            opacity: 1,
+            duration: 1.5,
+            ease: "power2.out",
+            delay: 1
+        });
 
-        // Human-like Typing Effect
-        const phrases = ["convert.", "inspire.", "dominate.", "stand out."];
-        let currentPhrase = 0;
-        let letterIndex = 0;
-        let isDeleting = false;
-        const typingElement = document.getElementById("typing-text");
-
-        function typeEffect() {
-            const text = phrases[currentPhrase];
-            
-            if (isDeleting) {
-                typingElement.textContent = text.substring(0, letterIndex - 1);
-                letterIndex--;
-            } else {
-                typingElement.textContent = text.substring(0, letterIndex + 1);
-                letterIndex++;
-            }
-
-            // Human like random typing speed
-            let typeSpeed = isDeleting ? 40 : Math.random() * (150 - 50) + 50;
-
-            if (!isDeleting && letterIndex === text.length) {
-                typeSpeed = 2000; // Pause at end
-                isDeleting = true;
-            } else if (isDeleting && letterIndex === 0) {
-                isDeleting = false;
-                currentPhrase = (currentPhrase + 1) % phrases.length;
-                typeSpeed = 500; // Pause before new word
-            }
-
-            setTimeout(typeEffect, typeSpeed);
-        }
-        setTimeout(typeEffect, 1000);
-
-        // Portfolio Data
+        // 4. Inject Portfolio Data & Create Horizontal Scroll
         const projects = [
             {title:'Nayan Demo v2', tag:'Demo', url:'https://nayandemoversion2.pages.dev'},
             {title:'Akshar Dental', tag:'Dental', url:'https://akshar-dental-clinic.pages.dev'},
@@ -651,110 +440,118 @@
             {title:'Srinagar Tourism', tag:'Travel agency', url:'https://srinagartourism.pages.dev'}
         ];
 
-        const portfolioGrid = document.getElementById('portfolio-grid');
-        let projDelay = 100;
-
-        projects.forEach(project => {
+        const workTrack = document.getElementById('work-track');
+        projects.forEach((proj, idx) => {
             const card = document.createElement('div');
-            card.className = 'glass-panel project-card';
-            card.setAttribute('data-aos', 'fade-up');
-            if(projDelay > 300) projDelay = 100;
-            card.setAttribute('data-aos-delay', projDelay.toString());
-            
+            card.className = 'glass work-card';
             card.innerHTML = `
-                <a href="${project.url}" target="_blank"></a>
-                <span class="project-tag">${project.tag}</span>
-                <h3>${project.title}</h3>
-                <div class="project-arrow"><i class="fas fa-arrow-right"></i></div>
+                <a href="${proj.url}" target="_blank" class="work-link"></a>
+                <div class="work-tag">${proj.tag}</div>
+                <h3 class="brand-text">${proj.title}</h3>
+                <div class="work-icon"><i class="fas fa-arrow-right" style="transform: rotate(-45deg);"></i></div>
+                <div style="position: absolute; top: -50px; right: -20px; font-size: 8rem; font-weight: 800; color: rgba(255,255,255,0.03); z-index: 0; font-family: 'Syne';">${String(idx+1).padStart(2, '0')}</div>
             `;
-            portfolioGrid.appendChild(card);
-            projDelay += 100;
+            workTrack.appendChild(card);
         });
 
-        // Review Data (80% Kashmiri / 20% Indian)
-        const names = [
-            // Kashmiri
-            "Tariq Bhat", "Sameer Lone", "Adil Dar", "Rubeena Wani", "Asif Sheikh", 
-            "Ishfaq Ahmed", "Sajad Mir", "Mehwish Zargar", "Faisal Qureshi", "Imran Shah", 
-            "Zahoor Khanday", "Insha Rasool", "Mudasir Malik", "Bilal Sofi", "Yawar Parray", 
-            "Nisar Wani", "Rafiq Mattoo", "Shabir Geelani", "Uzma Shah", "Danish Ganjoo",
-            // Other
-            "Rahul Sharma", "Priya Singh", "Vikram Reddy", "Anjali Desai", "Rohan Gupta"
-        ];
+        // GSAP Horizontal Scroll Setup
+        let container = document.querySelector(".work-container");
+        let track = document.querySelector(".work-track");
+        
+        gsap.to(track, {
+            x: () => -(track.scrollWidth - document.documentElement.clientWidth) + "px",
+            ease: "none",
+            scrollTrigger: {
+                trigger: container,
+                invalidateOnRefresh: true,
+                pin: true,
+                scrub: 1,
+                end: () => "+=" + track.scrollWidth
+            }
+        });
 
+        // 5. Inject Reviews Data & Continuous Flow Marquee
+        const names = ["Tariq Bhat", "Sameer Lone", "Adil Dar", "Rubeena Wani", "Asif Sheikh", "Ishfaq Ahmed", "Sajad Mir", "Mehwish Zargar", "Faisal Qureshi", "Imran Shah", "Zahoor Khanday", "Insha Rasool", "Mudasir Malik", "Bilal Sofi", "Yawar Parray", "Nisar Wani", "Rafiq Mattoo", "Shabir Geelani", "Uzma Shah", "Danish Ganjoo", "Rahul Sharma", "Priya Singh", "Vikram Reddy", "Anjali Desai", "Rohan Gupta"];
         const texts = [
-            "Astrux Marketing delivered a digital masterpiece. Our engagement has skyrocketed since launch.",
-            "The design is incredibly sleek and modern. They perfectly captured the premium feel we wanted.",
-            "Their SEO work brought us to the first page of Google within a few months. Outstanding results.",
-            "Very responsive team and the final website is faster than anything we have seen before.",
-            "The bento grid layout they designed for us looks incredibly professional and clean.",
-            "Our new AI chatbot integration has completely transformed how we handle customer support.",
-            "A seamless experience from start to finish. They truly understand high end web development.",
-            "We were amazed by the fluid animations and the attention to detail in every single section.",
-            "They took our basic concept and turned it into an award winning caliber website.",
-            "Communication was clear and they delivered everything exactly on schedule.",
-            "The glassmorphism aesthetic is stunning. We get compliments on our site daily.",
-            "Our local business finally has a professional online presence thanks to their hard work.",
-            "Highly recommend their services if you want a website that actually stands out from the crowd.",
-            "They perfectly optimized our site for mobile users which was a huge priority for us.",
-            "The customized typing effects and interactive elements make our site feel alive.",
-            "It is rare to find an agency that excels at both creative design and technical SEO.",
-            "They handled all our complex requirements with ease and professionalism.",
-            "Astrux Marketing is the best investment we have made for our brand this year.",
-            "The floating WhatsApp button they added has increased our direct inquiries significantly.",
-            "They completely overhauled our outdated corporate site into something futuristic.",
-            "Exceptional problem solvers. They fixed bugs we did not even know existed.",
-            "The pricing is totally justified by the premium quality of work they provide.",
-            "Our online sales increased noticeably after they redesigned our landing pages.",
-            "We love the dark theme and glowing accents. It matches our tech brand perfectly.",
-            "Astrux is our dedicated digital partner now. We trust them completely."
+            "Astrux Marketing delivered a digital masterpiece. High engagement.", "Incredibly sleek and modern. Premium feel captured perfectly.", "SEO work brought us to page one fast. Outstanding.", "Responsive team, fastest website we have experienced.", "The modern layout looks incredibly professional and clean.", "AI chatbot completely transformed our customer support.", "Seamless experience. They understand high end development.", "Amazed by the fluid animations and deep attention to detail.", "Turned our basic concept into an award winning site.", "Clear communication, delivered exactly on schedule.", "Stunning glassmorphism aesthetic. Daily compliments.", "Our local business finally has a professional edge.", "Highly recommend for a site that stands out.", "Perfectly optimized for mobile, huge priority met.", "Custom typing and interactive elements feel alive.", "Rare to find an agency excelling in design and technical SEO.", "Handled complex requirements with complete professionalism.", "Best investment we made for our brand this year.", "WhatsApp integration increased direct inquiries instantly.", "Overhauled our outdated site into something futuristic.", "Exceptional problem solvers. Fixed bugs fast.", "Pricing justified by the premium quality work.", "Online sales increased noticeably after the redesign.", "Love the dark theme and modern aesthetics.", "Astrux is our dedicated partner. Complete trust."
         ];
 
         function shuffle(arr) {
-            for (let i = arr.length - 1; i > 0; i--) {
+            let array = [...arr];
+            for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
+                [array[i], array[j]] = [array[j], array[i]];
             }
-            return arr;
+            return array;
         }
 
-        const shuffledNames = shuffle([...names]);
-        const shuffledTexts = shuffle([...texts]);
+        const sNames = shuffle(names);
+        const sTexts = shuffle(texts);
 
-        // Split reviews into two tracks for the double marquee
-        const m1 = document.getElementById('marquee-1');
-        const m2 = document.getElementById('marquee-2');
-        
-        function createReviewCard(name, text) {
+        function createReview(name, text) {
             const stars = Math.random() > 0.15 ? 5 : 4;
             let starHtml = '';
-            for(let s=0; s<5; s++) {
-                starHtml += s < stars ? '<i class="fas fa-star"></i> ' : '<i class="far fa-star"></i> ';
-            }
+            for(let s=0; s<5; s++) { starHtml += s < stars ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>'; }
             return `
-                <div class="glass-panel review-card">
-                    <div class="review-stars">${starHtml}</div>
-                    <p style="font-size: 1.1rem; margin-bottom: 20px;">"${text}"</p>
-                    <h4 style="color: var(--accent); font-weight: 600;">${name}</h4>
+                <div class="glass review-box">
+                    <div class="stars">${starHtml}</div>
+                    <p class="review-text">"${text}"</p>
+                    <div class="review-author">${name}</div>
                 </div>
             `;
         }
 
-        let html1 = '';
-        let html2 = '';
-        
-        for(let i=0; i<12; i++) {
-            html1 += createReviewCard(shuffledNames[i], shuffledTexts[i]);
-        }
-        for(let i=12; i<25; i++) {
-            html2 += createReviewCard(shuffledNames[i], shuffledTexts[i]);
+        let rHtml1 = ''; let rHtml2 = '';
+        for(let i=0; i<12; i++) { rHtml1 += createReview(sNames[i], sTexts[i]); }
+        for(let i=12; i<25; i++) { rHtml2 += createReview(sNames[i], sTexts[i]); }
+
+        // Duplicate for infinite scroll
+        const m1 = document.getElementById('marquee-1');
+        const m2 = document.getElementById('marquee-2');
+        m1.innerHTML = rHtml1 + rHtml1; 
+        m2.innerHTML = rHtml2 + rHtml2;
+
+        // Marquee GSAP Animation
+        function horizontalLoop(items, config) {
+            items = gsap.utils.toArray(items);
+            config = config || {};
+            let tl = gsap.timeline({repeat: config.repeat, paused: config.paused, defaults: {ease: "none"}, onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100)}),
+                length = items.length,
+                startX = items[0].offsetLeft,
+                times = [],
+                widths = [],
+                xPercents = [],
+                curIndex = 0,
+                pixelsPerSecond = (config.speed || 1) * 100,
+                snap = config.snap === false ? v => v : gsap.utils.snap(config.snap || 1), // some browsers leak memory with large numeric snap values
+                totalWidth, curX, distanceToStart, distanceToLoop, item, i;
+            gsap.set(items, { 
+                xPercent: (i, el) => {
+                    let w = widths[i] = parseFloat(gsap.getProperty(el, "width", "px"));
+                    xPercents[i] = snap(parseFloat(gsap.getProperty(el, "x", "px")) / w * 100 + gsap.getProperty(el, "xPercent"));
+                    return xPercents[i];
+                }
+            });
+            gsap.set(items, {x: 0});
+            totalWidth = items[length-1].offsetLeft + xPercents[length-1] / 100 * widths[length-1] - startX + items[length-1].offsetWidth * gsap.getProperty(items[length-1], "scaleX") + (parseFloat(config.paddingRight) || 0);
+            for (i = 0; i < length; i++) {
+                item = items[i];
+                curX = xPercents[i] / 100 * widths[i];
+                distanceToStart = item.offsetLeft + curX - startX;
+                distanceToLoop = distanceToStart + widths[i] * gsap.getProperty(item, "scaleX");
+                tl.to(item, {xPercent: snap((curX - distanceToLoop) / widths[i] * 100), duration: distanceToLoop / pixelsPerSecond}, 0)
+                  .fromTo(item, {xPercent: snap((curX - distanceToLoop + totalWidth) / widths[i] * 100)}, {xPercent: xPercents[i], duration: (curX - distanceToLoop + totalWidth - curX) / pixelsPerSecond, immediateRender: false}, distanceToLoop / pixelsPerSecond)
+                  .add("label" + i, distanceToStart / pixelsPerSecond);
+                times[i] = distanceToStart / pixelsPerSecond;
+            }
+            return tl;
         }
 
-        m1.innerHTML = html1;
-        document.getElementById('marquee-1-dup').innerHTML = html1; // Clone for seamless loop
+        const boxes1 = gsap.utils.toArray("#marquee-1 .review-box");
+        const boxes2 = gsap.utils.toArray("#marquee-2 .review-box");
         
-        m2.innerHTML = html2;
-        document.getElementById('marquee-2-dup').innerHTML = html2; // Clone for seamless loop
+        horizontalLoop(boxes1, { paused: false, repeat: -1, speed: 1.5 });
+        horizontalLoop(boxes2, { paused: false, repeat: -1, speed: 1.2 }).reverse(); // Reverse direction for bottom row
 
     </script>
 </body>
